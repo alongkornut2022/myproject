@@ -1,51 +1,76 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function CategoryList() {
   return (
     <div className="category_list">
-      {/* <div className="category_list_right"> */}
       <ul>
         <li>
-          <a>เสื้อผ้า </a>
+          <NavLink end to="/PasswordEdit">
+            เสื้อผ้า
+          </NavLink>
         </li>
         <li>
-          <a>กระเป๋า </a>
+          <NavLink end to="/PasswordEdit">
+            กระเป๋า
+          </NavLink>
         </li>
         <li>
-          <a>รองเท้แฟชั่น</a>
+          <NavLink end to="/PasswordEdit">
+            รองเท้า
+          </NavLink>
         </li>
         <li>
-          <a>เครื่องสำอาง</a>
+          <NavLink end to="/PasswordEdit">
+            เครื่องสำอาง
+          </NavLink>
         </li>
         <li>
-          <a>วิตามินและอาหารเสริม</a>
+          <NavLink end to="/PasswordEdit">
+            วิตามิน อาหารเสริม
+          </NavLink>
         </li>
         <li>
-          <a>เครื่องประดับและอัญมณี</a>
+          <NavLink end to="/PasswordEdit">
+            เครื่องประดับ อัญมณี
+          </NavLink>
         </li>
         <li>
-          <a>นาฬิกา</a>
+          <NavLink end to="/PasswordEdit">
+            นาฬิกา
+          </NavLink>
         </li>
         <li>
-          <a>โทรศัพท์มือถือ</a>
+          <NavLink end to="/PasswordEdit">
+            โทรศัพท์มือถือ
+          </NavLink>
         </li>
         <li>
-          <a>อุปกรณ์ไอที</a>
+          <NavLink end to="/PasswordEdit">
+            อุปกรณ์ไอที
+          </NavLink>
         </li>
         <li>
-          <a>หนังสือและนิตยสาร</a>
+          <NavLink end to="/PasswordEdit">
+            หนังสือ นิตยสาร
+          </NavLink>
         </li>
         <li>
-          <a>เฟอร์นิเจอร์ ของแต่งบ้าน</a>
+          <NavLink end to="/PasswordEdit">
+            เฟอร์นิเจอร์ ของแต่งบ้าน
+          </NavLink>
         </li>
         <li>
-          <a>ของเล่น</a>
+          <NavLink end to="/PasswordEdit">
+            ของเล่น
+          </NavLink>
         </li>
         <li>
-          <a>เครื่องใช้ไฟฟ้า</a>
+          <NavLink end to="/PasswordEdit">
+            เครื่องใช้ไฟฟ้า
+          </NavLink>
         </li>
       </ul>
-      {/* </div> */}
     </div>
   );
 }

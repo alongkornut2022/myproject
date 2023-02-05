@@ -12,7 +12,7 @@ function HomePage() {
         <div className="home_main_content_top_center">
           <p>carousel_banner</p>
         </div>
-        <div className="home_main_content_top_right"></div>
+        <div className="home_main_content_top_right">โฆษณา</div>
       </div>
       <div className="title_product">
         <p>สินค้าขายดี</p>

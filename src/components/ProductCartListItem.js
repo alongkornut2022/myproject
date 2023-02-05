@@ -22,7 +22,9 @@ function ProductCartListItem() {
       </div>
       <div className="item5">0000</div>
       <div className="item6">
-        <button>ลบ</button>
+        <div className="address_delivery_change">
+          <button>ลบ</button>
+        </div>
       </div>
     </div>
   );
