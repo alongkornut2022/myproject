@@ -1,6 +1,7 @@
 import React from 'react';
 import NavbarCustomer from '../components/NavbarCustomer';
 import ProductCartListItem from '../components/ProductCartListItem';
+import UserItem from '../components/UserItem';
 
 function AddToCart() {
   return (
@@ -9,12 +10,7 @@ function AddToCart() {
         <div className="home_main_content_top">
           <div className="customer_main_content_left">
             <div className="customer_main_content_left_top">
-              <div className="user_pic">
-                <img src="https://picsum.photos/50" />
-              </div>
-              <div className="user_name">
-                <h4>ชื่อผู้ใช้</h4>
-              </div>
+              <UserItem />
             </div>
             <div className="customer_main_content_left_buttom">
               <NavbarCustomer />
@@ -49,9 +45,12 @@ function AddToCart() {
                   </from>
                 </div>
                 <div className="item2">เลือกทั้งหมด</div>
-                <div className="item3">รวม 0 สินค้า</div>
-                <div className="item4">รวมเป็นเงิน 0000000 </div>
-                <div className="item5">
+                <div className="item3_1">รวม</div>
+                <div className="item3_2">000</div>
+                <div className="item3_3">สินค้า</div>
+                <div className="item4">เป็นเงิน</div>
+                <div className="item5">0000000</div>
+                <div className="item6">
                   <button>สั่งสินค้า</button>
                 </div>
               </div>

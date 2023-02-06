@@ -1,6 +1,7 @@
 import React from 'react';
 import NavbarCustomer from '../../components/NavbarCustomer';
 import OrderHistoryItem from '../../components/OrderHistoryItem';
+import UserItem from '../../components/UserItem';
 
 function OrderHistory() {
   return (
@@ -8,12 +9,7 @@ function OrderHistory() {
       <div className="home_main_content_top">
         <div className="customer_main_content_left">
           <div className="customer_main_content_left_top">
-            <div className="user_pic">
-              <img src="https://picsum.photos/50" />
-            </div>
-            <div className="user_name">
-              <h4>ชื่อผู้ใช้</h4>
-            </div>
+            <UserItem />
           </div>
           <div className="customer_main_content_left_buttom">
             <NavbarCustomer />
@@ -29,12 +25,13 @@ function OrderHistory() {
             <div className="orderhistory_filter_bar">
               <div className="item1">
                 <from>
-                  ค้นหา <input type="text" />
+                  <label>ค้นหา</label>
+                  <input type="text" />
                 </from>
               </div>
               <div className="item2">
                 <form>
-                  เรียงโดย
+                  <label>เรียงโดย</label>
                   <select name="statusorder">
                     <option value="all">วันที่สั่งซื้อ</option>
                     <option value="success">คำสั่งซื้อ</option>
@@ -44,7 +41,8 @@ function OrderHistory() {
               </div>
               <div className="item3">
                 <form>
-                  สถานะ
+                  <label>สถานะ</label>
+
                   <select name="statusorder">
                     <option value="all">ทั้งหมด</option>
                     <option value="success">จัดส่งสำเร็จ</option>

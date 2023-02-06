@@ -1,4 +1,5 @@
 import React from 'react';
+import ProductDetailReviewItem from '../components/ProductDetailReviewItem';
 
 function ProductDetail() {
   return (
@@ -27,7 +28,7 @@ function ProductDetail() {
           </div>
         </div>
         <div className="productitem_title">
-          <div>ชื่อสินค้า</div>
+          <div className="productitem_productname">ชื่อสินค้า</div>
           <div className="productitem_rating">คะแนนสินค้า</div>
           <div className="productitem_price_alreadySold">
             <div className="item1">ราคา</div>
@@ -52,22 +53,14 @@ function ProductDetail() {
           </div>
         </div>
       </div>
+
       <div className="productdetail_detail">
         <div>
           <h3>รายละเอียดสินค้า</h3>
         </div>
-        <div>
-          <p>
-            ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-          </p>
-          <p>
-            ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-          </p>
-          <p>
-            ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-          </p>
-        </div>
+        <div>เนื้อหา</div>
       </div>
+
       <div className="productdetail_rating">
         <h3>คะแนนของสินค้า</h3>
         <div className="rating_main">
@@ -75,37 +68,12 @@ function ProductDetail() {
           <div className="rating_right"></div>
         </div>
       </div>
+
       <div className="productdetail_review">
         <h3>รีวิวสินค้า</h3>
-        <div className="review_main">
-          <div className="review_left">
-            <img src="https://picsum.photos/40" />
-          </div>
-          <div className="review_right">
-            <div>
-              <h4>ชื่อลูกค้าที่รีวิว</h4>
-            </div>
-            <div>คะแนนสินค้าที่ลูกค้าให้</div>
-            <div>เนื้อหารีวิว</div>
-            <div className="review_image_main">
-              <div className="review_image_item1">
-                <img src="https://picsum.photos/80" />
-              </div>
-              <div className="review_image_item2">
-                <img src="https://picsum.photos/80" />
-              </div>
-              <div className="review_image_item3">
-                <img src="https://picsum.photos/80" />
-              </div>
-              <div className="review_image_item4">
-                <img src="https://picsum.photos/80" />
-              </div>
-              <div className="review_image_item5">
-                <img src="https://picsum.photos/80" />
-              </div>
-            </div>
-          </div>
-        </div>
+        <ProductDetailReviewItem />
+        <ProductDetailReviewItem />
+        <ProductDetailReviewItem />
       </div>
     </div>
   );

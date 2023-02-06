@@ -1,6 +1,7 @@
 import React from 'react';
 import AddressDelivery from '../../components/AddressDelivery';
 import NavbarCustomer from '../../components/NavbarCustomer';
+import UserItem from '../../components/UserItem';
 
 function AddressBook() {
   return (
@@ -8,12 +9,7 @@ function AddressBook() {
       <div className="home_main_content_top">
         <div className="customer_main_content_left">
           <div className="customer_main_content_left_top">
-            <div className="user_pic">
-              <img src="https://picsum.photos/50" />
-            </div>
-            <div className="user_name">
-              <h4>ชื่อผู้ใช้</h4>
-            </div>
+            <UserItem />
           </div>
           <div className="customer_main_content_left_buttom">
             <NavbarCustomer />

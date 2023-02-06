@@ -1,12 +1,13 @@
 import React from 'react';
 import buttonSearch from '../images/download.png';
 import addtocart from '../images/cart.jpg';
+import UserItem from '../components/UserItem';
 
 function Header() {
   return (
     <>
       <div className="header">
-        <div className="header_left">Logo ขายของออนไลน์</div>
+        <div className="header_left">Logo</div>
         <div className="header_middle">
           <div className="dropdown_product_category">
             <form>
@@ -34,9 +35,14 @@ function Header() {
           </div>
         </div>
         <div className="header_right">
-          <buttom type="submit">
-            <img src={addtocart} />
-          </buttom>
+          <div className="header_right_addtocart">
+            <buttom type="submit">
+              <img src={addtocart} />
+            </buttom>
+          </div>
+          <div className="header_right_useritem">
+            <UserItem />
+          </div>
         </div>
       </div>
     </>

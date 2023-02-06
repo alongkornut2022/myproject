@@ -11,16 +11,23 @@ function ProductCategory() {
           <CategoryList />
         </div>
         <div className="category_main_content">
-          <div>ชื่อ Category</div>
+          <div className="categoty_name">ชื่อ Category</div>
           <div className="category_sortbar">
             <div className="category_sortbar_option">
-              <div>เรียงโดย</div>
-              <div>สินค้าล่าสุด</div>
-              <div>สินค้าขายดี</div>
-              <div>ราคา มาก ไป น้อย</div>
-              <div>ราคา น้อย ไป มาก</div>
+              <div className="item1">เรียงโดย</div>
+              <div className="item2">สินค้าล่าสุด</div>
+              <div className="item3">สินค้าขายดี</div>
+              <div className="item4">
+                <form>
+                  <label>ราคา</label>
+                  <select name="filterbyprice">
+                    <option value="low price to high price">น้อย ไป มาก</option>
+                    <option value="high price to low price">มาก ไป น้อย</option>
+                  </select>
+                </form>
+              </div>
             </div>
-            <div>
+            <div className="pagination_top">
               <Pagination />
             </div>
           </div>
@@ -41,8 +48,10 @@ function ProductCategory() {
             <ProductItem />
             <ProductItem />
           </div>
-          <div className="pagination_buttom">
-            <Pagination />
+          <div className="">
+            <div className="pagination_buttom">
+              <Pagination />
+            </div>
           </div>
         </div>
       </div>

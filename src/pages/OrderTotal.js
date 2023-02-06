@@ -30,7 +30,7 @@ function OrderTotal() {
         <div className="product_sell_listbar_buttom">
           <div className="item1"></div>
           <div className="item2">ราคารวมสินค้า</div>
-          <div className="item3">00000</div>
+          <div className="item3">00000000</div>
         </div>
       </div>
 

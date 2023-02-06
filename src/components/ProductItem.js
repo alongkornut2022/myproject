@@ -3,7 +3,9 @@ import React from 'react';
 function ProductItem() {
   return (
     <div className="productitem_card">
-      <img src={'https://picsum.photos/200'} />
+      <div className="productitem_card_image">
+        <img src={'https://picsum.photos/200'} />
+      </div>
       <div className="productitem_card_detail">
         <div className="productitem_card_detail_top">
           <div className="productname">ชื่อสินค้า</div>

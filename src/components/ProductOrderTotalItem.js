@@ -10,8 +10,8 @@ function ProductOrderTotalItem() {
         <div className="item1_2">ชื่อสินค้า</div>
       </div>
       <div className="item2">0000</div>
-      <div className="item3">0</div>
-      <div className="item4">0000</div>
+      <div className="item3">0000</div>
+      <div className="item4">0000000</div>
     </div>
   );
 }
