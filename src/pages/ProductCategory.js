@@ -11,7 +11,7 @@ function ProductCategory() {
           <CategoryList />
         </div>
         <div className="category_main_content">
-          <div className="categoty_name">ชื่อ Category</div>
+          <div className="categoty_name">เสื้อผ้า</div>
           <div className="category_sortbar">
             <div className="category_sortbar_option">
               <div className="item1">เรียงโดย</div>

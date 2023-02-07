@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import ProductDetailReviewItem from '../components/ProductDetailReviewItem';
 
 function ProductDetail() {
@@ -45,10 +46,14 @@ function ProductDetail() {
           </div>
           <div className="productitem_addtocart">
             <div className="addtocart_item1">
-              <button>ซื้อเลย</button>
+              <NavLink end to="/OrderTotal">
+                <button>ซื้อเลย</button>
+              </NavLink>
             </div>
             <div className="addtocart_item2">
-              <button>เพิ่มไปยังรถเข็น</button>
+              <NavLink end to="/AddToCart">
+                <button>เพิ่มไปยังรถเข็น</button>
+              </NavLink>
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ function UserItem() {
         <img src="https://picsum.photos/40" />
       </div>
       <div className="useritem_username">
-        <h4>ชื่อลูกค้าที่รีวิว</h4>
+        <h4>Username Review</h4>
       </div>
     </div>
   );

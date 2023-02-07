@@ -1,14 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import CategoryList from './CategoryList';
 
 function NavBar() {
   return (
     <div className="navbar">
       <div className="navbar_left">
-        <div className="item">
-          <NavLink end to="/ProductCategory">
-            หมวดหมู่สินค้า
-          </NavLink>
+        <div className="dropdown">
+          <button className="dropbtn">หมวดหมู่สินค้า</button>
+          <div class="dropdown-content">
+            <CategoryList />
+          </div>
         </div>
       </div>
       <div className="navbar_right">

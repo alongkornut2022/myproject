@@ -6,7 +6,7 @@ function CategoryList() {
     <div className="category_list">
       <ul>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/ProductCategory">
             เสื้อผ้า
           </NavLink>
         </li>
