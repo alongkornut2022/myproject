@@ -1,6 +1,6 @@
 import React from 'react';
 import NavbarCustomer from '../../components/NavbarCustomer';
-import UserItem from '../../components/UserItem';
+import UserItem from '../../components/UserItemReview';
 
 function ChangePassword() {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import NavbarCustomer from '../../components/NavbarCustomer';
-import UserItem from '../../components/UserItem';
+import UserItemProfile from '../../components/UserItemProfile';
 
 function CustomerDetail() {
   return (
@@ -8,7 +8,7 @@ function CustomerDetail() {
       <div className="home_main_content_top">
         <div className="customer_main_content_left">
           <div className="customer_main_content_left_top">
-            <UserItem />
+            <UserItemProfile />
           </div>
           <div className="customer_main_content_left_buttom">
             <NavbarCustomer />

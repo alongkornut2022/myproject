@@ -1,7 +1,7 @@
 import React from 'react';
 import NavbarCustomer from '../components/NavbarCustomer';
 import ProductCartListItem from '../components/ProductCartListItem';
-import UserItem from '../components/UserItem';
+import UserItem from '../components/UserItemReview';
 
 function AddToCart() {
   return (

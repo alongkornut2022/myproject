@@ -1,6 +1,6 @@
 import React from 'react';
 
-function UserItem() {
+function UserItemReview() {
   return (
     <div className="useritem">
       <div className="useritem_image">
@@ -13,4 +13,4 @@ function UserItem() {
   );
 }
 
-export default UserItem;
+export default UserItemReview;
