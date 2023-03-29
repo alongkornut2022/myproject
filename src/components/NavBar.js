@@ -1,8 +1,12 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import CategoryList from './CategoryList';
+import { AuthContext } from '../contexts/AuthContext';
 
 function NavBar() {
+  const { customer } = useContext(AuthContext);
+
   return (
     <div className="navbar">
       <div className="navbar_left">
@@ -15,29 +19,34 @@ function NavBar() {
       </div>
       <div className="navbar_right">
         <div className="item">
-          <NavLink end to="/HomePage">
+          <Link end to="/HomePage">
             หน้าแรก
-          </NavLink>
+          </Link>
         </div>
         <div className="item">
-          <NavLink end to="/HowToOrderPage">
+          <Link end to="/HowToOrderPage">
             วิธีการสั่งซื้อ
-          </NavLink>
+          </Link>
         </div>
         <div className="item">
-          <NavLink end to="/PaymentMethodPage">
+          <Link end to="/PaymentMethodPage">
             วิธีการชำระเงิน
-          </NavLink>
+          </Link>
+        </div>
+
+        <div className="item">
+          {customer ? null : (
+            <Link end to="/Register">
+              ลงทะเบียน
+            </Link>
+          )}
         </div>
         <div className="item">
-          <NavLink end to="/Register">
-            ลงทะเบียน
-          </NavLink>
-        </div>
-        <div className="item">
-          <NavLink end to="/Login">
-            เข้าสู่ระบบ
-          </NavLink>
+          {customer ? null : (
+            <Link end to="/Login">
+              เข้าสู่ระบบ
+            </Link>
+          )}
         </div>
       </div>
     </div>

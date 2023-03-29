@@ -11,62 +11,62 @@ function CategoryList() {
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             กระเป๋า
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             รองเท้า
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             เครื่องสำอาง
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             วิตามิน อาหารเสริม
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             เครื่องประดับ อัญมณี
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             นาฬิกา
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             โทรศัพท์มือถือ
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             อุปกรณ์ไอที
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             หนังสือ นิตยสาร
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             เฟอร์นิเจอร์ ของแต่งบ้าน
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             ของเล่น
           </NavLink>
         </li>
         <li>
-          <NavLink end to="/PasswordEdit">
+          <NavLink end to="/">
             เครื่องใช้ไฟฟ้า
           </NavLink>
         </li>

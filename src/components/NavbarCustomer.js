@@ -1,45 +1,47 @@
-import React from 'react';
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
 function NavbarCustomer() {
+  const { customer, logout } = useContext(AuthContext);
+
   return (
     <>
-      <div></div>
       <div className="customer_list">
         <h5>จัดการบัญชี</h5>
         <ul>
           <li>
-            <NavLink end to="/CustomerDetail">
+            <NavLink end to={`/customer/profile/${customer.id}`}>
               ข้อมูลส่วนตัว
             </NavLink>
           </li>
           <li>
-            <NavLink end to="/AddressBook">
-              สมุดที่อยู่
+            <NavLink end to={`/customer/PasswordEdit/${customer.id}`}>
+              เปลี่ยนรหัสผ่าน
             </NavLink>
           </li>
           <li>
-            <NavLink end to="/PasswordEdit">
-              เปลี่ยนรหัสผ่าน
+            <NavLink end to={`/customer/AddressBook/${customer.id}`}>
+              ที่อยู่รับสินค้า
             </NavLink>
           </li>
         </ul>
         <h5>การสั่งซื้อสินค้า</h5>
         <ul>
           <li>
-            <NavLink end to="/AddToCart">
+            <NavLink end to={`/customer/cart/${customer.id}`}>
               ตะกร้าสินค้า
             </NavLink>
           </li>
           <li>
-            <NavLink end to="/OrderHistory">
+            <NavLink end to={`/customer/OrderHistory/${customer.id}`}>
               ประวัติการสั่งซื้อ
             </NavLink>
           </li>
           <li>
-            <NavLink end to="/HomePage">
+            <button type="button" onClick={logout}>
               ออกจากระบบ
-            </NavLink>
+            </button>
           </li>
         </ul>
       </div>

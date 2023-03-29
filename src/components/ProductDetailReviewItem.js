@@ -1,11 +1,11 @@
 import React from 'react';
-import UserItemReview from './UserItemReview';
+import UserItem from './UserItem';
 
 function ProductDetailReviewItem() {
   return (
     <div className="review_main">
       <div className="review_left">
-        <UserItemReview />
+        <UserItem />
       </div>
       <div className="review_right">
         <div>คะแนนสินค้าที่ลูกค้าให้</div>

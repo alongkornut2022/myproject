@@ -1,21 +1,27 @@
-import React from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
+import UserItem from './UserItem';
+import defaultUserPicture from '../assets/images/userpicture.png';
 import NavbarCustomer from './NavbarCustomer';
 
 function UserItemCustomer() {
+  const { customer } = useContext(AuthContext);
   return (
     <div className="useritem">
+      <Link to={`/customer/profile/${customer.id}`}>
+        <UserItem
+          size="28"
+          src={customer.userPicture || defaultUserPicture}
+          username={customer.username}
+        />
+      </Link>
       <div className="dropdown">
         <button className="dropbtn">
-          <div className="useritem_image">
-            <img src="https://picsum.photos/40" />
-          </div>
-          <div className="useritem_username">
-            <h4>Username</h4>
+          <div class="dropdown-content">
+            <NavbarCustomer />
           </div>
         </button>
-        <div class="dropdown-content">
-          <NavbarCustomer />
-        </div>
       </div>
     </div>
   );

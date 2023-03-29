@@ -1,6 +1,6 @@
-import React from 'react';
 import CategoryList from '../components/CategoryList';
-import ProductItem from '../components/ProductItem';
+import NewProduct from '../components/NewProduct';
+import ProductBestBuy from '../components/ฺProductBestBuy';
 
 function HomePage() {
   return (
@@ -18,18 +18,7 @@ function HomePage() {
         <p>สินค้าขายดี</p>
       </div>
       <div className="home_main_content_middle">
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
+        <ProductBestBuy />
       </div>
       <div className="">
         <button>ดูเพิ่มเติม</button>
@@ -38,18 +27,7 @@ function HomePage() {
         <p>สินค้าใหม่</p>
       </div>
       <div className="home_main_content_middle">
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
+        <NewProduct />
       </div>
       <div className="">
         <button>ดูเพิ่มเติม</button>

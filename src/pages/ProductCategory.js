@@ -31,23 +31,7 @@ function ProductCategory() {
               <Pagination />
             </div>
           </div>
-          <div className="category_main_productitem">
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-            <ProductItem />
-          </div>
+          <div className="category_main_productitem"></div>
           <div className="">
             <div className="pagination_buttom">
               <Pagination />

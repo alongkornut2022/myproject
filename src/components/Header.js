@@ -1,10 +1,13 @@
-import React from 'react';
+import { useContext } from 'react';
 import buttonSearch from '../images/download.png';
 import addtocart from '../images/cart.jpg';
 import UserItemCustomer from './UserItemCustomer';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
 function Header() {
+  const { customer } = useContext(AuthContext);
+
   return (
     <>
       <div className="header">
@@ -39,7 +42,7 @@ function Header() {
               <input
                 type="text"
                 name="form_searchproduct"
-                placeholder="ค้นหาสินค้าที่ต้องการ"
+                placeholder="ค้นหาสินค้า"
                 // value={}
               />
             </form>
@@ -61,7 +64,7 @@ function Header() {
             </NavLink>
           </div>
           <div className="header_right_useritem">
-            <UserItemCustomer />
+            {customer ? <UserItemCustomer /> : null}
           </div>
         </div>
       </div>
