@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import CategoryList from './CategoryList';
+import CategoryList from './category/CategoryList';
 import { AuthContext } from '../contexts/AuthContext';
 
 function NavBar() {

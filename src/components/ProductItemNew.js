@@ -5,17 +5,17 @@ function ProductItemNew({ newProduct }) {
     productId,
     productName,
     productUnitprice,
-    productImages,
     alreadysold,
+    image1,
     createdAt,
   } = newProduct;
 
   return (
     <>
-      <NavLink end to="/ProductDetail">
+      <NavLink end to={`/ProductDetail/${productId}`}>
         <div className="productitem_card">
           <div className="productitem_card_image">
-            <img src={'https://picsum.photos/200'} />
+            <img src={image1} sizes="200" />
           </div>
           <div className="productitem_card_detail">
             <div className="productitem_card_detail_top">

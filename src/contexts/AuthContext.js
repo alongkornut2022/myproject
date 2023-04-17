@@ -11,7 +11,7 @@ const AuthContext = createContext();
 
 function AuthContextProvider({ children }) {
   const [customer, setCustomer] = useState(null);
-  // const [customerAddress, setCustomerAddress] = useState(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {

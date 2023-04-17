@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-function ProductItemBestBuy({ productBestBuy }) {
+function ProductItemCategory({ productByCategory }) {
   const {
     productId,
     productName,
@@ -9,7 +9,7 @@ function ProductItemBestBuy({ productBestBuy }) {
     image1,
     inventory,
     createdAt,
-  } = productBestBuy;
+  } = productByCategory;
 
   return (
     <>
@@ -35,4 +35,4 @@ function ProductItemBestBuy({ productBestBuy }) {
   );
 }
 
-export default ProductItemBestBuy;
+export default ProductItemCategory;

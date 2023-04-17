@@ -1,12 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import buttonSearch from '../images/download.png';
 import addtocart from '../images/cart.jpg';
 import UserItemCustomer from './UserItemCustomer';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 function Header() {
   const { customer } = useContext(AuthContext);
+
+  const [keyword, setKeyword] = useState();
 
   return (
     <>
@@ -38,29 +40,23 @@ function Header() {
             </form>
           </div>
           <div className="searchbar_product">
-            <form>
-              <input
-                type="text"
-                name="form_searchproduct"
-                placeholder="ค้นหาสินค้า"
-                // value={}
-              />
-            </form>
+            <input
+              type="text"
+              placeholder="ค้นหาสินค้า"
+              value={keyword}
+              onChange={(event) => setKeyword(event.target.value)}
+            />
           </div>
           <div className="button_search">
-            <form>
-              <buton type="submit">
-                <img src={buttonSearch} />
-              </buton>
-            </form>
+            <Link end to={`Product/search/${keyword}`}>
+              <img src={buttonSearch} />
+            </Link>
           </div>
         </div>
         <div className="header_right">
           <div className="header_right_addtocart">
             <NavLink end to="/AddToCart">
-              <buttom type="submit">
-                <img src={addtocart} />
-              </buttom>
+              <img src={addtocart} />
             </NavLink>
           </div>
           <div className="header_right_useritem">

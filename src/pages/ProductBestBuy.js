@@ -1,10 +1,7 @@
-import { useParams } from 'react-router-dom';
 import CategoryList from '../components/category/CategoryList';
-import CategoryContainer from '../components/category/CategoryContainer';
+import ProductBestBuyContainer from '../components/productBestBuy/ProductBestBuyContainer';
 
-function ProductCategory() {
-  const { categoryName } = useParams();
-
+function ProductBestBuy() {
   return (
     <div className="home_main_content">
       <div className="home_main_content_top">
@@ -12,11 +9,11 @@ function ProductCategory() {
           <CategoryList />
         </div>
         <div className="category_main_content">
-          <CategoryContainer categoryName={categoryName} />
+          <ProductBestBuyContainer />
         </div>
       </div>
     </div>
   );
 }
 
-export default ProductCategory;
+export default ProductBestBuy;

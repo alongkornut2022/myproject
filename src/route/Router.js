@@ -19,6 +19,8 @@ import PasswordEdit from '../pages/Customer/PasswordEdit';
 import HowToOrderPage from '../pages/HowToOrderPage';
 import PaymentMethodPage from '../pages/PaymentMethodPage';
 import DeliveryMethodPage from '../pages/DeliveryMethodPage';
+import ProductBestBuy from '../pages/ProductBestBuy';
+import ProductNew from '../pages/ProductNew';
 import { AuthContext } from '../contexts/AuthContext';
 
 function Router() {
@@ -47,9 +49,20 @@ function Router() {
               </Route>
               <Route path="Purchase/OrderTotal" element={<OrderTotal />} />
 
-              <Route path="ProductCategory" element={<ProductCategory />} />
-              <Route path="ProductSearch" element={<ProductSearch />} />
-              <Route path="ProductDetail" element={<ProductDetail />} />
+              <Route
+                path="Product/Category/:categoryName"
+                element={<ProductCategory />}
+              />
+              <Route path="Product/newproduct" element={<ProductNew />} />
+              <Route
+                path="Product/productbestbuy"
+                element={<ProductBestBuy />}
+              />
+              <Route path="Product/Search" element={<ProductSearch />} />
+              <Route
+                path="ProductDetail/:productId"
+                element={<ProductDetail />}
+              />
               <Route path="*" element={<HomePage />} />
             </>
           ) : (
@@ -63,9 +76,24 @@ function Router() {
               />
               <Route path="About" element={<About />} />
 
-              <Route path="ProductCategory" element={<ProductCategory />} />
-              <Route path="ProductSearch" element={<ProductSearch />} />
-              <Route path="ProductDetail" element={<ProductDetail />} />
+              <Route
+                path="Product/Category/:categoryName"
+                element={<ProductCategory />}
+              />
+              <Route path="Product/newproduct" element={<ProductNew />} />
+              <Route
+                path="Product/productbestbuy"
+                element={<ProductBestBuy />}
+              />
+              <Route
+                path="Product/Search/:keyword"
+                element={<ProductSearch />}
+              />
+
+              <Route
+                path="ProductDetail/:productId"
+                element={<ProductDetail />}
+              />
 
               <Route path="Register" element={<Register />} />
               <Route path="Login" element={<Login />} />

@@ -1,16 +1,8 @@
 import { NavLink } from 'react-router-dom';
 
-function ProductItemBestBuy({ productBestBuy }) {
-  const {
-    productId,
-    productName,
-    productUnitprice,
-    alreadysold,
-    image1,
-    inventory,
-    createdAt,
-  } = productBestBuy;
-
+function ProductItemSearch({ productSearch }) {
+  const { productId, image1, productName, productUnitprice, alreadysold } =
+    productSearch;
   return (
     <>
       <NavLink end to={`/ProductDetail/${productId}`}>
@@ -35,4 +27,4 @@ function ProductItemBestBuy({ productBestBuy }) {
   );
 }
 
-export default ProductItemBestBuy;
+export default ProductItemSearch;

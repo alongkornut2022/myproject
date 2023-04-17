@@ -1,19 +1,18 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function ProductItemBestBuy({ productBestBuy }) {
-  const {
-    productId,
-    productName,
-    productUnitprice,
-    alreadysold,
-    image1,
-    inventory,
-    createdAt,
-  } = productBestBuy;
+function ProductItemSeller({ productSeller }) {
+  const { productId, image1, productName, productUnitprice, alreadysold } =
+    productSeller;
+
+  function refreshPage() {
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 0);
+  }
 
   return (
     <>
-      <NavLink end to={`/ProductDetail/${productId}`}>
+      <Link end to={`/ProductDetail/${productId}`} onClick={refreshPage}>
         <div className="productitem_card">
           <div className="productitem_card_image">
             <img src={image1} sizes="200" />
@@ -30,9 +29,9 @@ function ProductItemBestBuy({ productBestBuy }) {
             </div>
           </div>
         </div>
-      </NavLink>
+      </Link>
     </>
   );
 }
 
-export default ProductItemBestBuy;
+export default ProductItemSeller;
