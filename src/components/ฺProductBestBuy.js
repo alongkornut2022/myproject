@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import ProductItemBestBuy from './ProductItemBestBuy';
+import ProductItemBestBuy from './productBestBuy/ProductItemBestBuy';
 import axios from '../config/axios';
 
 function ProductBestBuy() {

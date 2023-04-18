@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ProductItemNew from './ProductItemNew';
+import ProductItemNew from './productNew/ProductItemNew';
 import axios from '../config/axios';
 
 function NewProduct() {

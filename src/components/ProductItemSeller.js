@@ -4,11 +4,11 @@ function ProductItemSeller({ productSeller }) {
   const { productId, image1, productName, productUnitprice, alreadysold } =
     productSeller;
 
-  function refreshPage() {
+  const refreshPage = () => {
     setTimeout(() => {
       window.location.reload(false);
     }, 0);
-  }
+  };
 
   return (
     <>

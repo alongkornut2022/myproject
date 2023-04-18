@@ -4,8 +4,8 @@ import HomePage from '../pages/HomePage';
 import About from '../pages/About';
 import Layout from '../pages/Layout';
 import CustomerLayout from '../pages/Customer/CustomerLayout';
-import ProductCategory from '../pages/ProductCategory';
-import ProductSearch from '../pages/ProductSearch';
+import ProductCategory from '../pages/products/ProductCategory';
+import ProductSearch from '../pages/products/ProductSearch';
 import ProductDetail from '../pages/ProductDetail';
 import Cart from '../pages/Cart';
 // import OrderItem from '../pages/OrderItem';
@@ -19,9 +19,10 @@ import PasswordEdit from '../pages/Customer/PasswordEdit';
 import HowToOrderPage from '../pages/HowToOrderPage';
 import PaymentMethodPage from '../pages/PaymentMethodPage';
 import DeliveryMethodPage from '../pages/DeliveryMethodPage';
-import ProductBestBuy from '../pages/ProductBestBuy';
-import ProductNew from '../pages/ProductNew';
+import ProductBestBuy from '../pages/products/ProductBestBuy';
+import ProductNew from '../pages/products/ProductNew';
 import { AuthContext } from '../contexts/AuthContext';
+import ProductLayout from '../pages/products/ProductLayout';
 
 function Router() {
   const { customer } = useContext(AuthContext);
@@ -49,16 +50,16 @@ function Router() {
               </Route>
               <Route path="Purchase/OrderTotal" element={<OrderTotal />} />
 
-              <Route
-                path="Product/Category/:categoryName"
-                element={<ProductCategory />}
-              />
-              <Route path="Product/newproduct" element={<ProductNew />} />
-              <Route
-                path="Product/productbestbuy"
-                element={<ProductBestBuy />}
-              />
-              <Route path="Product/Search" element={<ProductSearch />} />
+              <Route path="product" element={<ProductLayout />}>
+                <Route
+                  path="Category/:categoryName"
+                  element={<ProductCategory />}
+                />
+                <Route path="newproduct" element={<ProductNew />} />
+                <Route path="productbestbuy" element={<ProductBestBuy />} />
+                <Route path="Search/:keyword" element={<ProductSearch />} />
+              </Route>
+
               <Route
                 path="ProductDetail/:productId"
                 element={<ProductDetail />}
@@ -76,19 +77,15 @@ function Router() {
               />
               <Route path="About" element={<About />} />
 
-              <Route
-                path="Product/Category/:categoryName"
-                element={<ProductCategory />}
-              />
-              <Route path="Product/newproduct" element={<ProductNew />} />
-              <Route
-                path="Product/productbestbuy"
-                element={<ProductBestBuy />}
-              />
-              <Route
-                path="Product/Search/:keyword"
-                element={<ProductSearch />}
-              />
+              <Route path="product" element={<ProductLayout />}>
+                <Route
+                  path="Category/:categoryName"
+                  element={<ProductCategory />}
+                />
+                <Route path="newproduct" element={<ProductNew />} />
+                <Route path="productbestbuy" element={<ProductBestBuy />} />
+                <Route path="Search/:keyword" element={<ProductSearch />} />
+              </Route>
 
               <Route
                 path="ProductDetail/:productId"

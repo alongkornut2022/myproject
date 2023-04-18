@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductItemSeller from '../ProductItemSeller';
 import axios from '../../config/axios';
-import { ErrorContext } from '../../contexts/ErrorContext';
 
 function ProductOfSeller({ productItem }) {
   const [productSeller, setProductSeller] = useState([]);

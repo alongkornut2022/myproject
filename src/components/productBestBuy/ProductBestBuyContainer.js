@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ProductItemBestBuy from '../ProductItemBestBuy';
+import ProductItemBestBuy from './ProductItemBestBuy';
 import axios from '../../config/axios';
 import Pagination from '../Pagination';
 
