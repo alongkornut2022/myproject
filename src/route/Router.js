@@ -56,7 +56,10 @@ function Router() {
                   element={<ProductCategory />}
                 />
                 <Route path="newproduct" element={<ProductNew />} />
-                <Route path="productbestbuy" element={<ProductBestBuy />} />
+                <Route
+                  path="productbestbuy/:offset"
+                  element={<ProductBestBuy />}
+                />
                 <Route path="Search/:keyword" element={<ProductSearch />} />
               </Route>
 
@@ -83,7 +86,10 @@ function Router() {
                   element={<ProductCategory />}
                 />
                 <Route path="newproduct" element={<ProductNew />} />
-                <Route path="productbestbuy" element={<ProductBestBuy />} />
+                <Route
+                  path="productbestbuy/:offset"
+                  element={<ProductBestBuy />}
+                />
                 <Route path="Search/:keyword" element={<ProductSearch />} />
               </Route>
 

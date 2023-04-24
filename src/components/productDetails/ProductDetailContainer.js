@@ -7,6 +7,7 @@ import ProductRating from '../../components/productReview/ProductRating';
 import DataSeller from './DataSeller';
 import ProductOfSeller from './ProductOfSeller';
 import ProductOfCustomer from './ProductOfCustomer';
+import ProductHeader from './ProductHeader';
 
 function ProductDetailContainer({ productId }) {
   const [productItem, setProductItem] = useState([]);
@@ -23,6 +24,11 @@ function ProductDetailContainer({ productId }) {
 
   return (
     <>
+      <div className="productdetail_main_header">
+        {productItem.map((el) => (
+          <ProductHeader key={el.id} productItem={el} />
+        ))}
+      </div>
       <div className="productdetail_main_content_top">
         <div className="productitem_image">
           {productItem.map((el) => (
@@ -61,6 +67,7 @@ function ProductDetailContainer({ productId }) {
         <div>
           <h4>สินค้าจากร้านเดียวกัน</h4>
         </div>
+        <br></br>
         <div>
           {productItem.map((el) => (
             <ProductOfSeller key={el.id} productItem={el} />

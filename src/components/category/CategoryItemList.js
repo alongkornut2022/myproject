@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function CategoryItemList({ category }) {
   const { categoryName } = category;
@@ -7,9 +7,9 @@ function CategoryItemList({ category }) {
     <>
       <div className="category_list">
         <li>
-          <NavLink end to={`/Product/Category/${categoryName}`}>
+          <Link end to={`/Product/Category/${categoryName}`}>
             {categoryName}
-          </NavLink>
+          </Link>
         </li>
       </div>
     </>

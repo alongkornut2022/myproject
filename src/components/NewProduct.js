@@ -7,7 +7,9 @@ function NewProduct() {
 
   const fetchNewProduct = async () => {
     try {
-      const resNewProduct = await axios.get('/products/newproduct');
+      const resNewProduct = await axios.get(
+        '/products/newproduct?limit=limit 20&&orderBy=p.created_at desc'
+      );
       setNewProduct(resNewProduct.data.newProduct);
     } catch (err) {}
   };

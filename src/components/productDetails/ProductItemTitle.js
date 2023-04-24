@@ -19,12 +19,10 @@ function ProductItemTitle({ productItem }) {
 
   return (
     <>
-      <div className="productitem_productname">
-        <h4> ชื่อสินค้า : {productName}</h4>
-      </div>
+      <div className="productitem_productname">{productName}</div>
       <div className="productitem_rating">คะแนนสินค้า : </div>
       <div className="productitem_price_alreadySold">
-        <div className="item1">ราคา {productUnitprice}</div>
+        <div className="item1">฿ {productUnitprice}</div>
         <div className="item2">ขายแล้ว {alreadysold} ชิ้น</div>
       </div>
       <div className="productitem_numberofpieces">

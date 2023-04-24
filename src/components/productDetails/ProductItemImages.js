@@ -84,68 +84,97 @@ function ProductItemImages({ productItem, size, sizeMain }) {
           onClick={onClickModalImages}
         />
       </div>
-      <div className="productitem_image_overview">
-        <button onClick={handleOnClickArrowLeft}>
-          <img src={arrowLeft} tabIndex="1" />
-        </button>
+      <div
+        className={
+          newArrayImage.length > 5
+            ? 'productitem_image_overview'
+            : 'productitem_image_overview_2'
+        }
+      >
+        {newArrayImage.length > 4 ? (
+          <button onClick={handleOnClickArrowRight}>
+            <img src={arrowLeft} tabIndex="1" />
+          </button>
+        ) : null}
 
-        <img
-          src={imageShow1}
-          width={size}
-          height={size}
-          alt=""
-          onClick={onClickModalImages}
-          onMouseOver={() => {
-            setImageMain(imageShow1);
-          }}
-        />
-        <img
-          src={imageShow2}
-          width={size}
-          height={size}
-          alt=""
-          onClick={onClickModalImages}
-          onMouseOver={() => {
-            setImageMain(imageShow2);
-          }}
-        />
-        <img
-          src={imageShow3}
-          width={size}
-          height={size}
-          alt=""
-          onClick={onClickModalImages}
-          onMouseOver={() => {
-            setImageMain(imageShow3);
-          }}
-        />
-        <img
-          src={imageShow4}
-          width={size}
-          height={size}
-          alt=""
-          onClick={onClickModalImages}
-          onMouseOver={() => {
-            setImageMain(imageShow4);
-          }}
-        />
-        <img
-          src={imageShow5}
-          width={size}
-          height={size}
-          alt=""
-          onClick={onClickModalImages}
-          onMouseOver={() => {
-            setImageMain(imageShow5);
-          }}
-        />
-        <button className="btn_arrow">
+        <div className="productitem_image_overview_item ">
           <img
-            src={arrowRight}
-            onClick={handleOnClickArrowRight}
-            tabIndex="1"
+            src={imageShow1}
+            width={size}
+            height={size}
+            alt=""
+            onClick={onClickModalImages}
+            onMouseOver={() => {
+              setImageMain(imageShow1);
+            }}
           />
-        </button>
+        </div>
+        <div className="productitem_image_overview_item ">
+          {image2 ? (
+            <img
+              src={imageShow2}
+              width={size}
+              height={size}
+              alt=""
+              onClick={onClickModalImages}
+              onMouseOver={() => {
+                setImageMain(imageShow2);
+              }}
+            />
+          ) : null}
+        </div>
+        <div className="productitem_image_overview_item ">
+          {image3 ? (
+            <img
+              src={imageShow3}
+              width={size}
+              height={size}
+              alt=""
+              onClick={onClickModalImages}
+              onMouseOver={() => {
+                setImageMain(imageShow3);
+              }}
+            />
+          ) : null}
+        </div>
+        <div className="productitem_image_overview_item ">
+          {image4 ? (
+            <img
+              src={imageShow4}
+              width={size}
+              height={size}
+              alt=""
+              onClick={onClickModalImages}
+              onMouseOver={() => {
+                setImageMain(imageShow4);
+              }}
+            />
+          ) : null}
+        </div>
+        <div className="productitem_image_overview_item ">
+          {image5 ? (
+            <img
+              src={imageShow5}
+              width={size}
+              height={size}
+              alt=""
+              onClick={onClickModalImages}
+              onMouseOver={() => {
+                setImageMain(imageShow5);
+              }}
+            />
+          ) : null}
+        </div>
+
+        {newArrayImage.length > 5 ? (
+          <button className="btn_arrow">
+            <img
+              src={arrowRight}
+              onClick={handleOnClickArrowLeft}
+              tabIndex="1"
+            />
+          </button>
+        ) : null}
       </div>
 
       <div className="modal fade" tabIndex="-1" ref={modalEl}>

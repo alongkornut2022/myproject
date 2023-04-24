@@ -17,41 +17,43 @@ function Header({ category }) {
   return (
     <>
       <div className="header">
-        <div className="header_left">
-          <Link end to="/HomePage">
-            Logo
-          </Link>
-        </div>
-        <div className="header_middle">
-          <div className="dropdown_product_category">
-            <CategoryOption
-              category={category}
-              selectCategory={selectCategory}
-              setSelectCategory={setSelectCategory}
-            />
-          </div>
-          <div className="searchbar_product">
-            <input
-              type="text"
-              placeholder="ค้นหาสินค้า"
-              value={searchText}
-              onChange={(event) => setSearchText(event.target.value)}
-            />
-          </div>
-          <div className="button_search">
-            <Link end to={`Product/search/${keyword}`}>
-              <img src={buttonSearch} />
+        <div className="header_container">
+          <div className="header_left">
+            <Link end to="/HomePage">
+              Logo
             </Link>
           </div>
-        </div>
-        <div className="header_right">
-          <div className="header_right_addtocart">
-            <Link end to="/AddToCart">
-              <img src={addtocart} />
-            </Link>
+          <div className="header_middle">
+            <div className="dropdown_product_category">
+              <CategoryOption
+                category={category}
+                selectCategory={selectCategory}
+                setSelectCategory={setSelectCategory}
+              />
+            </div>
+            <div className="searchbar_product">
+              <input
+                type="text"
+                placeholder="ค้นหาสินค้า"
+                value={searchText}
+                onChange={(event) => setSearchText(event.target.value)}
+              />
+              <div className="button_search">
+                <Link end to={`Product/search/${keyword}`}>
+                  <img src={buttonSearch} />
+                </Link>
+              </div>
+            </div>
           </div>
-          <div className="header_right_useritem">
-            {customer ? <UserItemCustomer /> : null}
+          <div className="header_right">
+            <div className="header_right_addtocart">
+              <Link end to={customer ? `/cart/${customer.id}` : '/Login'}>
+                <img src={addtocart} />
+              </Link>
+            </div>
+            <div className="header_right_useritem">
+              {customer ? <UserItemCustomer /> : null}
+            </div>
           </div>
         </div>
       </div>

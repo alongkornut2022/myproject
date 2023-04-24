@@ -1,78 +1,109 @@
 import { useEffect, useState } from 'react';
 import ProductItemBestBuy from './ProductItemBestBuy';
 import axios from '../../config/axios';
-import Pagination from '../Pagination';
+import Pagination from '../pagination/Pagination';
+import ProductSortBar from '../ProductSortBar';
 
-function ProductBestBuyContainer() {
+function ProductBestBuyContainer({ offset }) {
   const [productBestBuy, setProductBestBuy] = useState([]);
+  const [sortPrice, setSortPrice] = useState(null);
+  const [sortProduct, setSortProduct] = useState(null);
 
-  const fetchProductBestBuy = async () => {
-    try {
-      const resProductBestBuy = await axios.get('/products/bestbuy');
-      setProductBestBuy(resProductBestBuy.data.productBestBuy);
-    } catch (err) {}
-  };
+  const [allProductBestBuy, setAllProductBestBuy] = useState([]);
+
+  const productPagination = allProductBestBuy;
+  const limit = 10;
 
   useEffect(() => {
-    fetchProductBestBuy();
+    const fetchAllProductBestBuy = async (limit, offset) => {
+      try {
+        const resAllProductBestBuy = await axios.get(
+          `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
+        );
+        setAllProductBestBuy(resAllProductBestBuy.data.productBestBuy);
+      } catch (err) {}
+    };
+    fetchAllProductBestBuy('', '');
   }, []);
 
-  const handleOnClickNewProduct = async () => {
+  useEffect(() => {
+    const fetchProductBestBuy = async (limit, offset) => {
+      try {
+        const resProductBestBuy = await axios.get(
+          `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
+        );
+        setProductBestBuy(resProductBestBuy.data.productBestBuy);
+      } catch (err) {}
+    };
+    fetchProductBestBuy(limit, offset);
+    setSortPrice(null);
+    setSortProduct(null);
+  }, [offset]);
+
+  const handleOnClickNewProduct = async (limit, offset) => {
     try {
+      const resProductBestBuy = await axios.get(
+        `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=p.created_at desc`
+      );
+      setProductBestBuy(resProductBestBuy.data.productBestBuy);
+      setSortProduct(true);
+      setSortPrice(null);
     } catch (err) {}
   };
 
-  const handleOnClickBestBuyProduct = async () => {
+  const handleOnClickBestBuyProduct = async (limit, offset) => {
     try {
+      const resProductBestBuy = await axios.get(
+        `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
+      );
+      setProductBestBuy(resProductBestBuy.data.productBestBuy);
+      setSortProduct(false);
+      setSortPrice(null);
     } catch (err) {}
   };
 
-  const handleOnClickLowToHighPrice = async () => {
+  const handleOnClickLowToHighPrice = async (limit, offset) => {
     try {
+      const resProductBestBuy = await axios.get(
+        `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=p.product_unitprice asc`
+      );
+      setProductBestBuy(resProductBestBuy.data.productBestBuy);
+      setSortPrice(true);
+      setSortProduct(null);
     } catch (err) {}
   };
 
-  const handleOnClickHighToLowPrice = async () => {
+  const handleOnClickHighToLowPrice = async (limit, offset) => {
     try {
+      const resProductBestBuy = await axios.get(
+        `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=p.product_unitprice desc`
+      );
+      setProductBestBuy(resProductBestBuy.data.productBestBuy);
+      setSortPrice(false);
+      setSortProduct(null);
     } catch (err) {}
+  };
+
+  const dataSortBar = {
+    sortPrice,
+    sortProduct,
+    handleOnClickNewProduct,
+    handleOnClickBestBuyProduct,
+    handleOnClickLowToHighPrice,
+    handleOnClickHighToLowPrice,
   };
 
   return (
     <>
-      <div className="categoty_name">สินค้าขายดี</div>
-      <div className="category_sortbar">
-        <div className="category_sortbar_option">
-          <div className="item1">เรียงโดย</div>
-          <div className="item2">
-            <button onClick={handleOnClickNewProduct}>สินค้าล่าสุด</button>
-          </div>
-          <div className="item3">
-            <button onClick={handleOnClickBestBuyProduct}>สินค้าขายดี</button>
-          </div>
-          <div className="item4">
-            <div className="dropdown">
-              <button className="dropbtn">ราคา</button>
-              <div class="dropdown-content">
-                <buton onClick={handleOnClickLowToHighPrice}>น้อย ไป มาก</buton>
-                <br />
-                <buton onClick={handleOnClickHighToLowPrice}>มาก ไป น้อย</buton>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="pagination_top">
-          <Pagination />
-        </div>
-      </div>
+      <ProductSortBar dataSortBar={dataSortBar} limit={limit} offset={offset} />
       <div className="category_main_productitem">
         {productBestBuy.map((el) => (
           <ProductItemBestBuy key={el.id} productBestBuy={el} />
         ))}
       </div>
-      <div className="">
-        <div className="pagination_buttom">
-          <Pagination />
-        </div>
+
+      <div className="pagination_container">
+        <Pagination productPagination={productPagination} />
       </div>
     </>
   );

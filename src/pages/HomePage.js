@@ -22,10 +22,11 @@ function HomePage() {
         <ProductBestBuy />
       </div>
       <div className="load_more">
-        <Link end to="Product/productbestbuy">
+        <Link end to="Product/productbestbuy/1">
           <button>ดูเพิ่มเติม</button>
         </Link>
       </div>
+      <br />
       <div className="title_product">
         <p>สินค้าใหม่</p>
       </div>

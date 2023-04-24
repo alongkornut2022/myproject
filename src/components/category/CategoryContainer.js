@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from '../../config/axios';
-import Pagination from '../../components/Pagination';
+import Pagination from '../pagination/Pagination';
 import ProductItemCategory from './ProductItemCategory';
+import ProductSortBar from '../ProductSortBar';
 
 function CategoryContainer({ categoryName }) {
   const [productByCategory, setProductByCategory] = useState([]);
+  const [sortPrice, setSortPrice] = useState(null);
+  const [sortProduct, setSortProduct] = useState(null);
+
+  const productPagination = productByCategory;
 
   useEffect(() => {
     const fetchProductByCategory = async () => {
@@ -17,6 +22,8 @@ function CategoryContainer({ categoryName }) {
       } catch (err) {}
     };
     fetchProductByCategory();
+    setSortPrice(null);
+    setSortProduct(null);
   }, [categoryName]);
 
   const handleOnClickNewProduct = async () => {
@@ -25,6 +32,8 @@ function CategoryContainer({ categoryName }) {
         `products/category/bycategoryname?categoryName=${categoryName}`
       );
       setProductByCategory(resProductByCategory.data.productByCategory);
+      setSortProduct(true);
+      setSortPrice(null);
     } catch (err) {}
   };
 
@@ -36,6 +45,8 @@ function CategoryContainer({ categoryName }) {
       setProductByCategory(
         resProductByCategory.data.productByCategorySortAlreadysold
       );
+      setSortProduct(false);
+      setSortPrice(null);
     } catch (err) {}
   };
 
@@ -47,6 +58,8 @@ function CategoryContainer({ categoryName }) {
       setProductByCategory(
         resProductByCategory.data.productByCategorySortPriceASC
       );
+      setSortPrice(true);
+      setSortProduct(null);
     } catch (err) {}
   };
 
@@ -58,45 +71,34 @@ function CategoryContainer({ categoryName }) {
       setProductByCategory(
         resProductByCategory.data.productByCategorySortPriceDESC
       );
+      setSortPrice(false);
+      setSortProduct(null);
     } catch (err) {}
+  };
+
+  const dataSortBar = {
+    sortPrice,
+    sortProduct,
+    handleOnClickNewProduct,
+    handleOnClickBestBuyProduct,
+    handleOnClickLowToHighPrice,
+    handleOnClickHighToLowPrice,
   };
 
   return (
     <>
-      <div className="categoty_name">{categoryName}</div>
-      <div className="category_sortbar">
-        <div className="category_sortbar_option">
-          <div className="item1">เรียงโดย</div>
-          <div className="item2">
-            <button onClick={handleOnClickNewProduct}>สินค้าล่าสุด</button>
-          </div>
-          <div className="item3">
-            <button onClick={handleOnClickBestBuyProduct}>สินค้าขายดี</button>
-          </div>
-          <div className="item4">
-            <div className="dropdown">
-              <button className="dropbtn">ราคา</button>
-              <div class="dropdown-content">
-                <buton onClick={handleOnClickLowToHighPrice}>น้อย ไป มาก</buton>
-                <br />
-                <buton onClick={handleOnClickHighToLowPrice}>มาก ไป น้อย</buton>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="pagination_top">
-          <Pagination />
-        </div>
+      <div className="categoty_name">
+        <h4>{categoryName}</h4>
       </div>
+      <ProductSortBar dataSortBar={dataSortBar} />
       <div className="category_main_productitem">
         {productByCategory.map((el) => (
           <ProductItemCategory key={el.id} productByCategory={el} />
         ))}
       </div>
-      <div className="">
-        <div className="pagination_buttom">
-          <Pagination />
-        </div>
+
+      <div className="pagination_container">
+        <Pagination productPagination={productPagination} />
       </div>
     </>
   );
