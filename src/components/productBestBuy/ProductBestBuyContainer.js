@@ -4,98 +4,59 @@ import axios from '../../config/axios';
 import Pagination from '../pagination/Pagination';
 import ProductSortBar from '../ProductSortBar';
 
-function ProductBestBuyContainer({ offset }) {
+function ProductBestBuyContainer() {
   const [productBestBuy, setProductBestBuy] = useState([]);
   const [sortPrice, setSortPrice] = useState(null);
   const [sortProduct, setSortProduct] = useState(null);
+  const [pageNumberShow, setPageNumberShow] = useState();
 
   const [allProductBestBuy, setAllProductBestBuy] = useState([]);
-
   const productPagination = allProductBestBuy;
+  const productLength = productPagination.length;
   const limit = 10;
+  const pageCount = Math.ceil(productLength / limit);
 
   useEffect(() => {
     const fetchAllProductBestBuy = async (limit, offset) => {
       try {
         const resAllProductBestBuy = await axios.get(
-          `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
+          `/products/sort?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
         );
-        setAllProductBestBuy(resAllProductBestBuy.data.productBestBuy);
+        setAllProductBestBuy(resAllProductBestBuy.data.productSort);
       } catch (err) {}
     };
     fetchAllProductBestBuy('', '');
   }, []);
 
-  useEffect(() => {
-    const fetchProductBestBuy = async (limit, offset) => {
-      try {
-        const resProductBestBuy = await axios.get(
-          `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
-        );
-        setProductBestBuy(resProductBestBuy.data.productBestBuy);
-      } catch (err) {}
-    };
-    fetchProductBestBuy(limit, offset);
-    setSortPrice(null);
-    setSortProduct(null);
-  }, [offset]);
-
-  const handleOnClickNewProduct = async (limit, offset) => {
+  const handleOnClickBestBuyProduct = async (limit, offset, pageNumber) => {
     try {
       const resProductBestBuy = await axios.get(
-        `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=p.created_at desc`
+        `/products/sort?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
       );
-      setProductBestBuy(resProductBestBuy.data.productBestBuy);
-      setSortProduct(true);
-      setSortPrice(null);
-    } catch (err) {}
-  };
-
-  const handleOnClickBestBuyProduct = async (limit, offset) => {
-    try {
-      const resProductBestBuy = await axios.get(
-        `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
-      );
-      setProductBestBuy(resProductBestBuy.data.productBestBuy);
+      setProductBestBuy(resProductBestBuy.data.productSort);
       setSortProduct(false);
       setSortPrice(null);
+      setPageNumberShow(pageNumber);
     } catch (err) {}
   };
 
-  const handleOnClickLowToHighPrice = async (limit, offset) => {
-    try {
-      const resProductBestBuy = await axios.get(
-        `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=p.product_unitprice asc`
-      );
-      setProductBestBuy(resProductBestBuy.data.productBestBuy);
-      setSortPrice(true);
-      setSortProduct(null);
-    } catch (err) {}
-  };
+  useEffect(() => {
+    handleOnClickBestBuyProduct(limit, 0);
+    setSortPrice(null);
+    setSortProduct(null);
+  }, []);
 
-  const handleOnClickHighToLowPrice = async (limit, offset) => {
-    try {
-      const resProductBestBuy = await axios.get(
-        `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=p.product_unitprice desc`
-      );
-      setProductBestBuy(resProductBestBuy.data.productBestBuy);
-      setSortPrice(false);
-      setSortProduct(null);
-    } catch (err) {}
-  };
-
+  const handleOnClickPagination = handleOnClickBestBuyProduct;
   const dataSortBar = {
     sortPrice,
     sortProduct,
-    handleOnClickNewProduct,
-    handleOnClickBestBuyProduct,
-    handleOnClickLowToHighPrice,
-    handleOnClickHighToLowPrice,
+    pageNumberShow,
+    pageCount,
   };
 
   return (
     <>
-      <ProductSortBar dataSortBar={dataSortBar} limit={limit} offset={offset} />
+      <ProductSortBar dataSortBar={dataSortBar} />
       <div className="category_main_productitem">
         {productBestBuy.map((el) => (
           <ProductItemBestBuy key={el.id} productBestBuy={el} />
@@ -103,7 +64,11 @@ function ProductBestBuyContainer({ offset }) {
       </div>
 
       <div className="pagination_container">
-        <Pagination productPagination={productPagination} />
+        <Pagination
+          productPagination={productPagination}
+          handleOnClickPagination={handleOnClickPagination}
+          setPageNumberShow={setPageNumberShow}
+        />
       </div>
     </>
   );

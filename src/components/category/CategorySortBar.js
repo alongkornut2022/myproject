@@ -1,26 +1,18 @@
-import { useNavigate } from 'react-router-dom';
-import PageNumberShow from './pagination/PageNumberShow';
+import PageNumberShow from '../pagination/PageNumberShow';
 
-function ProductSortBar({ dataSortBar }) {
-  const { sortPrice, sortProduct, pageNumberShow, pageCount } = dataSortBar;
-
-  const navigate = useNavigate();
-
-  const onClickNewProduct = () => {
-    navigate('/Product/sortnewproduct');
-  };
-
-  const onClickBestBuyProduct = () => {
-    navigate('/Product/sortbestbuy');
-  };
-
-  const onClickLowToHigh = () => {
-    navigate('/Product/sortlowtohigh');
-  };
-
-  const onClickHighToLow = () => {
-    navigate('/Product/sorthightolow');
-  };
+function CategorySortBar({ dataSortBar }) {
+  const {
+    sortPrice,
+    sortProduct,
+    pageNumberShow,
+    pageCount,
+    categoryName,
+    paginationLimit,
+    handleOnClickNewProduct,
+    handleOnClickBestBuyProduct,
+    handleOnClickLowToHighPrice,
+    handleOnClickHighToLowPrice,
+  } = dataSortBar;
 
   return (
     <>
@@ -39,7 +31,13 @@ function ProductSortBar({ dataSortBar }) {
                   : 'item2'
               }
             >
-              <button onClick={onClickNewProduct}>สินค้าล่าสุด</button>
+              <button
+                onClick={() =>
+                  handleOnClickNewProduct(categoryName, paginationLimit, 0)
+                }
+              >
+                สินค้าล่าสุด
+              </button>
             </div>
             <div
               className={
@@ -50,7 +48,13 @@ function ProductSortBar({ dataSortBar }) {
                   : 'item3-2'
               }
             >
-              <button onClick={onClickBestBuyProduct}>สินค้าขายดี</button>
+              <button
+                onClick={() =>
+                  handleOnClickBestBuyProduct(categoryName, paginationLimit, 0)
+                }
+              >
+                สินค้าขายดี
+              </button>
             </div>
             <div className="item4">
               <div className="dropdown-sortprice">
@@ -69,9 +73,29 @@ function ProductSortBar({ dataSortBar }) {
                     : ' มาก ไป น้อย'}
                 </button>
                 <div class="dropdown-content-sortprice">
-                  <button onClick={onClickLowToHigh}>ราคา: น้อย ไป มาก</button>
+                  <button
+                    onClick={() =>
+                      handleOnClickLowToHighPrice(
+                        categoryName,
+                        paginationLimit,
+                        0
+                      )
+                    }
+                  >
+                    ราคา: น้อย ไป มาก
+                  </button>
                   <br />
-                  <button onClick={onClickHighToLow}>ราคา: มาก ไป น้อย</button>
+                  <button
+                    onClick={() =>
+                      handleOnClickHighToLowPrice(
+                        categoryName,
+                        paginationLimit,
+                        0
+                      )
+                    }
+                  >
+                    ราคา: มาก ไป น้อย
+                  </button>
                 </div>
               </div>
             </div>
@@ -88,4 +112,4 @@ function ProductSortBar({ dataSortBar }) {
   );
 }
 
-export default ProductSortBar;
+export default CategorySortBar;

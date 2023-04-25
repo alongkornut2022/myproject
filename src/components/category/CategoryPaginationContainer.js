@@ -1,7 +1,12 @@
-import PaginationItem from './PaginationItem';
+import CategoryPaginationItem from './CategoryPaginationItem';
 
-function Pagination({ productPagination, handleOnClickPagination }) {
-  const paginationLimit = 10;
+function CategoryPaginationContainer({
+  productPagination,
+  paginationLimit,
+  handleOnClickPagination,
+  categoryName,
+  orderBy,
+}) {
   const productLength = productPagination.length;
   const pageCount = Math.ceil(productLength / paginationLimit);
 
@@ -32,11 +37,13 @@ function Pagination({ productPagination, handleOnClickPagination }) {
       <button className="pagination_button">&lt;</button>
       <div className="pagination_number">
         {paginationTotal.map((el) => (
-          <PaginationItem
+          <CategoryPaginationItem
             key={el.id}
             paginationTotal={el}
             handleOnClickPagination={handleOnClickPagination}
             paginationLimit={paginationLimit}
+            categoryName={categoryName}
+            orderBy={orderBy}
           />
         ))}
       </div>
@@ -45,4 +52,4 @@ function Pagination({ productPagination, handleOnClickPagination }) {
   );
 }
 
-export default Pagination;
+export default CategoryPaginationContainer;

@@ -1,13 +1,19 @@
-import { Link } from 'react-router-dom';
-
-function PaginationItem({ paginationTotal }) {
+function PaginationItem({
+  paginationTotal,
+  paginationLimit,
+  handleOnClickPagination,
+}) {
   const { pageNumber, offset } = paginationTotal;
 
   return (
     <>
-      <Link end to={`/Product/productbestbuy/${offset}`}>
+      <button
+        onClick={() =>
+          handleOnClickPagination(paginationLimit, offset, pageNumber)
+        }
+      >
         {pageNumber}
-      </Link>
+      </button>
     </>
   );
 }

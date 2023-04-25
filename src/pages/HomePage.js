@@ -22,7 +22,7 @@ function HomePage() {
         <ProductBestBuy />
       </div>
       <div className="load_more">
-        <Link end to="Product/productbestbuy/1">
+        <Link end to="Product/sortbestbuy">
           <button>ดูเพิ่มเติม</button>
         </Link>
       </div>
@@ -34,7 +34,7 @@ function HomePage() {
         <NewProduct />
       </div>
       <div className="load_more">
-        <Link end to="Product/newproduct">
+        <Link end to="Product/sortnewproduct">
           <button>ดูเพิ่มเติม</button>
         </Link>
       </div>

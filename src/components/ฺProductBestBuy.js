@@ -8,9 +8,9 @@ function ProductBestBuy() {
   const fetchProductBestBuy = async (limit, offset) => {
     try {
       const resProductBestBuy = await axios.get(
-        `/products/bestbuy?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
+        `/products/sort?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
       );
-      setProductBestBuy(resProductBestBuy.data.productBestBuy);
+      setProductBestBuy(resProductBestBuy.data.productSort);
     } catch (err) {}
   };
 

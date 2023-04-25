@@ -5,17 +5,17 @@ import axios from '../config/axios';
 function NewProduct() {
   const [newProduct, setNewProduct] = useState([]);
 
-  const fetchNewProduct = async () => {
+  const fetchNewProduct = async (limit, offset) => {
     try {
       const resNewProduct = await axios.get(
-        '/products/newproduct?limit=limit 20&&orderBy=p.created_at desc'
+        `/products/sort?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
       );
-      setNewProduct(resNewProduct.data.newProduct);
+      setNewProduct(resNewProduct.data.productSort);
     } catch (err) {}
   };
 
   useEffect(() => {
-    fetchNewProduct();
+    fetchNewProduct(20, 1);
   }, []);
 
   return (

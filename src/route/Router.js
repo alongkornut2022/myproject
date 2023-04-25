@@ -23,6 +23,8 @@ import ProductBestBuy from '../pages/products/ProductBestBuy';
 import ProductNew from '../pages/products/ProductNew';
 import { AuthContext } from '../contexts/AuthContext';
 import ProductLayout from '../pages/products/ProductLayout';
+import ProductLowToHigh from '../pages/products/ProductLowToHigh';
+import ProductHighToLow from '../pages/products/ProductHighToLow';
 
 function Router() {
   const { customer } = useContext(AuthContext);
@@ -55,11 +57,10 @@ function Router() {
                   path="Category/:categoryName"
                   element={<ProductCategory />}
                 />
-                <Route path="newproduct" element={<ProductNew />} />
-                <Route
-                  path="productbestbuy/:offset"
-                  element={<ProductBestBuy />}
-                />
+                <Route path="sortnewproduct" element={<ProductNew />} />
+                <Route path="sortbestbuy" element={<ProductBestBuy />} />
+                <Route path="sortlowtohigh" element={<ProductLowToHigh />} />
+                <Route path="sorthightolow" element={<ProductHighToLow />} />
                 <Route path="Search/:keyword" element={<ProductSearch />} />
               </Route>
 
@@ -85,11 +86,10 @@ function Router() {
                   path="Category/:categoryName"
                   element={<ProductCategory />}
                 />
-                <Route path="newproduct" element={<ProductNew />} />
-                <Route
-                  path="productbestbuy/:offset"
-                  element={<ProductBestBuy />}
-                />
+                <Route path="sortnewproduct" element={<ProductNew />} />
+                <Route path="sortbestbuy" element={<ProductBestBuy />} />
+                <Route path="sortlowtohigh" element={<ProductLowToHigh />} />
+                <Route path="sorthightolow" element={<ProductHighToLow />} />
                 <Route path="Search/:keyword" element={<ProductSearch />} />
               </Route>
 

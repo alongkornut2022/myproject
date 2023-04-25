@@ -8,78 +8,57 @@ function ProductNewContainer() {
   const [newProduct, setNewProduct] = useState([]);
   const [sortPrice, setSortPrice] = useState(null);
   const [sortProduct, setSortProduct] = useState(null);
+  const [pageNumberShow, setPageNumberShow] = useState();
 
-  const fetchNewProduct = async () => {
+  const [allNewProduct, setAllNewProduct] = useState([]);
+
+  const productPagination = allNewProduct;
+
+  const productLength = productPagination.length;
+  const limit = 10;
+  const pageCount = Math.ceil(productLength / limit);
+
+  useEffect(() => {
+    const fetchAllNewProduct = async (limit, offset) => {
+      try {
+        const resAllNewProduct = await axios.get(
+          `/products/sort?limit=${limit}&&offset=${offset}&&orderBy=p.created_at desc`
+        );
+        setAllNewProduct(resAllNewProduct.data.productSort);
+      } catch (err) {}
+    };
+    fetchAllNewProduct('', '');
+  }, []);
+
+  const handleOnClickNewProduct = async (limit, offset, pageNumber) => {
     try {
       const resNewProduct = await axios.get(
-        '/products/newproduct?limit=&&orderBy=p.created_at desc'
+        `/products/sort?limit=${limit}&&offset=${offset}&&orderBy=p.created_at desc`
       );
-      setNewProduct(resNewProduct.data.newProduct);
+      setNewProduct(resNewProduct.data.productSort);
+      setSortProduct(true);
       setSortPrice(null);
-      setSortProduct(null);
+      setPageNumberShow(pageNumber);
     } catch (err) {}
   };
 
   useEffect(() => {
-    fetchNewProduct();
+    handleOnClickNewProduct(limit, 0);
+    setSortPrice(null);
+    setSortProduct(null);
   }, []);
 
-  const handleOnClickNewProduct = async () => {
-    try {
-      const resNewProduct = await axios.get(
-        '/products/newproduct?limit=&&orderBy=p.created_at desc'
-      );
-      setNewProduct(resNewProduct.data.newProduct);
-      setSortProduct(true);
-      setSortPrice(null);
-    } catch (err) {}
-  };
-
-  const handleOnClickBestBuyProduct = async () => {
-    try {
-      const resNewProduct = await axios.get(
-        '/products/newproduct?limit=&&orderBy=ps.alreadysold desc'
-      );
-      setNewProduct(resNewProduct.data.newProduct);
-      setSortProduct(false);
-      setSortPrice(null);
-    } catch (err) {}
-  };
-
-  const handleOnClickLowToHighPrice = async () => {
-    try {
-      const resNewProduct = await axios.get(
-        '/products/newproduct?limit=&&orderBy=p.product_unitprice asc'
-      );
-      setNewProduct(resNewProduct.data.newProduct);
-      setSortPrice(true);
-      setSortProduct(null);
-    } catch (err) {}
-  };
-
-  const handleOnClickHighToLowPrice = async () => {
-    try {
-      const resNewProduct = await axios.get(
-        '/products/newproduct?limit=&&orderBy=p.product_unitprice desc'
-      );
-      setNewProduct(resNewProduct.data.newProduct);
-      setSortPrice(false);
-      setSortProduct(null);
-    } catch (err) {}
-  };
+  const handleOnClickPagination = handleOnClickNewProduct;
 
   const dataSortBar = {
     sortPrice,
     sortProduct,
-    handleOnClickNewProduct,
-    handleOnClickBestBuyProduct,
-    handleOnClickLowToHighPrice,
-    handleOnClickHighToLowPrice,
+    pageNumberShow,
+    pageCount,
   };
 
   return (
     <>
-      {/* <div className="categoty_name">สินค้าใหม่</div> */}
       <ProductSortBar dataSortBar={dataSortBar} />
       <div className="category_main_productitem">
         {newProduct.map((el) => (
@@ -87,8 +66,11 @@ function ProductNewContainer() {
         ))}
       </div>
       <div className="">
-        <div className="pagination_buttom">
-          <Pagination />
+        <div className="pagination_container">
+          <Pagination
+            productPagination={productPagination}
+            handleOnClickPagination={handleOnClickPagination}
+          />
         </div>
       </div>
     </>

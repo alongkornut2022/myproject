@@ -298,6 +298,7 @@ body {
 }
 
 .category_sortbar_container {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   background-color: #e7e7e7;
@@ -396,6 +397,20 @@ body {
 
 .dropdown-sortprice:hover .dropdown-content-sortprice {
   display: block;
+}
+
+.pagenumber_show {
+  width: 20%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.pagenumber_show > * {
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+.pagenumber_show .item1 {
+  margin-right: 8px;
 }
 
 /* --------------*/
@@ -1903,7 +1918,7 @@ a:link {
   margin: 10px;
 }
 
-.pagination_number a {
+.pagination_number button {
   font-size: 1.5rem;
   color: #000;
   font-weight: lighter;
@@ -1913,8 +1928,8 @@ a:link {
   border: none;
 }
 
-.pagination_number a:hover,
-.pagination_number a.active {
+.pagination_number button:hover,
+.pagination_number button.active {
   background-color: #00ad26;
   color: #ffffff;
 }
