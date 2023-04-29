@@ -1,31 +1,43 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import UserItem from './UserItem';
 import defaultUserPicture from '../assets/images/userpicture.png';
 import NavbarCustomer from './NavbarCustomer';
 import axios from '../config/axios';
+import Spinner from './Spinner';
 
 function CustomerSidebar() {
   const { customer } = useContext(AuthContext);
   const [userPicture, setUserPicture] = useState(null);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const usePic = useRef();
 
   const HandleOnClickSaveUserPicture = async () => {
     try {
+      setLoading(true);
       const formData = new FormData();
       formData.append('userPicture', userPicture);
       await axios.patch(`/customers/profilepic/${customer.id}`, formData);
       setUserPicture(null);
-      navigate(`/customer/profile/${customer.id}`);
-    } catch (err) {}
+      HandleOnClickRefresh();
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   const HandleOnClickEditUserPicture = () => {
-    document.getElementById('editUserPicture').addEventListener('click', () => {
-      document.getElementById('selectUserPicture').click();
-    });
+    usePic.current.click();
   };
+
+  const HandleOnClickRefresh = () => {
+    document.location.reload();
+  };
+
+  useEffect(() => {
+    HandleOnClickSaveUserPicture();
+  }, [userPicture]);
 
   return (
     <div className="customer_main_content_left">
@@ -42,17 +54,14 @@ function CustomerSidebar() {
           <Link to={`/customer/profile/${customer.id}`}>
             {customer.username}
           </Link>
+          <Spinner loading={loading} />
           <div>
-            <button
-              type="button"
-              id="editUserPicture"
-              onClick={HandleOnClickEditUserPicture}
-            >
-              แก้ไขรูป Profile
+            <button type="button" onClick={HandleOnClickEditUserPicture}>
+              Edit Image
             </button>
             <input
               type="file"
-              id="selectUserPicture"
+              ref={usePic}
               onChange={(event) => {
                 if (event.target.files[0]) {
                   setUserPicture(event.target.files[0]);
@@ -60,11 +69,13 @@ function CustomerSidebar() {
               }}
             />
           </div>
-          <button type="button" onClick={HandleOnClickSaveUserPicture}>
-            บันทึกรูป
+
+          <button type="button" onClick={HandleOnClickRefresh}>
+            save
           </button>
         </div>
       </div>
+
       <div className="customer_main_content_left_buttom">
         <NavbarCustomer />
       </div>

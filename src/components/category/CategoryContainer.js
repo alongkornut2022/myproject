@@ -8,7 +8,8 @@ function CategoryContainer({ categoryName }) {
   const [productByCategory, setProductByCategory] = useState([]);
   const [sortPrice, setSortPrice] = useState(null);
   const [sortProduct, setSortProduct] = useState(null);
-  const [pageNumberShow, setPageNumberShow] = useState(null);
+  const [pageNumberShow, setPageNumberShow] = useState(1);
+  const [currentOffset, setCurrentOffset] = useState(0);
 
   const [allProductByCategory, setAllProductByCategory] = useState([]);
   const [orderBy, setOrderBy] = useState('p.product_name');
@@ -47,7 +48,8 @@ function CategoryContainer({ categoryName }) {
         setProductByCategory(resProductByCategory.data.productByCategory);
         setSortPrice(null);
         setSortProduct(null);
-        setPageNumberShow(null);
+        setPageNumberShow(1);
+        setCurrentOffset(offset);
       } catch (err) {}
     };
     fetchProductByCategory(
@@ -71,6 +73,7 @@ function CategoryContainer({ categoryName }) {
       );
       setProductByCategory(resChangePage.data.productByCategory);
       setPageNumberShow(pageNumber);
+      setCurrentOffset(offset);
     } catch (err) {}
   };
 
@@ -89,7 +92,8 @@ function CategoryContainer({ categoryName }) {
       setSortProduct(true);
       setSortPrice(null);
       setOrderBy('p.created_at desc');
-      setPageNumberShow(null);
+      setPageNumberShow(1);
+      setCurrentOffset(offset);
     } catch (err) {}
   };
 
@@ -106,7 +110,8 @@ function CategoryContainer({ categoryName }) {
       setSortProduct(false);
       setSortPrice(null);
       setOrderBy('ps.alreadysold desc');
-      setPageNumberShow(null);
+      setPageNumberShow(1);
+      setCurrentOffset(offset);
     } catch (err) {}
   };
 
@@ -123,7 +128,8 @@ function CategoryContainer({ categoryName }) {
       setSortPrice(true);
       setSortProduct(null);
       setOrderBy('p.product_unitprice asc');
-      setPageNumberShow(null);
+      setPageNumberShow(1);
+      setCurrentOffset(offset);
     } catch (err) {}
   };
 
@@ -140,7 +146,8 @@ function CategoryContainer({ categoryName }) {
       setSortPrice(false);
       setSortProduct(null);
       setOrderBy('p.product_unitprice desc');
-      setPageNumberShow(null);
+      setPageNumberShow(1);
+      setCurrentOffset(offset);
     } catch (err) {}
   };
 
@@ -156,10 +163,6 @@ function CategoryContainer({ categoryName }) {
     handleOnClickLowToHighPrice,
     handleOnClickHighToLowPrice,
   };
-
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, [pageNumberShow]);
 
   return (
     <>
@@ -180,6 +183,8 @@ function CategoryContainer({ categoryName }) {
           handleOnClickPagination={handleOnClickPagination}
           paginationLimit={paginationLimit}
           orderBy={orderBy}
+          pageNumberShow={pageNumberShow}
+          currentOffset={currentOffset}
         />
       </div>
     </>

@@ -51,7 +51,7 @@ function Register() {
               <div className="item2">
                 <label for="email">Email</label>
                 <input
-                  type="text"
+                  type="email"
                   placeholder="อีเมล์"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
@@ -72,7 +72,7 @@ function Register() {
               <div className="item4">
                 <label for="password">Password</label>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="รหัสผ่าน"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
@@ -84,7 +84,7 @@ function Register() {
               <div className="item5">
                 <label for="Confirm password">Confirm Password</label>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="ยืนยันรหัสผ่าน"
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ProductItemDescription from './ProductItemDescription';
 import ProductItemImages from './ProductItemImages';
 import ProductItemTitle from './ProductItemTitle';
@@ -8,15 +8,19 @@ import DataSeller from './DataSeller';
 import ProductOfSeller from './ProductOfSeller';
 import ProductOfCustomer from './ProductOfCustomer';
 import ProductHeader from './ProductHeader';
+import { AuthContext } from '../../contexts/AuthContext';
 
 function ProductDetailContainer({ productId }) {
+  const { customer } = useContext(AuthContext);
   const [productItem, setProductItem] = useState([]);
+  const [productSpecs, setProductSpecs] = useState('');
 
   useEffect(() => {
     const fetchProductItem = async () => {
       try {
         const resProductItem = await axios.get(`/products/${productId}`);
         setProductItem(resProductItem.data.productItem);
+        setProductSpecs(resProductItem.data.productSpecs);
       } catch (err) {}
     };
     fetchProductItem();
@@ -54,7 +58,13 @@ function ProductDetailContainer({ productId }) {
       </div>
 
       <div className="productdetail_detail">
-        <ProductItemDescription />
+        {productItem.map((el) => (
+          <ProductItemDescription
+            key={el.id}
+            productItem={el}
+            productSpecs={productSpecs}
+          />
+        ))}
       </div>
 
       <div className="productdetail_rating">

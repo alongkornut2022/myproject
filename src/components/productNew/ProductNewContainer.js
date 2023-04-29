@@ -9,6 +9,7 @@ function ProductNewContainer() {
   const [sortPrice, setSortPrice] = useState(null);
   const [sortProduct, setSortProduct] = useState(null);
   const [pageNumberShow, setPageNumberShow] = useState();
+  const [currentOffset, setCurrentOffset] = useState(0);
 
   const [allNewProduct, setAllNewProduct] = useState([]);
 
@@ -39,11 +40,12 @@ function ProductNewContainer() {
       setSortProduct(true);
       setSortPrice(null);
       setPageNumberShow(pageNumber);
+      setCurrentOffset(offset);
     } catch (err) {}
   };
 
   useEffect(() => {
-    handleOnClickNewProduct(limit, 0);
+    handleOnClickNewProduct(limit, 0, 1);
     setSortPrice(null);
     setSortProduct(null);
   }, []);
@@ -70,6 +72,8 @@ function ProductNewContainer() {
           <Pagination
             productPagination={productPagination}
             handleOnClickPagination={handleOnClickPagination}
+            pageNumberShow={pageNumberShow}
+            currentOffset={currentOffset}
           />
         </div>
       </div>

@@ -9,6 +9,7 @@ function ProductLowToHighContainer() {
   const [sortPrice, setSortPrice] = useState(null);
   const [sortProduct, setSortProduct] = useState(null);
   const [pageNumberShow, setPageNumberShow] = useState();
+  const [currentOffset, setCurrentOffset] = useState(0);
 
   const [allProductPriceLTH, setAllProductPriceLTH] = useState([]);
 
@@ -37,13 +38,14 @@ function ProductLowToHighContainer() {
       );
       setProductPriceLTH(resProductPriceLTH.data.productSort);
       setSortProduct(null);
-      setSortPrice(false);
+      setSortPrice(true);
       setPageNumberShow(pageNumber);
+      setCurrentOffset(offset);
     } catch (err) {}
   };
 
   useEffect(() => {
-    handleOnClickProductPriceLTH(limit, 0);
+    handleOnClickProductPriceLTH(limit, 0, 1);
     setSortPrice(null);
     setSortProduct(null);
   }, []);
@@ -69,6 +71,8 @@ function ProductLowToHighContainer() {
         <Pagination
           productPagination={productPagination}
           handleOnClickPagination={handleOnClickPagination}
+          pageNumberShow={pageNumberShow}
+          currentOffset={currentOffset}
         />
       </div>
     </>

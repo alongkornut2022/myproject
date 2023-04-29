@@ -47,7 +47,10 @@ function Header({ category }) {
           </div>
           <div className="header_right">
             <div className="header_right_addtocart">
-              <Link end to={customer ? `/cart/${customer.id}` : '/Login'}>
+              <Link
+                end
+                to={customer ? `customer/cart/${customer.id}` : '/Login'}
+              >
                 <img src={addtocart} />
               </Link>
             </div>

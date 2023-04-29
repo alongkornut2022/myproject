@@ -9,6 +9,7 @@ function ProductBestBuyContainer() {
   const [sortPrice, setSortPrice] = useState(null);
   const [sortProduct, setSortProduct] = useState(null);
   const [pageNumberShow, setPageNumberShow] = useState();
+  const [currentOffset, setCurrentOffset] = useState(0);
 
   const [allProductBestBuy, setAllProductBestBuy] = useState([]);
   const productPagination = allProductBestBuy;
@@ -37,11 +38,12 @@ function ProductBestBuyContainer() {
       setSortProduct(false);
       setSortPrice(null);
       setPageNumberShow(pageNumber);
+      setCurrentOffset(offset);
     } catch (err) {}
   };
 
   useEffect(() => {
-    handleOnClickBestBuyProduct(limit, 0);
+    handleOnClickBestBuyProduct(limit, 0, 1);
     setSortPrice(null);
     setSortProduct(null);
   }, []);
@@ -67,7 +69,8 @@ function ProductBestBuyContainer() {
         <Pagination
           productPagination={productPagination}
           handleOnClickPagination={handleOnClickPagination}
-          setPageNumberShow={setPageNumberShow}
+          pageNumberShow={pageNumberShow}
+          currentOffset={currentOffset}
         />
       </div>
     </>

@@ -1,8 +1,9 @@
-function CategoryPaginationItem({
+function SearchPaginationItem({
   paginationTotal,
   paginationLimit,
   handleOnClickPagination,
-  categoryName,
+  categorySearch,
+  keySearch,
   orderBy,
   pageNumberShow,
 }) {
@@ -14,7 +15,8 @@ function CategoryPaginationItem({
         <button
           onClick={() =>
             handleOnClickPagination(
-              categoryName,
+              categorySearch,
+              keySearch,
               paginationLimit,
               offset,
               orderBy,
@@ -29,4 +31,4 @@ function CategoryPaginationItem({
   );
 }
 
-export default CategoryPaginationItem;
+export default SearchPaginationItem;

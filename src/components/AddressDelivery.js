@@ -67,35 +67,37 @@ function AddressDelivery({ customerAddress, fetchData }) {
       <div className="address_delivery">
         <div className="address_delivery_top">
           <div className="username_delivery">
-            <span>ชื่อ-สกุล ผู้รับสินค้า : </span>
-            <span>
+            <div className="address_delivery_title">ชื่อ-สกุล ผู้รับสินค้า</div>
+            <div className="address_delivery_input">
               {firstName} {lastName}
-            </span>
+            </div>
           </div>
           <div className="phonenumber">
-            <span>หมายเลขโทรศัพท์ : </span>
-            <san>{phoneNumber}</san>
+            <div className="address_delivery_title">หมายเลขโทรศัพท์</div>
+            <div className="address_delivery_input">{phoneNumber}</div>
           </div>
+          <div hidden="hidden">stand by</div>
         </div>
         <div className="address_delivery_middle">
           <div className="address_detial">
-            <span>ที่อยู่ : </span>
-            <san>{addressDetail}</san>
+            <div className="address_delivery_title">ที่อยู่</div>
+            <div className="address_delivery_input">{addressDetail}</div>
           </div>
           <div className="district">
-            <span>อำเภอ/เขต : </span>
-            <san>{district}</san>
+            <div className="address_delivery_title">อำเภอ/เขต</div>
+            <div className="address_delivery_input">{district}</div>
           </div>
+          <div hidden="hidden">stand by</div>
         </div>
         <div className="address_delivery_bottom">
           <div className="address_delivery_bottom_left">
             <div className="province">
-              <span>จังหวัด : </span>
-              <san>{province}</san>
+              <div className="address_delivery_title">จังหวัด</div>
+              <div className="address_delivery_input">{province}</div>
             </div>
             <div className="postcard">
-              <span>รหัสไปรษณีย์ : </span>
-              <san>{postcode}</san>
+              <div className="address_delivery_title">รหัสไปรษณีย์ </div>
+              <div className="address_delivery_input">{postcode}</div>
             </div>
           </div>
           <div className="address_delivery_bottom_right">

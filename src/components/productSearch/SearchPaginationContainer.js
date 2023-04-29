@@ -1,10 +1,11 @@
-import CategoryPaginationItem from './CategoryPaginationItem';
+import SearchPaginationItem from './SearchPaginationItem';
 
-function CategoryPaginationContainer({
+function SearchPaginationContainer({
   productPagination,
-  paginationLimit,
   handleOnClickPagination,
-  categoryName,
+  categorySearch,
+  keySearch,
+  paginationLimit,
   orderBy,
   pageNumberShow,
   currentOffset,
@@ -40,7 +41,8 @@ function CategoryPaginationContainer({
         className="pagination_button"
         onClick={() =>
           handleOnClickPagination(
-            categoryName,
+            categorySearch,
+            keySearch,
             paginationLimit,
             currentOffset - 10,
             orderBy,
@@ -53,12 +55,13 @@ function CategoryPaginationContainer({
       </button>
       <div className="pagination_number">
         {paginationTotal.map((el) => (
-          <CategoryPaginationItem
+          <SearchPaginationItem
             key={el.id}
             paginationTotal={el}
             handleOnClickPagination={handleOnClickPagination}
+            categorySearch={categorySearch}
+            keySearch={keySearch}
             paginationLimit={paginationLimit}
-            categoryName={categoryName}
             orderBy={orderBy}
             pageNumberShow={pageNumberShow}
           />
@@ -68,7 +71,8 @@ function CategoryPaginationContainer({
         className="pagination_button"
         onClick={() =>
           handleOnClickPagination(
-            categoryName,
+            categorySearch,
+            keySearch,
             paginationLimit,
             currentOffset + 10,
             orderBy,
@@ -87,4 +91,4 @@ function CategoryPaginationContainer({
   );
 }
 
-export default CategoryPaginationContainer;
+export default SearchPaginationContainer;

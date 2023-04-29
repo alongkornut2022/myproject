@@ -1,8 +1,6 @@
-import React from 'react';
-import CustomerSidebar from '../components/CustomerSidebar';
 import ProductCartListItem from '../components/ProductCartListItem';
 
-function AddToCart() {
+function Cart() {
   return (
     <>
       <div className="addressbook_main_content_right_top">
@@ -46,4 +44,4 @@ function AddToCart() {
   );
 }
 
-export default AddToCart;
+export default Cart;

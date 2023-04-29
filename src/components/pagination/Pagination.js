@@ -1,6 +1,11 @@
 import PaginationItem from './PaginationItem';
 
-function Pagination({ productPagination, handleOnClickPagination }) {
+function Pagination({
+  productPagination,
+  handleOnClickPagination,
+  pageNumberShow,
+  currentOffset,
+}) {
   const paginationLimit = 10;
   const productLength = productPagination.length;
   const pageCount = Math.ceil(productLength / paginationLimit);
@@ -29,7 +34,19 @@ function Pagination({ productPagination, handleOnClickPagination }) {
 
   return (
     <>
-      <button className="pagination_button">&lt;</button>
+      <button
+        className="pagination_button"
+        onClick={() =>
+          handleOnClickPagination(
+            paginationLimit,
+            currentOffset - 10,
+            pageNumberShow - 1
+          )
+        }
+        disabled={pageNumberShow == 1 || currentOffset == 0 ? 'disabled' : ''}
+      >
+        &lt;
+      </button>
       <div className="pagination_number">
         {paginationTotal.map((el) => (
           <PaginationItem
@@ -37,10 +54,27 @@ function Pagination({ productPagination, handleOnClickPagination }) {
             paginationTotal={el}
             handleOnClickPagination={handleOnClickPagination}
             paginationLimit={paginationLimit}
+            pageNumberShow={pageNumberShow}
           />
         ))}
       </div>
-      <button className="pagination_button">&gt;</button>
+      <button
+        className="pagination_button"
+        onClick={() =>
+          handleOnClickPagination(
+            paginationLimit,
+            currentOffset + 10,
+            pageNumberShow + 1
+          )
+        }
+        disabled={
+          pageNumberShow == pageCount || currentOffset == pageCount - 1
+            ? 'disabled'
+            : ''
+        }
+      >
+        &gt;
+      </button>
     </>
   );
 }

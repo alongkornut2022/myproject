@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ErrorContext } from '../../contexts/ErrorContext';
 import axios from '../../config/axios';
@@ -7,7 +7,12 @@ import { useNavigate } from 'react-router-dom';
 function Profile() {
   const { customer } = useContext(AuthContext);
   const { setError } = useContext(ErrorContext);
+
   const navigate = useNavigate();
+
+  const focusUsername = useRef();
+  const focusEmail = useRef();
+  const focusPhoneNumber = useRef();
 
   const [username, setUsername] = useState(`${customer.username}`);
   const [email, setEmail] = useState(`${customer.email}`);
@@ -24,23 +29,26 @@ function Profile() {
   const onChangePhoneNumber = (event) => setPhoneNumber(event.target.value);
 
   const focusButtonUsername = () => {
-    document.getElementById('buttonUsername').addEventListener('click', () => {
-      document.getElementById('textUsername').focus();
-    });
+    // document.getElementById('buttonUsername').addEventListener('click', () => {
+    //   document.getElementById('textUsername').focus();
+    // });
+    focusUsername.current.focus();
   };
 
   const focusButtonEmail = () => {
-    document.getElementById('buttonEmail').addEventListener('click', () => {
-      document.getElementById('textEmail').focus();
-    });
+    // document.getElementById('buttonEmail').addEventListener('click', () => {
+    //   document.getElementById('textEmail').focus();
+    // });
+    focusEmail.current.focus();
   };
 
   const focusButtonPhoneNumber = () => {
-    document
-      .getElementById('buttonPhoneNumber')
-      .addEventListener('click', () => {
-        document.getElementById('textPhoneNumber').focus();
-      });
+    // document
+    //   .getElementById('buttonPhoneNumber')
+    //   .addEventListener('click', () => {
+    //     document.getElementById('textPhoneNumber').focus();
+    //   });
+    focusPhoneNumber.current.focus();
   };
 
   const handleClickEditUsename = async (event) => {
@@ -107,7 +115,8 @@ function Profile() {
               <div className="item2">
                 <input
                   type="text"
-                  id="textUsername"
+                  ref={focusUsername}
+                  // id="textUsername"
                   value={username}
                   onChange={editusername ? onChangeUsername : ''}
                 />
@@ -115,7 +124,7 @@ function Profile() {
               <div className="item4">
                 <button
                   type="button"
-                  id="buttonUsername"
+                  // id="buttonUsername"
                   onClick={handleClickEditUsename}
                 >
                   แก้ไข
@@ -130,7 +139,8 @@ function Profile() {
               <div className="item2">
                 <input
                   type="text"
-                  id="textEmail"
+                  ref={focusEmail}
+                  // id="textEmail"
                   value={email}
                   onChange={editEmail ? onChangeEmail : ''}
                 />
@@ -138,7 +148,7 @@ function Profile() {
               <div className="item4">
                 <button
                   type="button"
-                  id="buttonEmail"
+                  // id="buttonEmail"
                   onClick={handleClickEditEmail}
                 >
                   แก้ไข
@@ -153,7 +163,8 @@ function Profile() {
               <div className="item2">
                 <input
                   type="text"
-                  id="textPhoneNumber"
+                  ref={focusPhoneNumber}
+                  // id="textPhoneNumber"
                   value={phoneNumber}
                   onChange={editPhoneNumber ? onChangePhoneNumber : ''}
                 />
@@ -161,7 +172,7 @@ function Profile() {
               <div className="item4">
                 <button
                   type="button"
-                  id="buttonPhoneNumber"
+                  // id="buttonPhoneNumber"
                   onClick={handleClickEditPhoneNumber}
                 >
                   แก้ไข

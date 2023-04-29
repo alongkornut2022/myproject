@@ -6,20 +6,36 @@ import defaultUserPicture from '../assets/images/userpicture.png';
 import NavbarCustomer from './NavbarCustomer';
 
 function UserItemCustomer() {
-  const { customer } = useContext(AuthContext);
+  const { customer, logout } = useContext(AuthContext);
   return (
     <div className="useritem">
-      <Link to={`/customer/profile/${customer.id}`}>
-        <UserItem
-          size="28"
-          src={customer.userPicture || defaultUserPicture}
-          username={customer.username}
-        />
-      </Link>
       <div className="dropdown">
         <button className="dropbtn">
+          <div className="useritem_dropbtn">
+            <UserItem
+              size="28"
+              src={customer.userPicture || defaultUserPicture}
+              username={customer.username}
+            />
+          </div>
           <div class="dropdown-content">
-            <NavbarCustomer />
+            <div className="useritem_dropdown">
+              <div className="item1">
+                <Link end to={`/customer/profile/${customer.id}`}>
+                  บัญชีของฉัน
+                </Link>
+              </div>
+              <div className="item2">
+                <Link end to={`/customer/cart/${customer.id}`}>
+                  การสั่งซื่้อของฉัน
+                </Link>
+              </div>
+              <div className="item3">
+                <button type="button" onClick={logout}>
+                  ออกจากระบบ
+                </button>
+              </div>
+            </div>
           </div>
         </button>
       </div>

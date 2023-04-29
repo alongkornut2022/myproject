@@ -42,7 +42,7 @@ function Login() {
               <div className="item2">
                 <label for="password">Password</label>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="รหัสผ่าน"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
