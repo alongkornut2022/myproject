@@ -1,20 +1,29 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import axios from '../config/axios';
 import { AuthContext } from './AuthContext';
 
 const AddressCustomerContext = createContext();
 
 function AddressCustomerContextProvider({ children }) {
+  const [customerAddress, setCustomerAddress] = useState([]);
+
   const { customer } = useContext(AuthContext);
 
-  const [address, setAddress] = useState(null);
-
-  const resAddressCustomer = async () => {
-    const resAddress = await axios.get(`/address/customer/${customer.id}`);
-    setAddress(resAddress.data.customerAddress);
+  const fetchAddressCustomer = async () => {
+    try {
+      const resAddress = await axios.get(`/address/customer/${customer.id}`);
+      setCustomerAddress(resAddress.data.customerAddress);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  useEffect(() => {
+    fetchAddressCustomer();
+  }, []);
+
   return (
-    <AddressCustomerContext.Provider value={{ resAddressCustomer, address }}>
+    <AddressCustomerContext.Provider value={{ customerAddress }}>
       {children}
     </AddressCustomerContext.Provider>
   );

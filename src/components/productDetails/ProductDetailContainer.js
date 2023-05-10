@@ -12,6 +12,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 function ProductDetailContainer({ productId }) {
   const { customer } = useContext(AuthContext);
+
   const [productItem, setProductItem] = useState([]);
   const [productSpecs, setProductSpecs] = useState('');
 
@@ -46,7 +47,12 @@ function ProductDetailContainer({ productId }) {
         </div>
         <div className="productitem_title">
           {productItem.map((el) => (
-            <ProductItemTitle key={el.id} productItem={el} />
+            <ProductItemTitle
+              key={el.id}
+              productItem={el}
+              productId={productId}
+              customerId={customer.id}
+            />
           ))}
         </div>
       </div>

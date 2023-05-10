@@ -1,13 +1,23 @@
 import { Modal } from 'bootstrap';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useEffect, useRef, useState } from 'react';
 import axios from '../../config/axios';
-import AddressDelivery from '../../components/AddressDelivery';
-import AddAddressDelivery from '../../components/AddAddressDelivery';
+import OrderAddressDeliveryModalItem from './OrderAddressDeliveryModalItem';
+import AddAddressDelivery from '../AddAddressDelivery';
 
-function AddressBook() {
+function OrderAddressDeliveryModalContainer({
+  customerId,
+  customerAddressDefaultId,
+  handleOnClickAddressCustomerById,
+}) {
   const modalEl = useRef();
   const [modal, setModal] = useState(null);
+
+  const [customerAddressAll, setCustomerAddressAll] = useState([]);
+  const [customerAddressId, setCustomerAddressId] = useState(
+    customerAddressDefaultId
+  );
+
+  console.log(customerAddressId);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -44,14 +54,10 @@ function AddressBook() {
     setPhoneNumber('');
   };
 
-  const [customerAddress, setCustomerAddress] = useState([]);
-
-  const { customer } = useContext(AuthContext);
-
   const fetchAddressCustomerAll = async () => {
     try {
-      const resAddress = await axios.get(`/address/customer/${customer.id}`);
-      setCustomerAddress(resAddress.data.customerAddressAll);
+      const resAddress = await axios.get(`/address/customer/${customerId}`);
+      setCustomerAddressAll(resAddress.data.customerAddressAll);
     } catch (err) {
       console.log(err);
     }
@@ -78,28 +84,37 @@ function AddressBook() {
 
   return (
     <>
-      <div className="addressbook_main_content_right_top">
-        <div>
-          <h4>ที่อยู่รับสินค้า</h4>
+      <div className="order_address_delivery_modal_container">
+        <div className="order_address_delivery_modal_item">
+          {customerAddressAll.map((el) => (
+            <OrderAddressDeliveryModalItem
+              key={el.id}
+              customerAddressAll={el}
+              fetchData={fetchAddressCustomerAll}
+              setCustomerAddressId={setCustomerAddressId}
+              customerAddressId={customerAddressId}
+              customerAddressDefaultId={customerAddressDefaultId}
+            />
+          ))}
         </div>
-        <div>
-          <div className="address_delivery_change">
-            <button type="button" onClick={handleClickModal}>
-              เพิ่มที่อยู่
+        <div className="order_address_delivery_modal_addaddress">
+          <button type="button" onClick={handleClickModal}>
+            + เพิ่มที่อยู่
+          </button>
+        </div>
+        <div className="order_address_delivery_modal_buttom">
+          <div className="item2">
+            <button
+              onClick={() =>
+                handleOnClickAddressCustomerById(customerAddressId)
+              }
+            >
+              ยืนยัน
             </button>
           </div>
         </div>
       </div>
 
-      <div className="addressbook_main_content_right_middle">
-        {customerAddress.map((el) => (
-          <AddressDelivery
-            key={el.id}
-            customerAddress={el}
-            fetchData={fetchAddressCustomerAll}
-          />
-        ))}
-      </div>
       <div className="modal fade" tabIndex="-1" ref={modalEl}>
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -126,4 +141,4 @@ function AddressBook() {
   );
 }
 
-export default AddressBook;
+export default OrderAddressDeliveryModalContainer;

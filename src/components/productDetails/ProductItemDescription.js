@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 
 function ProductItemDescription({ productItem, productSpecs }) {
-  const { categoryName, productName, inventory, province } = productItem;
+  const { categoryName, productName, inventory, province, productWeightPiece } =
+    productItem;
+
+  console.log(productWeightPiece);
+
   return (
     <>
       <div className="itiem1">
@@ -32,6 +36,17 @@ function ProductItemDescription({ productItem, productSpecs }) {
           <div className="item1">
             <div className="item2">จำนวนสินค้า</div>
             <div className="item3">{inventory} ชิ้น</div>
+          </div>
+          <div
+            className="item1"
+            hidden={
+              productWeightPiece === null || productWeightPiece === ''
+                ? 'hidden'
+                : ''
+            }
+          >
+            <div className="item2">น้ำหนัก</div>
+            <div className="item3">{productWeightPiece} กรัม</div>
           </div>
           <div className="item1">
             <div className="item2">ส่งจาก</div>

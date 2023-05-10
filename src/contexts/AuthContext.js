@@ -59,8 +59,7 @@ function AuthContextProvider({ children }) {
     setAccessToken(res.data.token);
     const resMe = await axios.get('/customers/me');
     setCustomer(resMe.data.customer);
-    // const resAddress = await axios.get(`/address/customer/${customer.id}`);
-    // setCustomerAddress(resAddress.data.customerAddress);
+
     navigate('/');
   };
 

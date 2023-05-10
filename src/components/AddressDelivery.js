@@ -17,6 +17,7 @@ function AddressDelivery({ customerAddress, fetchData }) {
     province,
     postcode,
     phoneNumber,
+    status,
   } = customerAddress;
 
   const modalEl = useRef();
@@ -24,6 +25,17 @@ function AddressDelivery({ customerAddress, fetchData }) {
 
   const { customer } = useContext(AuthContext);
   const { setError } = useContext(ErrorContext);
+
+  const handleOnClickSetAddressDefault = async () => {
+    try {
+      await axios.patch(
+        `/address/customer/status/${customerAddressId}/${customer.id}`
+      );
+    } catch (err) {
+    } finally {
+      document.location.reload();
+    }
+  };
 
   const DeleteCustomerAddress = async () => {
     try {
@@ -72,54 +84,69 @@ function AddressDelivery({ customerAddress, fetchData }) {
               {firstName} {lastName}
             </div>
           </div>
-          <div className="phonenumber">
-            <div className="address_delivery_title">หมายเลขโทรศัพท์</div>
+
+          <div className="address_delivery_phonenumber">
+            <div className="address_delivery_title_2">โทรศัพท์</div>
             <div className="address_delivery_input">{phoneNumber}</div>
           </div>
-          <div hidden="hidden">stand by</div>
+          <div className="address_delivery_status">
+            <div
+              className={
+                status === 'default' ? 'status_title' : 'status_title2'
+              }
+            >
+              {status === 'default' ? 'ค่าเริ่มต้น' : ''}
+            </div>
+          </div>
         </div>
+
         <div className="address_delivery_middle">
           <div className="address_detial">
             <div className="address_delivery_title">ที่อยู่</div>
             <div className="address_delivery_input">{addressDetail}</div>
           </div>
-          <div className="district">
-            <div className="address_delivery_title">อำเภอ/เขต</div>
+          <div className="address_delivery_district">
+            <div className="address_delivery_title_2">อำเภอ/เขต</div>
             <div className="address_delivery_input">{district}</div>
           </div>
-          <div hidden="hidden">stand by</div>
-        </div>
-        <div className="address_delivery_bottom">
-          <div className="address_delivery_bottom_left">
-            <div className="province">
-              <div className="address_delivery_title">จังหวัด</div>
-              <div className="address_delivery_input">{province}</div>
-            </div>
-            <div className="postcard">
-              <div className="address_delivery_title">รหัสไปรษณีย์ </div>
-              <div className="address_delivery_input">{postcode}</div>
-            </div>
+          <div className="address_delivery_status">
+            <button
+              type="button"
+              disabled={status === 'default' ? 'disabled' : ''}
+              onClick={handleOnClickSetAddressDefault}
+            >
+              ตั้งเป็นค่าเริ่มต้น
+            </button>
           </div>
-          <div className="address_delivery_bottom_right">
-            <div className="address_delivery_change">
-              <button
-                type="button"
-                onClick={handleClickModal}
-                closeModal={closeModal}
-                fetchData={fetchData}
-              >
-                แก้ไข
-              </button>
-              <button
-                typr="button"
-                onClick={handleOnClickDeleteCustomerAddress}
-              >
-                ลบ
-              </button>
-            </div>
+        </div>
+
+        <div className="address_delivery_bottom">
+          <div className="address_delivery_province">
+            <div className="address_delivery_title">จังหวัด</div>
+            <div className="address_delivery_input">{province}</div>
+          </div>
+
+          <div className="address_delivery_postcard">
+            <div className="address_delivery_title_2">รหัสไปรษณีย์ </div>
+            <div className="address_delivery_input">{postcode}</div>
+          </div>
+
+          <div className="address_delivery_edit">
+            <button
+              type="button"
+              onClick={handleClickModal}
+              closeModal={closeModal}
+              fetchData={fetchData}
+            >
+              แก้ไข
+            </button>
+            <button type="button" onClick={handleOnClickDeleteCustomerAddress}>
+              ลบ
+            </button>
           </div>
         </div>
       </div>
+
       <div className="modal fade" tabIndex="-1" ref={modalEl}>
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">

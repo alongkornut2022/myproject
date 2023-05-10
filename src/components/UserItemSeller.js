@@ -1,6 +1,6 @@
 import defaultUserPicture from '../assets/images/userpicture.png';
 
-function UserItemSeller({ src, size, shopName }) {
+function UserItemSeller({ src, size }) {
   return (
     <div className="useritem">
       <div className="useritem_image">

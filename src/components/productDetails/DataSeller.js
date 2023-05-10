@@ -1,17 +1,19 @@
 import UserItemSeller from '../UserItemSeller';
 
 function DataSeller({ productItem }) {
-  const { shopName } = productItem;
+  const { shopName, shopPicture } = productItem;
+
+  console.log(productItem);
   return (
     <>
       <div className="productitem_seller_left">
         <div className="item1">
-          <UserItemSeller size="80" shopName={shopName} />
+          <UserItemSeller size="80" shopName={shopName} src={shopPicture} />
         </div>
 
         <div className="item2">
           <div className="item2_1">
-            <div className="shopTitle">ชื่อร้านค้า : </div>
+            <div className="shopTitle">ร้านค้า : </div>
             <div className="shopName"> {shopName}</div>
           </div>
           <div className="item2_2">ดูร้านค้า</div>

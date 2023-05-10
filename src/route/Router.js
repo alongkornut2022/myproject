@@ -8,8 +8,8 @@ import ProductCategory from '../pages/products/ProductCategory';
 import ProductSearch from '../pages/products/ProductSearch';
 import ProductDetail from '../pages/ProductDetail';
 import Cart from '../pages/Cart';
-// import OrderItem from '../pages/OrderItem';
-import OrderTotal from '../pages/OrderTotal';
+import OrderItem from '../pages/OrderItem';
+import Order from '../pages/Order';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import AddressBook from '../pages/Customer/AddressBook';
@@ -50,7 +50,10 @@ function Router() {
                 <Route path="Cart/:id" element={<Cart />} />
                 <Route path="OrderHistory/:id" element={<OrderHistory />} />
               </Route>
-              <Route path="Purchase/OrderTotal" element={<OrderTotal />} />
+              <Route
+                path="Purchase/:customerId/checkout/:cartIds"
+                element={<Order />}
+              />
 
               <Route path="product" element={<ProductLayout />}>
                 <Route

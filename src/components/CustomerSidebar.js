@@ -20,7 +20,7 @@ function CustomerSidebar() {
       formData.append('userPicture', userPicture);
       await axios.patch(`/customers/profilepic/${customer.id}`, formData);
       setUserPicture(null);
-      HandleOnClickRefresh();
+      document.location.reload();
     } catch (err) {
     } finally {
       setLoading(false);
@@ -29,10 +29,6 @@ function CustomerSidebar() {
 
   const HandleOnClickEditUserPicture = () => {
     usePic.current.click();
-  };
-
-  const HandleOnClickRefresh = () => {
-    document.location.reload();
   };
 
   useEffect(() => {
@@ -69,10 +65,6 @@ function CustomerSidebar() {
               }}
             />
           </div>
-
-          <button type="button" onClick={HandleOnClickRefresh}>
-            save
-          </button>
         </div>
       </div>
 
