@@ -1,10 +1,11 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import buttonSearch from '../images/download.png';
-import addtocart from '../images/cart.jpg';
+
 import UserItemCustomer from './UserItemCustomer';
 import { AuthContext } from '../contexts/AuthContext';
 import CategoryOption from './category/CategoryOption';
+import HeaderCart from './HeaderCart';
 
 function Header({ category }) {
   const { customer } = useContext(AuthContext);
@@ -47,12 +48,7 @@ function Header({ category }) {
           </div>
           <div className="header_right">
             <div className="header_right_addtocart">
-              <Link
-                end
-                to={customer ? `customer/cart/${customer.id}` : '/Login'}
-              >
-                <img src={addtocart} />
-              </Link>
+              <HeaderCart customer={customer} />
             </div>
             <div className="header_right_useritem">
               {customer ? <UserItemCustomer /> : null}

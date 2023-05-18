@@ -8,7 +8,7 @@ import ProductCategory from '../pages/products/ProductCategory';
 import ProductSearch from '../pages/products/ProductSearch';
 import ProductDetail from '../pages/ProductDetail';
 import Cart from '../pages/Cart';
-import OrderItem from '../pages/OrderItem';
+import OrderResult from '../pages/OrderResult';
 import Order from '../pages/Order';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
@@ -49,6 +49,7 @@ function Router() {
                 <Route path="PasswordEdit/:id" element={<PasswordEdit />} />
                 <Route path="Cart/:id" element={<Cart />} />
                 <Route path="OrderHistory/:id" element={<OrderHistory />} />
+                <Route path="Purchase/:customerId" element={<OrderResult />} />
               </Route>
               <Route
                 path="Purchase/:customerId/checkout/:cartIds"

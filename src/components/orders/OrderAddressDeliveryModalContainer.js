@@ -17,7 +17,7 @@ function OrderAddressDeliveryModalContainer({
     customerAddressDefaultId
   );
 
-  console.log(customerAddressId);
+  // console.log(customerAddressId);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');

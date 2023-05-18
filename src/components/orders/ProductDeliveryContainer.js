@@ -3,10 +3,15 @@ import ProductDelivery from './ProductDelivery';
 function ProductDeliveryContainer({ productDeliveryContainerData }) {
   const {
     customerId,
+    sellerId,
     cartCheckout,
+    cartIdsBySeller,
     customerPostcodeZone,
     sellerPostcodeZone,
-    setDeliveryTotalPrice,
+    deliveryPrice,
+    optionDelivery,
+    setDeliveryPrice,
+    setOptionDelivery,
   } = productDeliveryContainerData;
 
   const sumPostcodeZone = sellerPostcodeZone + customerPostcodeZone;
@@ -25,15 +30,16 @@ function ProductDeliveryContainer({ productDeliveryContainerData }) {
     0
   );
 
-  console.log('postcodeZone', sumPostcodeZone);
-  console.log('areaGroup', areaGroup);
-  console.log('totalWeight', totalWeight);
-
   const productDeliveryData = {
     customerId,
+    sellerId,
+    cartIdsBySeller,
     areaGroup,
     totalWeight,
-    setDeliveryTotalPrice,
+    deliveryPrice,
+    optionDelivery,
+    setDeliveryPrice,
+    setOptionDelivery,
   };
 
   return (

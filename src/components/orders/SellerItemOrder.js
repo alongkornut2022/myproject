@@ -9,7 +9,7 @@ function SellerItemOrder({
   customerId,
   cartIds,
   customerPostcode,
-  setDeliveryTotalPrice,
+  setDeliverys,
 }) {
   const { sellerId, shopName, shopPicture, sellerPostcode } = cartSellerIds;
 
@@ -17,11 +17,27 @@ function SellerItemOrder({
   const [customerPostcodeZone, setCustomerPostcodeZone] = useState();
   const [sellerPostcodeZone, setSellerPostcodeZone] = useState();
 
+  const [deliveryPrice, setDeliveryPrice] = useState(0);
+  const [optionDelivery, setOptionDelivery] = useState();
+
+  useEffect(() => {
+    const mixOption = sellerId + ':' + optionDelivery + ':' + deliveryPrice;
+    setDeliverys(mixOption);
+  }, [optionDelivery, deliveryPrice]);
+
   const amount = cartCheckout.length;
-  const totalprice = cartCheckout.reduce(
+  const productTotalPrice = cartCheckout.reduce(
     (acc, item) => acc + item.productTotalPrice,
     0
   );
+
+  const cartIdsBySeller = [];
+  for (let item of cartCheckout) {
+    let i = item.cartId;
+    cartIdsBySeller.push(i);
+  }
+
+  const totalprice = productTotalPrice + deliveryPrice;
 
   const fetchMyCartCheckout = async () => {
     try {
@@ -70,10 +86,15 @@ function SellerItemOrder({
 
   const productDeliveryContainerData = {
     customerId,
+    sellerId,
     cartCheckout,
+    cartIdsBySeller,
     customerPostcodeZone,
     sellerPostcodeZone,
-    setDeliveryTotalPrice,
+    deliveryPrice,
+    optionDelivery,
+    setDeliveryPrice,
+    setOptionDelivery,
   };
 
   return (
@@ -96,7 +117,7 @@ function SellerItemOrder({
           />
         </div>
         <div className="ordertotal_main_content_totalprice">
-          <div className="item1">ยอดสั่งซื้อ {amount} ชื้น</div>
+          <div className="item1">ยอดสั่งซื้อ {amount} ชื้น (รวมขนส่ง)</div>
           <div className="item2">฿ {totalprice}</div>
         </div>
       </div>

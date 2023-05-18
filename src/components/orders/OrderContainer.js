@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from '../../config/axios';
+import { Modal } from 'bootstrap';
 import PaymentMethod from '../../components/PaymentMethod';
 import SellerItemOrder from './SellerItemOrder';
 import CustomerAddressDelivery from '../OrderAddressDelivery';
-import { Modal } from 'bootstrap';
 import OrderAddressDeliveryModal from './OrderAddressDeliveryModalContainer';
+import { useNavigate } from 'react-router-dom';
 
 function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
   const modalEl = useRef();
@@ -13,11 +14,19 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
   const [customerAddressCurrent, setCustomerAddressCurrent] = useState('');
   const [cartSellerIds, setCartSellerIds] = useState([]);
   const [productItemPrice, setProductItemPrice] = useState([]);
-  const [deliveryTotalPrice, setDeliveryTotalPrice] = useState();
+  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
+  const [deliverys, setDeliverys] = useState();
+  const [deliveryTotalPrice, setDeliveryTotalPrice] = useState(0);
 
-  // console.log('default', customerAddressDefault);
-  // console.log('current', customerAddressCurrent);
-  console.log('0', deliveryTotalPrice);
+  const navigate = useNavigate();
+
+  let customerAddressId;
+
+  if (customerAddressCurrent) {
+    customerAddressId = customerAddressCurrent.id;
+  } else {
+    customerAddressId = customerAddressDefault.id;
+  }
 
   const allTotalPrice = productItemPrice.reduce((acc, item) => acc + item, 0);
 
@@ -42,12 +51,29 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
       );
       setCartSellerIds(resMyCartBySeller.data.sellers);
       setProductItemPrice(resMyCartBySeller.data.productTotalPrice);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
     fetchMyCartBySeller();
   }, []);
+
+  const fetchDeliveryPrice = async () => {
+    try {
+      const resDeliveryPrice = await axios.get(
+        `/delivery/price/${cartIds}/${customerId}`
+      );
+      setDeliveryTotalPrice(resDeliveryPrice.data.deliveryPrice);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchDeliveryPrice();
+  }, [deliverys]);
 
   const handleClickModal = () => {
     const modalObj = new Modal(modalEl.current);
@@ -61,6 +87,29 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
 
   const handleOnClickCloseModal = () => {
     closeModal();
+  };
+
+  const sellerIdsArr = [];
+  for (let item of cartSellerIds) {
+    let i = item.sellerId;
+    sellerIdsArr.push(i);
+  }
+  const sellerIds = sellerIdsArr.join(',');
+
+  const handleOnClickOrderResult = async () => {
+    try {
+      const orderResult = await axios.post(
+        `/purchase/order/${cartIds}/${sellerIds}/${customerId}`,
+        {
+          paymentMethod,
+          customerAddressId,
+        }
+      );
+
+      navigate(`/customer/purchase/${customerId}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -131,14 +180,14 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
                   customerAddressCurrent.postcode ||
                   customerAddressDefault.postcode
                 }
-                setDeliveryTotalPrice={setDeliveryTotalPrice}
+                setDeliverys={setDeliverys}
               />
             ))}
           </div>
         </div>
 
         <div className="ordertotal_main_content_payment">
-          <PaymentMethod />
+          <PaymentMethod setPaymentMethod={setPaymentMethod} />
         </div>
 
         <div className="ordertotal_main_content_allprice">
@@ -148,7 +197,7 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
           </div>
           <div className="delivery_allprice">
             <div className="item1">รวมการจัดส่ง</div>
-            <div className="item2">฿</div>
+            <div className="item2">฿ {deliveryTotalPrice}</div>
           </div>
           <div className="total_allprice">
             <div className="item1">การชำระเงินทั้งหมด</div>
@@ -158,7 +207,7 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
 
         <div className="ordertotal_button">
           <div className="item1"></div>
-          <button>สั่งซื้อสินค้า</button>
+          <button onClick={handleOnClickOrderResult}>สั่งซื้อสินค้า</button>
         </div>
       </div>
     </>

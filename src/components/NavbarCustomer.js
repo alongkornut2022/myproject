@@ -34,8 +34,8 @@ function NavbarCustomer() {
             </NavLink>
           </li>
           <li>
-            <NavLink end to={`/customer/OrderHistory/${customer.id}`}>
-              ประวัติการสั่งซื้อ
+            <NavLink end to={`/customer/purchase/${customer.id}`}>
+              การสั่งซื้อของฉัน
             </NavLink>
           </li>
           <li>

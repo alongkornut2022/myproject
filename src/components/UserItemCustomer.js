@@ -26,7 +26,7 @@ function UserItemCustomer() {
                 </Link>
               </div>
               <div className="item2">
-                <Link end to={`/customer/cart/${customer.id}`}>
+                <Link end to={`/customer/purchase/${customer.id}`}>
                   การสั่งซื่้อของฉัน
                 </Link>
               </div>
