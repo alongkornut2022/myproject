@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from '../../config/axios';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function ProductItemTitle({ productItem, productId, customerId }) {
+function ProductItemTitle({ productItem, productId, customerId, customer }) {
   const {
     productName,
     productUnitprice,
@@ -15,17 +15,59 @@ function ProductItemTitle({ productItem, productId, customerId }) {
   const [amount, setAmount] = useState(1);
   const [productTotalPrice, setProductTotalPrice] = useState();
   const [productWeightTotal, setProductWeightTotal] = useState();
+  const [productRating, setProductRating] = useState([]);
+
+  const totalRating = productRating.reduce((acc, item) => acc + item.rating, 0);
+  const sumRating = totalRating / productRating.length;
+
+  const navigate = useNavigate();
 
   const handleOnClickAddToCart = async () => {
-    try {
-      const resCart = await axios.post(`cart/${productId}/${customerId}`, {
-        amount,
-        productTotalPrice,
-        productUnitprice,
-        productWeightTotal,
-        sellerId,
-      });
-    } catch (err) {}
+    if (customer) {
+      try {
+        const resCart = await axios.post(`cart/${productId}/${customerId}`, {
+          amount,
+          productTotalPrice,
+          productUnitprice,
+          productWeightTotal,
+          sellerId,
+        });
+        alert('เพิ่มไปยังรถเข็นเรียบร้อยแล้ว');
+      } catch (err) {
+        console.log(err);
+      }
+    } else if (
+      window.confirm(
+        'คุณยังไม่ได้เข้าสู่ระบบ คุณต้องการ "เข้าสู่ระบบ"  หรือไม่ ?'
+      ) === true
+    ) {
+      navigate('/login');
+    } else {
+    }
+  };
+
+  const handleOnClickSendToCart = async () => {
+    if (customer) {
+      try {
+        const resCart = await axios.post(`cart/${productId}/${customerId}`, {
+          amount,
+          productTotalPrice,
+          productUnitprice,
+          productWeightTotal,
+          sellerId,
+        });
+        navigate(`/customer/cart/${customerId}`);
+      } catch (err) {
+        console.log(err);
+      }
+    } else if (
+      window.confirm(
+        'คุณยังไม่ได้เข้าสู่ระบบ คุณต้องการ "เข้าสู่ระบบ"  หรือไม่ ?'
+      ) === true
+    ) {
+      navigate('/login');
+    } else {
+    }
   };
 
   const amountIncrease = () => {
@@ -45,10 +87,27 @@ function ProductItemTitle({ productItem, productId, customerId }) {
     setProductWeightTotal(productWeightPiece * amount);
   }, [amount]);
 
+  const fetchProductRating = async (rating) => {
+    try {
+      const resProductRating = await axios.get(
+        `/postreview/product/${productId}?rating=${rating}`
+      );
+      setProductRating(resProductRating.data.productRating);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchProductRating('All');
+  }, []);
+
   return (
     <>
       <div className="productitem_productname">{productName}</div>
-      <div className="productitem_rating">คะแนนสินค้า : </div>
+      <div className="productitem_rating">
+        คะแนนสินค้า : {sumRating ? sumRating : 'ยังไม่มีคะแนน'}
+      </div>
       <div className="productitem_price_alreadySold">
         <div className="item1">฿ {productUnitprice}</div>
         <div className="item2">ขายแล้ว {alreadysold} ชิ้น</div>
@@ -71,9 +130,7 @@ function ProductItemTitle({ productItem, productId, customerId }) {
       </div>
       <div className="productitem_addtocart">
         <div className="addtocart_item1">
-          <Link end to="/OrderTotal">
-            <button>ซื้อเลย</button>
-          </Link>
+          <button onClick={handleOnClickSendToCart}>ซื้อเลย</button>
         </div>
         <div className="addtocart_item2">
           <button onClick={handleOnClickAddToCart}>เพิ่มไปยังรถเข็น</button>

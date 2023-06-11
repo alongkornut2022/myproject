@@ -10,7 +10,9 @@ function NavBar() {
     <div className="navbar">
       <div className="navbar_left">
         <div className="dropdown">
-          <button className="dropbtn">หมวดหมู่สินค้า</button>
+          <button className="dropbtn">
+            <i class="fa-solid fa-list fa-lg"></i> หมวดหมู่สินค้า
+          </button>
           <div class="dropdown-content">
             <CategoryList />
           </div>
@@ -19,31 +21,31 @@ function NavBar() {
       <div className="navbar_right">
         <div className="item">
           <Link end to="/HomePage">
-            หน้าแรก
+            <i class="fa-solid fa-house fa-lg"></i> หน้าแรก
           </Link>
         </div>
         <div className="item">
           <Link end to="/HowToOrderPage">
-            วิธีการสั่งซื้อ
+            <i class="fa-solid fa-shop fa-lg"></i> วิธีการสั่งซื้อ
           </Link>
         </div>
         <div className="item">
           <Link end to="/PaymentMethodPage">
-            วิธีการชำระเงิน
+            <i class="fa-regular fa-credit-card fa-lg"></i> วิธีการชำระเงิน
           </Link>
         </div>
 
         <div className="item">
           {customer ? null : (
             <Link end to="/Register">
-              ลงทะเบียน
+              <i class="fa-solid fa-registered fa-lg"></i> ลงทะเบียน
             </Link>
           )}
         </div>
         <div className="item">
           {customer ? null : (
             <Link end to="/Login">
-              เข้าสู่ระบบ
+              <i class="fa-solid fa-user-large fa-lg"></i> เข้าสู่ระบบ
             </Link>
           )}
         </div>

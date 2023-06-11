@@ -27,9 +27,7 @@ function ProductSortBar({ dataSortBar }) {
       <div className="category_sortbar">
         <div className="category_sortbar_container">
           <div className="category_sortbar_option">
-            <div className="item1">
-              <h5>เรียงโดย</h5>
-            </div>
+            <div className="item1">เรียงโดย</div>
             <div
               className={
                 sortProduct === null

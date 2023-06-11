@@ -12,6 +12,7 @@ function ProductDeliveryContainer({ productDeliveryContainerData }) {
     optionDelivery,
     setDeliveryPrice,
     setOptionDelivery,
+    setTrigerDelivery,
   } = productDeliveryContainerData;
 
   const sumPostcodeZone = sellerPostcodeZone + customerPostcodeZone;
@@ -40,6 +41,7 @@ function ProductDeliveryContainer({ productDeliveryContainerData }) {
     optionDelivery,
     setDeliveryPrice,
     setOptionDelivery,
+    setTrigerDelivery,
   };
 
   return (

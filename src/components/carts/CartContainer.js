@@ -3,49 +3,61 @@ import axios from '../../config/axios';
 import ProductCartListItem from './ProductCartListItem';
 import { Link, useNavigate } from 'react-router-dom';
 
-function CartContainer({ customer }) {
+function CartContainer({
+  customer,
+  // carts,
+  // allProductTotalPrice,
+  // setAllProductTotalPrice,
+}) {
   const [carts, setCarts] = useState([]);
   const [amountProducts, setAmountProcucts] = useState(0);
   const [allProductTotalPrice, setAllProductTotalPrice] = useState(0);
   const [selectCarts, setSelectCarts] = useState([]);
+  const [triger, setTriger] = useState(false);
 
   const navigate = useNavigate();
-
   const customerId = customer.id;
 
   const fetchMyCart = async () => {
     try {
       const resMyCart = await axios.get(`/cart/${customerId}`);
       setCarts(resMyCart.data.carts);
-    } catch (err) {}
+      setTriger(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
     fetchMyCart();
-  }, []);
+  }, [allProductTotalPrice, triger]);
 
   const sumAllProductTotalPrice = carts.reduce(
     (acc, item) => acc + item.productTotalPrice,
     0
   );
+
+  console.log(sumAllProductTotalPrice);
+  console.log('selectCarts', selectCarts);
+
   const sumCartId = carts.map((item) => item.cartId);
   const handleOnClickAllCheckBoxProduct = (event) => {
     if (event.currentTarget.checked) {
+      if (selectCarts.length > 0) {
+        for (let i = 1; (i = selectCarts.length); i++) {
+          selectCarts.pop();
+        }
+      }
+
+      setSelectCarts(selectCarts.concat(sumCartId));
       setAmountProcucts(carts.length);
       setAllProductTotalPrice(sumAllProductTotalPrice);
-      setSelectCarts([]);
-      setSelectCarts(selectCarts.concat(sumCartId));
     } else {
       setAmountProcucts(0);
       setAllProductTotalPrice(0);
       setSelectCarts([]);
     }
   };
-
-  //   console.log(sumAllProductTotalPrice);
-  //   console.log('sum', sumCartId);
-  //   console.log('carts', carts);
-  //   console.log('selectCarts', selectCarts);
 
   const handleOnClickCheckBoxProduct = (
     event,
@@ -67,14 +79,18 @@ function CartContainer({ customer }) {
   const cartIds = selectCarts.join(',');
 
   const handleOnClickDeleteCart = async () => {
-    if (window.confirm('คุณแน่ใจว่าต้องการลบสินค้า หรือไม่') == true) {
-      try {
-        await axios.delete(`/cart/${selectCarts}/${customerId}`);
-      } catch (err) {
-      } finally {
-        document.location.reload();
-      }
+    if (selectCarts.length === 0) {
+      alert('คุณยังไม่ได้เลือกสินค้า');
     } else {
+      if (window.confirm('คุณแน่ใจว่าต้องการลบสินค้า หรือไม่') == true) {
+        try {
+          await axios.delete(`/cart/${selectCarts}/${customerId}`);
+        } catch (err) {
+        } finally {
+          document.location.reload();
+        }
+      } else {
+      }
     }
   };
 
@@ -129,6 +145,7 @@ function CartContainer({ customer }) {
             setAllProductTotalPrice={setAllProductTotalPrice}
             allProductTotalPrice={allProductTotalPrice}
             selectCarts={selectCarts}
+            setTriger={setTriger}
           />
         ))}
 

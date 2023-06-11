@@ -24,6 +24,8 @@ function HeaderCart({ customer }) {
       <div className="header_right_addtocart_main">
         <Link end to={customer ? `customer/cart/${customer.id}` : '/Login'}>
           <img src={addtocart} />
+
+          {/* <i class="fa-solid fa-cart-shopping fa-2xl"></i> */}
           {/* <div
             className={
               carts

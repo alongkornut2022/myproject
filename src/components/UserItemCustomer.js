@@ -3,7 +3,7 @@ import { AuthContext } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import UserItem from './UserItem';
 import defaultUserPicture from '../assets/images/userpicture.png';
-import NavbarCustomer from './NavbarCustomer';
+// import NavbarCustomer from './NavbarCustomer';
 
 function UserItemCustomer() {
   const { customer, logout } = useContext(AuthContext);

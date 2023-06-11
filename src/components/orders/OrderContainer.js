@@ -14,9 +14,9 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
   const [customerAddressCurrent, setCustomerAddressCurrent] = useState('');
   const [cartSellerIds, setCartSellerIds] = useState([]);
   const [productItemPrice, setProductItemPrice] = useState([]);
-  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
-  const [deliverys, setDeliverys] = useState();
+  const [paymentMethod, setPaymentMethod] = useState('เลือกประเภทการชำระเงิน');
   const [deliveryTotalPrice, setDeliveryTotalPrice] = useState(0);
+  const [trigerDelivery, setTrigerDelivery] = useState(false);
 
   const navigate = useNavigate();
 
@@ -66,6 +66,7 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
         `/delivery/price/${cartIds}/${customerId}`
       );
       setDeliveryTotalPrice(resDeliveryPrice.data.deliveryPrice);
+      setTrigerDelivery(false);
     } catch (err) {
       console.log(err);
     }
@@ -73,7 +74,7 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
 
   useEffect(() => {
     fetchDeliveryPrice();
-  }, [deliverys]);
+  }, [trigerDelivery]);
 
   const handleClickModal = () => {
     const modalObj = new Modal(modalEl.current);
@@ -97,18 +98,26 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
   const sellerIds = sellerIdsArr.join(',');
 
   const handleOnClickOrderResult = async () => {
-    try {
-      const orderResult = await axios.post(
-        `/purchase/order/${cartIds}/${sellerIds}/${customerId}`,
-        {
-          paymentMethod,
-          customerAddressId,
-        }
-      );
+    if (!customerAddressId) {
+      alert('คุณยังไม่มีที่อยู่จัดส่งสินค้า');
+    } else if (deliveryTotalPrice === 0) {
+      alert('คุณยังไม่ได้เลือกประเภทการส่ง');
+    } else if (paymentMethod === 'เลือกประเภทการชำระเงิน') {
+      alert('คุณยังไม่ได้เลือกประเภทการชำระเงิน');
+    } else {
+      try {
+        const orderResult = await axios.post(
+          `/purchase/order/${cartIds}/${sellerIds}/${customerId}`,
+          {
+            paymentMethod,
+            customerAddressId,
+          }
+        );
 
-      navigate(`/customer/purchase/${customerId}`);
-    } catch (err) {
-      console.log(err);
+        navigate(`/customer/purchase/${customerId}`);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -122,14 +131,24 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
           </div>
           <div className="ordertotal_main_content_address_detail">
             <div className="ordertotal_main_content_address_detail_top">
-              <CustomerAddressDelivery
+              {/* <CustomerAddressDelivery
                 customerAddressCurrent={
                   customerAddressCurrent || customerAddressDefault
                 }
-              />
+              /> */}
+
+              {customerAddressDefault || customerAddressCurrent ? (
+                <CustomerAddressDelivery
+                  customerAddressCurrent={
+                    customerAddressCurrent || customerAddressDefault
+                  }
+                />
+              ) : (
+                '- คุณยังไม่มีทีอยู่จัดส่งสินค้า'
+              )}
             </div>
             <div className="ordertotal_main_content_address_detail_buttom">
-              <button onClick={handleClickModal}>เปลี่ยน</button>
+              <button onClick={handleClickModal}>เพิ่ม/เปลี่ยน ที่อยู่</button>
             </div>
             <div className="modal fade" tabIndex="-1" ref={modalEl}>
               <div className="modal-dialog modal-dialog-centered">
@@ -180,7 +199,7 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
                   customerAddressCurrent.postcode ||
                   customerAddressDefault.postcode
                 }
-                setDeliverys={setDeliverys}
+                setTrigerDelivery={setTrigerDelivery}
               />
             ))}
           </div>

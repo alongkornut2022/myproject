@@ -28,7 +28,9 @@ function Order() {
       <OrderContainer
         customerId={customerId}
         cartIds={cartIds}
-        customerAddressDefault={customerAddressDefault}
+        customerAddressDefault={
+          customerAddressDefault ? customerAddressDefault : ''
+        }
       />
     </>
   );

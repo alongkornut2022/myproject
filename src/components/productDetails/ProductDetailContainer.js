@@ -15,6 +15,10 @@ function ProductDetailContainer({ productId }) {
 
   const [productItem, setProductItem] = useState([]);
   const [productSpecs, setProductSpecs] = useState('');
+  const [productSeller, setProductSeller] = useState([]);
+
+  const sellerId = productItem.map((item) => item.sellerId);
+  console.log(sellerId);
 
   useEffect(() => {
     const fetchProductItem = async () => {
@@ -26,6 +30,16 @@ function ProductDetailContainer({ productId }) {
     };
     fetchProductItem();
   }, [productId]);
+
+  useEffect(() => {
+    const fetchProductSeller = async () => {
+      try {
+        const resProductSeller = await axios.get(`/products/shop/${sellerId}`);
+        setProductSeller(resProductSeller.data.productSeller);
+      } catch (err) {}
+    };
+    fetchProductSeller();
+  }, [productItem]);
 
   return (
     <>
@@ -40,8 +54,8 @@ function ProductDetailContainer({ productId }) {
             <ProductItemImages
               key={el.id}
               productItem={el}
-              size="90"
-              sizeMain="500"
+              size="75"
+              sizeMain="450"
             />
           ))}
         </div>
@@ -51,7 +65,8 @@ function ProductDetailContainer({ productId }) {
               key={el.id}
               productItem={el}
               productId={productId}
-              customerId={customer.id}
+              customerId={customer ? customer.id : ''}
+              customer={customer}
             />
           ))}
         </div>
@@ -59,7 +74,11 @@ function ProductDetailContainer({ productId }) {
 
       <div className="productitem_seller">
         {productItem.map((el) => (
-          <DataSeller key={el.id} productItem={el} />
+          <DataSeller
+            key={el.id}
+            productItem={el}
+            productSeller={productSeller}
+          />
         ))}
       </div>
 
@@ -75,7 +94,7 @@ function ProductDetailContainer({ productId }) {
 
       <div className="productdetail_rating">
         {productItem.map((el) => (
-          <ProductRating key={el.id} productItem={el} />
+          <ProductRating key={el.id} productItem={el} productId={productId} />
         ))}
       </div>
 
@@ -85,9 +104,15 @@ function ProductDetailContainer({ productId }) {
         </div>
         <br></br>
         <div>
-          {productItem.map((el) => (
-            <ProductOfSeller key={el.id} productItem={el} />
-          ))}
+          <ProductOfSeller productSeller={productSeller} />
+
+          {/* {productItem.map((el) => (
+            <ProductOfSeller
+              key={el.id}
+              productItem={el}
+              productSeller={productSeller}
+            />
+          ))} */}
         </div>
       </div>
 

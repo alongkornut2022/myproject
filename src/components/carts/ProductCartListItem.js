@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from '../../config/axios';
 import { Link } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ function ProductCartListItem({
   setAllProductTotalPrice,
   allProductTotalPrice,
   selectCarts,
+  setTriger,
 }) {
   const {
     productId,
@@ -48,12 +49,14 @@ function ProductCartListItem({
 
   const handleOnClickUpdateCart = async () => {
     try {
-      console.log(amountCart, productTotalPriceCart);
       const resCart = await axios.patch(`/cart/${cartId}/${customerId}`, {
         amountCart,
         productTotalPriceCart,
       });
-    } catch (err) {}
+      setTriger(true);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -86,8 +89,9 @@ function ProductCartListItem({
             <img src={image} />
           </Link>
           <div className="item2_shopname">
-            {/* <div>ร้านค้า</div> */}
-            <div>{shopName}</div>
+            <div>
+              <i class="fa-solid fa-shop fa-lg"></i> {shopName}
+            </div>
           </div>
         </div>
 

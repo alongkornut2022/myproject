@@ -9,21 +9,15 @@ function SellerItemOrder({
   customerId,
   cartIds,
   customerPostcode,
-  setDeliverys,
+  setTrigerDelivery,
 }) {
   const { sellerId, shopName, shopPicture, sellerPostcode } = cartSellerIds;
 
   const [cartCheckout, setCartCheckout] = useState([]);
   const [customerPostcodeZone, setCustomerPostcodeZone] = useState();
   const [sellerPostcodeZone, setSellerPostcodeZone] = useState();
-
   const [deliveryPrice, setDeliveryPrice] = useState(0);
-  const [optionDelivery, setOptionDelivery] = useState();
-
-  useEffect(() => {
-    const mixOption = sellerId + ':' + optionDelivery + ':' + deliveryPrice;
-    setDeliverys(mixOption);
-  }, [optionDelivery, deliveryPrice]);
+  const [optionDelivery, setOptionDelivery] = useState('เลือกประเภทการส่ง');
 
   const amount = cartCheckout.length;
   const productTotalPrice = cartCheckout.reduce(
@@ -95,6 +89,7 @@ function SellerItemOrder({
     optionDelivery,
     setDeliveryPrice,
     setOptionDelivery,
+    setTrigerDelivery,
   };
 
   return (

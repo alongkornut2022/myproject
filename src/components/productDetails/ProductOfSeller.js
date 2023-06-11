@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import ProductItemSeller from '../ProductItemSeller';
-import axios from '../../config/axios';
+// import axios from '../../config/axios';
 
-function ProductOfSeller({ productItem }) {
-  const [productSeller, setProductSeller] = useState([]);
+function ProductOfSeller({ productSeller }) {
+  // const [productSeller, setProductSeller] = useState([]);
 
-  const { sellerId } = productItem;
+  // const { sellerId } = productItem;
 
-  useEffect(() => {
-    const fetchProductSeller = async () => {
-      try {
-        const resProductSeller = await axios.get(`/products/shop/${sellerId}`);
-        setProductSeller(resProductSeller.data.productSeller);
-      } catch (err) {}
-    };
-    fetchProductSeller();
-  }, []);
+  // useEffect(() => {
+  //   const fetchProductSeller = async () => {
+  //     try {
+  //       const resProductSeller = await axios.get(`/products/shop/${sellerId}`);
+  //       setProductSeller(resProductSeller.data.productSeller);
+  //     } catch (err) {}
+  //   };
+  //   fetchProductSeller();
+  // }, []);
 
   return (
     <>

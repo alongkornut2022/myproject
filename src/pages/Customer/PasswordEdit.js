@@ -8,6 +8,7 @@ function ChangePassword() {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const { customer, logout } = useContext(AuthContext);
   const { setError } = useContext(ErrorContext);
@@ -28,62 +29,79 @@ function ChangePassword() {
     }
   };
 
+  const handleResetPasswordEdit = () => {
+    setOldPassword('');
+    setNewPassword('');
+    setConfirmNewPassword('');
+    setShowPassword(false);
+  };
+
+  const handleOnClickShowPassword = (event) => {
+    if (event.currentTarget.checked) {
+      setShowPassword(true);
+    } else {
+      setShowPassword(false);
+    }
+  };
+
   return (
     <>
-      <div className="customer_main_content_right_top">
-        <h3>ตั้งค่ารหัสผ่านใหม่</h3>
-      </div>
-
+      <div className="customer_main_content_right_top">ตั้งค่ารหัสผ่านใหม่</div>
       <div className="customer_main_content_right_middle">
-        <form onSubmit={handleSubmitPasswordEdit}>
-          <div className="customer_inner_content">
-            <div className="item1">
-              <label for="oldPassword">รหัสผ่านปัจจุบัน</label>
-            </div>
-            <div className="item2">
-              <input
-                type="text"
-                value={oldPassword}
-                onChange={(event) => setOldPassword(event.target.value)}
-              />
-            </div>
-            <div className="item4">
-              <Link end to="/Login">
-                ลืมรหัสผ่าน
-              </Link>
-            </div>
+        <div className="customer_inner_content">
+          <div className="item1">รหัสผ่านปัจจุบัน</div>
+          <div className="item2">
+            <input
+              type={showPassword === false ? 'password' : 'text'}
+              value={oldPassword}
+              onChange={(event) => setOldPassword(event.target.value)}
+            />
           </div>
+          <div className="item4">
+            <Link end to="/Login">
+              ลืมรหัสผ่าน
+            </Link>
+          </div>
+        </div>
 
-          <div className="customer_inner_content">
-            <div className="item1">
-              <label for="newPassword">รหัสผ่านใหม่</label>
-            </div>
-            <div className="item2">
-              <input
-                type="text"
-                value={newPassword}
-                onChange={(event) => setNewPassword(event.target.value)}
-              />
-            </div>
+        <div className="customer_inner_content">
+          <div className="item1">รหัสผ่านใหม่</div>
+          <div className="item2">
+            <input
+              type={showPassword === false ? 'password' : 'text'}
+              value={newPassword}
+              onChange={(event) => setNewPassword(event.target.value)}
+            />
           </div>
+        </div>
 
-          <div className="customer_inner_content">
-            <div className="item1">
-              <label for="confirmNewPassword">ยืนยันรหัสผ่านใหม่</label>
-            </div>
-            <div className="item2">
-              <input
-                type="text"
-                value={confirmNewPassword}
-                onChange={(event) => setConfirmNewPassword(event.target.value)}
-              />
-            </div>
+        <div className="customer_inner_content">
+          <div className="item1">ยืนยันรหัสผ่านใหม่</div>
+          <div className="item2">
+            <input
+              type={showPassword === false ? 'password' : 'text'}
+              value={confirmNewPassword}
+              onChange={(event) => setConfirmNewPassword(event.target.value)}
+            />
           </div>
+        </div>
 
-          <div className="customer_inner_content_submit">
-            <input type="submit" value="บันทึก" />
+        <div className="customer_inner_content">
+          <div className="item1"></div>
+          <div className="item2_1">
+            <input
+              type="checkbox"
+              checked={showPassword === true ? 'checked' : ''}
+              onClick={(event) => handleOnClickShowPassword(event)}
+            />
+            Show Password
           </div>
-        </form>
+        </div>
+
+        <div className="customer_inner_content_submit">
+          <button onClick={handleSubmitPasswordEdit}>บันทึก</button>
+          <button onClick={handleResetPasswordEdit}>ยกเลิก</button>
+        </div>
       </div>
     </>
   );

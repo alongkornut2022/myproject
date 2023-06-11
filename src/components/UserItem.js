@@ -12,7 +12,9 @@ function UserItem({ src, size, username }) {
             alt="customer"
           />
         </div>
-        <div className="useritem_username">{username}</div>
+        <div className="useritem_username">
+          <div>{username}</div>
+        </div>
       </div>
     </>
   );

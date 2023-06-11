@@ -1,31 +1,64 @@
-import React from 'react';
 import UserItemReview from './UserItemReview';
 
-function ProductDetailReviewItem() {
+function ProductDetailReviewItem({ productRating }) {
+  const {
+    username,
+    userPicture,
+    rating,
+    postReview,
+    image1,
+    image2,
+    image3,
+    image4,
+    displayUsername,
+    createdAt,
+  } = productRating;
+
+  const date = new Date(createdAt);
+  const day = date.getUTCDate();
+  const monthNum = date.getUTCMonth();
+  const monthNameEng = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const month = monthNameEng[monthNum];
+  const year = date.getUTCFullYear();
+  const hour = date.getHours();
+  const minutes = date.getMinutes();
+
   return (
     <>
       <div className="review_main">
         <div className="review_left">
-          <UserItemReview size="40" />
+          <UserItemReview
+            size="40"
+            username={username}
+            src={userPicture}
+            displayUsername={displayUsername == 1 ? displayUsername : ''}
+          />
         </div>
         <div className="review_right">
-          <div>คะแนนสินค้าที่ลูกค้าให้</div>
-          <div>เนื้อหารีวิว</div>
+          <div>คะแนนสินค้าที่ลูกค้าให้ {rating}</div>
+          <div>
+            {day} {month} {year} {hour}:{minutes}
+          </div>
+          <div>{postReview}</div>
           <div className="review_image_main">
             <div className="review_image_item1">
-              <img src="https://picsum.photos/80" />
-            </div>
-            <div className="review_image_item2">
-              <img src="https://picsum.photos/80" />
-            </div>
-            <div className="review_image_item3">
-              <img src="https://picsum.photos/80" />
-            </div>
-            <div className="review_image_item4">
-              <img src="https://picsum.photos/80" />
-            </div>
-            <div className="review_image_item5">
-              <img src="https://picsum.photos/80" />
+              {image1 ? <img src={image1} /> : ''}
+              {image2 ? <img src={image2} /> : ''}
+              {image3 ? <img src={image3} /> : ''}
+              {image4 ? <img src={image4} /> : ''}
             </div>
           </div>
         </div>

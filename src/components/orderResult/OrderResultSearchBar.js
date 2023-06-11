@@ -21,7 +21,7 @@ function OrderResultSearchBar({ customerId, setOrderCustomer }) {
   return (
     <>
       <div className="orderresult_searchbar_button">
-        <img src={buttonSearch} />
+        <i class="fa-solid fa-magnifying-glass"></i>
       </div>
       <div className="orderresult_searchbar_input">
         <input

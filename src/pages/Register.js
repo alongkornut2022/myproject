@@ -8,6 +8,7 @@ function Register() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const { register } = useContext(AuthContext);
   const { setError, setTrigger } = useContext(ErrorContext);
@@ -27,29 +28,44 @@ function Register() {
     }
   };
 
+  const handleResetRegister = () => {
+    setUsername('');
+    setEmail('');
+    setPhoneNumber('');
+    setPassword('');
+    setConfirmPassword('');
+    setShowPassword(false);
+  };
+
+  const handleOnClickShowPassword = (event) => {
+    if (event.currentTarget.checked) {
+      setShowPassword(true);
+    } else {
+      setShowPassword(false);
+    }
+  };
+
   return (
     <div className="home_main_content">
-      <div className="register_title">
-        <h3>สมัครสมาชิกใหม่</h3>
-      </div>
+      <div className="register_title">สมัครสมาชิกใหม่</div>
       <div className="register_main_content">
-        <form onSubmit={handleSubmitRegister}>
-          <div className="register_main_content_top">
-            <div className="register_inner_content">
-              <div className="item1">
-                <label for="username">Username</label>
-                <input
-                  type="text"
-                  placeholder="ชื่อผู้ใช้"
-                  value={username}
-                  onChange={(event) => setUsername(event.target.value)}
-                />
-              </div>
+        <div className="register_main_content_top">
+          <div className="register_inner_content">
+            <div className="item1">
+              <div>Username</div>
+              <input
+                type="text"
+                placeholder="ชื่อผู้ใช้"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+              />
             </div>
+          </div>
 
-            <div className="register_inner_content">
-              <div className="item2">
-                <label for="email">Email</label>
+          <div className="register_inner_content">
+            <div className="register_inner_content_email_label">
+              <div>Email</div>
+              <div className="register_inner_content_email_input">
                 <input
                   type="email"
                   placeholder="อีเมล์"
@@ -57,51 +73,65 @@ function Register() {
                   onChange={(event) => setEmail(event.target.value)}
                 />
               </div>
-              <div className="item3">
-                <label for="phoneNumber">Phone Number</label>
-                <input
-                  type="text"
-                  placeholder="หมายเลขโทรศัพท์"
-                  value={phoneNumber}
-                  onChange={(event) => setPhoneNumber(event.target.value)}
-                />
-              </div>
             </div>
+            <div className="register_inner_content_phonenumber">
+              <div>Phone Number</div>
+              <input
+                type="text"
+                placeholder="หมายเลขโทรศัพท์"
+                value={phoneNumber}
+                onChange={(event) => setPhoneNumber(event.target.value)}
+              />
+            </div>
+          </div>
 
-            <div className="register_inner_content">
-              <div className="item4">
-                <label for="password">Password</label>
+          <div className="register_inner_content">
+            <div className="register_inner_content_password">
+              <div>Password</div>
+              <div className="register_inner_content_password_input">
                 <input
-                  type="password"
+                  type={showPassword === false ? 'password' : 'text'}
                   placeholder="รหัสผ่าน"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                 />
-                <div className="item4_1">
-                  8 ตัวไป มีตัวเลข ตัวอักษร และสัญลักษณ์
+              </div>
+              <div className="register_inner_content_validate">
+                รหัสผ่าน 8 ตัวขึ้นไป มีตัวเลข ตัวอักษร และสัญลักษณ์
+              </div>
+              <div className="register_inner_content_checkbox">
+                <div className="register_inner_content_checkbox_input">
+                  <input
+                    type="checkbox"
+                    checked={showPassword === true ? 'checked' : ''}
+                    onClick={(event) => handleOnClickShowPassword(event)}
+                  />
+                </div>
+                <div className="register_inner_content_checkbox_label">
+                  Show Password
                 </div>
               </div>
-              <div className="item5">
-                <label for="Confirm password">Confirm Password</label>
-                <input
-                  type="password"
-                  placeholder="ยืนยันรหัสผ่าน"
-                  value={confirmPassword}
-                  onChange={(event) => setConfirmPassword(event.target.value)}
-                />
-              </div>
+            </div>
+            <div className="register_inner_content_confirmpassword">
+              <label for="Confirm password">Confirm Password</label>
+              <input
+                type={showPassword === false ? 'password' : 'text'}
+                placeholder="ยืนยันรหัสผ่าน"
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+              />
             </div>
           </div>
+        </div>
 
-          <div className="register_main_content_buttom">
-            <div>
-              <button type="submit">สมัครสมาชิก</button>
-            </div>
-            <div>
-              <button type="reset">ยกเลิก</button>
-            </div>
+        <div className="register_main_content_buttom">
+          <div className="register_main_content_buttom_button">
+            <button onClick={handleSubmitRegister}>สมัครสมาชิก</button>
           </div>
-        </form>
+          <div className="register_main_content_buttom_button">
+            <button onClick={handleResetRegister}>ยกเลิก</button>
+          </div>
+        </div>
       </div>
     </div>
   );

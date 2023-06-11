@@ -12,8 +12,6 @@ function OrderResultContainer() {
   const { customer } = useContext(AuthContext);
   const customerId = customer.id;
 
-  //   console.log(orderCustomer);
-
   const fetchOrderCustomer = async (status) => {
     try {
       const resOrderCustomer = await axios.get(
@@ -32,7 +30,6 @@ function OrderResultContainer() {
 
   return (
     <div className="orderresult_container_main">
-      {/* <div className="orderresult_container_content"> */}
       <div className="orderresult_container_navbar">
         <OrderResultNavBar
           fetchOrderCustomer={fetchOrderCustomer}
@@ -60,7 +57,6 @@ function OrderResultContainer() {
           />
         ))}
       </div>
-      {/* </div> */}
     </div>
   );
 }
