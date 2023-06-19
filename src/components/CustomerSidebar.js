@@ -53,7 +53,7 @@ function CustomerSidebar() {
           <Spinner loading={loading} />
           <div>
             <button type="button" onClick={HandleOnClickEditUserPicture}>
-              Edit Image
+              แก้ไขรูป profile
             </button>
             <input
               type="file"

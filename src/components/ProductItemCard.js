@@ -6,12 +6,23 @@ function ProductItemCard({ productItems }) {
     image1,
     inventory,
     createdAt,
+    discounts,
   } = productItems;
 
+  const newProductUnitprice = Math.floor(
+    productUnitprice - (productUnitprice * discounts) / 100
+  );
   return (
     <>
       <div className="productitem_card">
         <div className="productitem_card_image">
+          <div
+            className="productitem_card_discounts"
+            hidden={discounts === null ? 'hidden' : ''}
+          >
+            <div className="productitem_card_discounts_item1">ลด</div>
+            <div className="productitem_card_discounts_item2">{discounts}%</div>
+          </div>
           <img src={image1} sizes="200" />
         </div>
         <div className="productitem_card_detail">
@@ -20,7 +31,17 @@ function ProductItemCard({ productItems }) {
           </div>
           <div className="productitem_card_detail_middle"></div>
           <div className="productitem_card_detail_buttom">
-            <div className="productprice">฿ {productUnitprice}</div>
+            <div className="productitem_card_detail_buttom_left">
+              <div
+                className="productprice"
+                hidden={discounts === null ? 'hidden' : ''}
+              >
+                ฿{productUnitprice}
+              </div>
+              <div className="newproductprice">
+                ฿{discounts === null ? productUnitprice : newProductUnitprice}
+              </div>
+            </div>
             <div className="productalreadysold">ขายแล้ว {alreadysold} ชิ้น</div>
           </div>
         </div>

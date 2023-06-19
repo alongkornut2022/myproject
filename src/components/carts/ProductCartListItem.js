@@ -21,7 +21,11 @@ function ProductCartListItem({
     image,
     shopName,
     inventory,
+    discounts,
   } = carts;
+
+  const newProductUnitPrice =
+    productUnitPrice - Math.floor((productUnitPrice * discounts) / 100);
 
   const [amountCart, setAmountCart] = useState(amount);
   const [productTotalPriceCart, setProductTotalPriceCart] =
@@ -33,7 +37,7 @@ function ProductCartListItem({
     if (+amountCart < +inventory) {
       setAmountCart(+amountCart + 1);
       if (findCartId === true) {
-        setAllProductTotalPrice(+allProductTotalPrice + +productUnitPrice);
+        setAllProductTotalPrice(+allProductTotalPrice + +newProductUnitPrice);
       }
     }
   };
@@ -42,7 +46,7 @@ function ProductCartListItem({
     if (+amountCart > 1) {
       setAmountCart(+amountCart - 1);
       if (findCartId === true) {
-        setAllProductTotalPrice(+allProductTotalPrice - productUnitPrice);
+        setAllProductTotalPrice(+allProductTotalPrice - newProductUnitPrice);
       }
     }
   };
@@ -60,11 +64,11 @@ function ProductCartListItem({
   };
 
   useEffect(() => {
-    setProductTotalPriceCart(productUnitPrice * amountCart);
+    setProductTotalPriceCart(newProductUnitPrice * amountCart);
   }, [amountCartIncrease]);
 
   useEffect(() => {
-    setProductTotalPriceCart(productUnitPrice * amountCart);
+    setProductTotalPriceCart(newProductUnitPrice * amountCart);
   }, [amountCartDecrease]);
 
   useEffect(() => {
@@ -102,7 +106,15 @@ function ProductCartListItem({
             </Link>
           </div>
 
-          <div className="item3_2">{productUnitPrice}</div>
+          <div className="item3_2">
+            <div
+              className="item3_2_1"
+              hidden={discounts === null ? 'hidden' : ''}
+            >
+              ฿{productUnitPrice}
+            </div>
+            <div className="item3_2_2">฿{newProductUnitPrice}</div>
+          </div>
           <div className="item3_3">
             <button onClick={amountCartDecrease}>-</button>
             <input

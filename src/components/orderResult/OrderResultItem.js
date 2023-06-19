@@ -154,9 +154,23 @@ function OrderResultItem({ orderCustomer, customerId }) {
               ) : (
                 ''
               )}
+              {status === 'ชำระเงินแล้ว' ? (
+                <div className="orderresult_item_seller_right_item">
+                  | ชำระเงินแล้ว
+                </div>
+              ) : (
+                ''
+              )}
               {status === 'รออนุมัติ' ? (
                 <div className="orderresult_item_seller_right_item">
                   | รออนุมัติ
+                </div>
+              ) : (
+                ''
+              )}
+              {status === 'อนุมัติแล้ว' ? (
+                <div className="orderresult_item_seller_right_item">
+                  | อนุมัติแล้ว
                 </div>
               ) : (
                 ''
@@ -179,6 +193,7 @@ function OrderResultItem({ orderCustomer, customerId }) {
           <div className="orderresult_item_price_title">รวมการสั่งซื้อ : </div>
           <div className="orderresult_item_price_amount">฿ {allTotalPrice}</div>
         </div>
+
         <div className="orderresult_item_buttom">
           {status === 'อยู่ระหว่างจัดส่ง' || status === 'จัดส่งสำเร็จ' ? (
             ''
@@ -190,11 +205,21 @@ function OrderResultItem({ orderCustomer, customerId }) {
               <button>รออนุมัติ</button>
             </div>
           ) : (
-            <div className="orderresult_item_buttom_money">
+            <div
+              className={
+                status === 'ชำระเงินแล้ว'
+                  ? 'orderresult_item_buttom_money2'
+                  : 'orderresult_item_buttom_money'
+              }
+            >
               <div className="orderresult_item_buttom_payment">
-                ชำระเงินผ่าน
+                {status === 'ชำระเงินแล้ว'
+                  ? 'ชำระเงินแล้วผ่าน ' + paymentMethod
+                  : 'ชำระเงินผ่าน'}
               </div>
-              <button>{paymentMethod}</button>
+              <button hidden={status === 'ชำระเงินแล้ว' ? 'hidden' : ''}>
+                {paymentMethod}
+              </button>
             </div>
           )}
 

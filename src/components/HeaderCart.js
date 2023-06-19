@@ -4,37 +4,31 @@ import addtocart from '../images/cart.jpg';
 import { useEffect, useState } from 'react';
 
 function HeaderCart({ customer }) {
-  //   const customerId = customer.id;
+  const customerId = customer.id;
 
-  //   const [carts, setCarts] = useState([]);
+  const [carts, setCarts] = useState([]);
 
-  //   const fetchMyCart = async () => {
-  //     try {
-  //       const resMyCart = await axios.get(`/cart/${customerId}`);
-  //       setCarts(resMyCart.data.carts);
-  //     } catch (err) {}
-  //   };
+  const fetchMyCart = async () => {
+    try {
+      const resMyCart = await axios.get(`/cart/${customerId}`);
+      setCarts(resMyCart.data.carts);
+    } catch (err) {}
+  };
 
-  //   useEffect(() => {
-  //     fetchMyCart();
-  //   }, []);
+  useEffect(() => {
+    fetchMyCart();
+  }, []);
 
   return (
     <>
       <div className="header_right_addtocart_main">
         <Link end to={customer ? `customer/cart/${customer.id}` : '/Login'}>
-          <img src={addtocart} />
-
-          {/* <i class="fa-solid fa-cart-shopping fa-2xl"></i> */}
-          {/* <div
-            className={
-              carts
-                ? 'header_right_addtocart_item2'
-                : 'header_right_addtocart_item2_1'
-            }
-          >
-            {carts ? carts.length : ''}
-          </div> */}
+          <div className="header_right_addtocart_item1">
+            <img src={addtocart} />
+            <div className="header_right_addtocart_item2">
+              {carts.length > 0 ? carts.length : ''}
+            </div>
+          </div>
         </Link>
       </div>
     </>

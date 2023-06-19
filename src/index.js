@@ -9,7 +9,8 @@ import './index.css';
 import App from './App';
 import ErrorContextProvider from './contexts/ErrorContext';
 import AuthContextProvider from './contexts/AuthContext';
-import AddressCustomerContextProvider from './contexts/AddressCustomerContext';
+import AuthSellerContextProvider from './contexts/AuthSellerContext';
+// import AddressCustomerContextProvider from './contexts/AddressCustomerContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,9 +18,11 @@ root.render(
     <BrowserRouter>
       <ErrorContextProvider>
         <AuthContextProvider>
-          <AddressCustomerContextProvider>
+          <AuthSellerContextProvider>
+            {/* <AddressCustomerContextProvider> */}
             <App />
-          </AddressCustomerContextProvider>
+            {/* </AddressCustomerContextProvider> */}
+          </AuthSellerContextProvider>
         </AuthContextProvider>
       </ErrorContextProvider>
     </BrowserRouter>

@@ -10,7 +10,12 @@ function ProductItemTitle({ productItem, productId, customerId, customer }) {
     inventory,
     sellerId,
     productWeightPiece,
+    discounts,
   } = productItem;
+
+  const newProductUnitprice = Math.floor(
+    productUnitprice - (productUnitprice * discounts) / 100
+  );
 
   const [amount, setAmount] = useState(1);
   const [productTotalPrice, setProductTotalPrice] = useState();
@@ -27,8 +32,8 @@ function ProductItemTitle({ productItem, productId, customerId, customer }) {
       try {
         const resCart = await axios.post(`cart/${productId}/${customerId}`, {
           amount,
-          productTotalPrice,
-          productUnitprice,
+          // productTotalPrice,
+          // productUnitprice,
           productWeightTotal,
           sellerId,
         });
@@ -106,11 +111,24 @@ function ProductItemTitle({ productItem, productId, customerId, customer }) {
     <>
       <div className="productitem_productname">{productName}</div>
       <div className="productitem_rating">
-        คะแนนสินค้า : {sumRating ? sumRating : 'ยังไม่มีคะแนน'}
+        <div className="item1">
+          คะแนนสินค้า : {sumRating ? sumRating : 'ยังไม่มีคะแนน'}
+        </div>
+
+        <div className="item2">ขายแล้ว {alreadysold} ชิ้น</div>
       </div>
       <div className="productitem_price_alreadySold">
-        <div className="item1">฿ {productUnitprice}</div>
-        <div className="item2">ขายแล้ว {alreadysold} ชิ้น</div>
+        <div className="item1" hidden={discounts === null ? 'hidden' : ''}>
+          ฿{productUnitprice}
+        </div>
+        <div className="item2">
+          ฿{discounts === null ? productUnitprice : newProductUnitprice}
+        </div>
+        <div className="item3">
+          <div className="item3_1" hidden={discounts === null ? 'hidden' : ''}>
+            ส่วนลด {discounts}%
+          </div>
+        </div>
       </div>
       <div className="productitem_numberofpieces">
         <div className="item1">จำนวน</div>

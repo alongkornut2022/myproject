@@ -10,6 +10,7 @@ function ProductItemCategory({ productByCategory }) {
     image1,
     inventory,
     createdAt,
+    discounts,
   } = productByCategory;
 
   const productItems = {
@@ -19,6 +20,7 @@ function ProductItemCategory({ productByCategory }) {
     image1,
     inventory,
     createdAt,
+    discounts,
   };
 
   return (

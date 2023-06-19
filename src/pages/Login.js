@@ -30,7 +30,7 @@ function Login() {
 
   return (
     <div className="home_main_content">
-      <div className="login_title">เข้าสู่ระบบ</div>
+      <div className="login_title">เข้าสู่ระบบ : ผู้ซื้อ </div>
       <div className="login_main_content">
         <form onSubmit={handleSubmitLogin}>
           <div className="login_main_content_top">

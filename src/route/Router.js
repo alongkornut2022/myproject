@@ -26,8 +26,22 @@ import ProductLayout from '../pages/products/ProductLayout';
 import ProductLowToHigh from '../pages/products/ProductLowToHigh';
 import ProductHighToLow from '../pages/products/ProductHighToLow';
 
+/***** Seller ****/
+import SellerLogin from '../pages/sellerAccount/SellerLogin';
+import SellerRegister from '../pages/sellerAccount/SellerRegister';
+import { AuthSellerContext } from '../contexts/AuthSellerContext';
+import SellerLayout from '../pages/sellerProfile/SellerLayout';
+import SellerAddressBook from '../pages/sellerProfile/SellerAddressBook';
+import SellerProfile from '../pages/sellerProfile/SellerProfile';
+import SellerPasswordEdit from '../pages/sellerProfile/SellerPasswordEdit';
+import SellerOrder from '../pages/sellerProfile/SellerOrder';
+import SellerDelivery from '../pages/sellerProfile/SellerDelivery';
+import SellerProductAdd from '../pages/sellerProfile/SellerProductAdd';
+import SellerProductMain from '../pages/sellerProfile/SellerProductMain';
+
 function Router() {
   const { customer } = useContext(AuthContext);
+  const { seller } = useContext(AuthSellerContext);
 
   return (
     <>
@@ -105,6 +119,35 @@ function Router() {
               <Route path="Register" element={<Register />} />
               <Route path="Login" element={<Login />} />
               <Route path="*" element={<HomePage />} />
+            </>
+          )}
+
+          {seller ? (
+            <Route path="Seller" element={<SellerLayout />}>
+              <Route path="Profile/:sellerId" element={<SellerProfile />} />
+              <Route
+                path="AddressBook/:sellerId"
+                element={<SellerAddressBook />}
+              />
+              <Route
+                path="PasswordEdit/:sellerId"
+                element={<SellerPasswordEdit />}
+              />
+              <Route path="order/:sellerId" element={<SellerOrder />} />
+              <Route path="delivery/:sellerId" element={<SellerDelivery />} />
+              <Route
+                path="productadd/:sellerId"
+                element={<SellerProductAdd />}
+              />
+              <Route
+                path="productmain/:sellerId"
+                element={<SellerProductMain />}
+              />
+            </Route>
+          ) : (
+            <>
+              <Route path="seller/register" element={<SellerRegister />} />
+              <Route path="seller/login" element={<SellerLogin />} />
             </>
           )}
         </Route>

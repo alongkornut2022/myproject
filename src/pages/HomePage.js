@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import CategoryList from '../components/category/CategoryList';
 import NewProduct from '../components/NewProduct';
 import ProductBestBuy from '../components/ฺProductBestBuy';
+import CarouselBannerContainer from '../components/banner/CarouselBannerContainer';
+import CarouselBannerContainer2 from '../components/banner2/CarouselBannerContainer2';
+import CarouselBannerContainer3 from '../components/banner3/CarouselBannerContainer3';
 
 function HomePage() {
   return (
@@ -11,9 +14,14 @@ function HomePage() {
           <CategoryList />
         </div>
         <div className="home_main_content_top_center">
-          <p>carousel_banner</p>
+          <CarouselBannerContainer />
         </div>
-        <div className="home_main_content_top_right">โฆษณา</div>
+        <div className="home_main_content_top_center2">
+          <CarouselBannerContainer2 />
+        </div>
+        <div className="home_main_content_top_right">
+          <CarouselBannerContainer3 />
+        </div>
       </div>
       <div className="title_product">
         <p>สินค้าขายดี</p>

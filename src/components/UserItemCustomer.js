@@ -13,7 +13,7 @@ function UserItemCustomer() {
         <button className="dropbtn">
           <div className="useritem_dropbtn">
             <UserItem
-              size="28"
+              size="20"
               src={customer.userPicture || defaultUserPicture}
               username={customer.username}
             />

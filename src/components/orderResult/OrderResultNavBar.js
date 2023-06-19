@@ -21,6 +21,22 @@ function OrderResultNavBar({ fetchOrderCustomer, navBar }) {
           รอชำระเงิน
         </button>
       </div>
+
+      <div
+        className={
+          navBar === 'ชำระเงินแล้ว' || navBar === 'อนุมัติแล้ว'
+            ? 'orderresult_navbar2'
+            : 'orderresult_navbar'
+        }
+      >
+        <button
+          type="button"
+          onClick={() => fetchOrderCustomer('ชำระเงินแล้ว')}
+        >
+          ที่ต้องได้รับ
+        </button>
+      </div>
+
       <div
         className={
           navBar === 'อยู่ระหว่างจัดส่ง'

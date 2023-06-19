@@ -10,6 +10,7 @@ function ProductItemBestBuy({ productBestBuy }) {
     image1,
     inventory,
     createdAt,
+    discounts,
   } = productBestBuy;
 
   const productItems = {
@@ -19,6 +20,7 @@ function ProductItemBestBuy({ productBestBuy }) {
     image1,
     inventory,
     createdAt,
+    discounts,
   };
 
   return (

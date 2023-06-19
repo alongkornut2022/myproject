@@ -2,9 +2,11 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import CategoryList from './category/CategoryList';
 import { AuthContext } from '../contexts/AuthContext';
+import { AuthSellerContext } from '../contexts/AuthSellerContext';
 
 function NavBar() {
   const { customer } = useContext(AuthContext);
+  const { seller } = useContext(AuthSellerContext);
 
   return (
     <div className="navbar">
@@ -36,16 +38,16 @@ function NavBar() {
         </div>
 
         <div className="item">
-          {customer ? null : (
+          {customer || seller ? null : (
             <Link end to="/Register">
-              <i class="fa-solid fa-registered fa-lg"></i> ลงทะเบียน
+              <i class="fa-solid fa-registered fa-lg"></i> ลงทะเบียน : ผู้ซื้อ
             </Link>
           )}
         </div>
         <div className="item">
-          {customer ? null : (
+          {customer || seller ? null : (
             <Link end to="/Login">
-              <i class="fa-solid fa-user-large fa-lg"></i> เข้าสู่ระบบ
+              <i class="fa-solid fa-user-large fa-lg"></i> เข้าสู่ระบบ : ผู้ซื้อ
             </Link>
           )}
         </div>

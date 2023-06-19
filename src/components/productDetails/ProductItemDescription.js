@@ -4,8 +4,6 @@ function ProductItemDescription({ productItem, productSpecs }) {
   const { categoryName, productName, inventory, province, productWeightPiece } =
     productItem;
 
-  console.log(productWeightPiece);
-
   return (
     <>
       <div className="itiem1">

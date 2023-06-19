@@ -47,7 +47,7 @@ function Register() {
 
   return (
     <div className="home_main_content">
-      <div className="register_title">สมัครสมาชิกใหม่</div>
+      <div className="register_title">สมัครสมาชิกใหม่ : ผู้ซื้อ</div>
       <div className="register_main_content">
         <div className="register_main_content_top">
           <div className="register_inner_content">

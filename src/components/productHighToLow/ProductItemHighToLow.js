@@ -10,6 +10,7 @@ function ProductHighToLowItem({ productPriceHTL }) {
     image1,
     inventory,
     createdAt,
+    discounts,
   } = productPriceHTL;
 
   const productItems = {
@@ -19,6 +20,7 @@ function ProductHighToLowItem({ productPriceHTL }) {
     image1,
     inventory,
     createdAt,
+    discounts,
   };
 
   return (

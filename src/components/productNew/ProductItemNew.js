@@ -9,6 +9,7 @@ function ProductItemNew({ newProduct }) {
     alreadysold,
     image1,
     createdAt,
+    discounts,
   } = newProduct;
 
   const productItems = {
@@ -17,7 +18,7 @@ function ProductItemNew({ newProduct }) {
     alreadysold,
     image1,
     createdAt,
-    createdAt,
+    discounts,
   };
 
   return (

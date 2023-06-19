@@ -37,8 +37,8 @@ function CartContainer({
     0
   );
 
-  console.log(sumAllProductTotalPrice);
-  console.log('selectCarts', selectCarts);
+  // console.log(sumAllProductTotalPrice);
+  // console.log('selectCarts', selectCarts);
 
   const sumCartId = carts.map((item) => item.cartId);
   const handleOnClickAllCheckBoxProduct = (event) => {
@@ -129,7 +129,7 @@ function CartContainer({
           <div className="item3">ราคาต่อชิ้น</div>
           <div className="item4">จำนวน</div>
           <div className="item5">ราคารวม</div>
-          <div className="item6">แก้ไข</div>
+          <div className="item6"></div>
         </div>
         <div>
           <h5>
