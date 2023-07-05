@@ -5,10 +5,12 @@ import SellerProductSortBar from './SellerProductSortBar';
 import SellerAmountProduct from './SellerAmountProduct';
 import SellerProductItem from './SellerProductItem';
 import SellerProductListBar from './SellerProductListBar';
+import SellerProductItemGrid from './sellerProductItemGrid';
 
 function SellerProductContainer({ seller }) {
   const [productSeller, setProductSeller] = useState([]);
   const [navBar, setNavBar] = useState('');
+  const [viewProduct, setViewProduct] = useState(true);
 
   const [trigerSearch, setTrigerSearch] = useState(false);
 
@@ -22,8 +24,6 @@ function SellerProductContainer({ seller }) {
   const [inventoryTo, setInventoryTo] = useState('');
   const [alreadysoldStart, setAlreadysoldStart] = useState('');
   const [alreadysoldTo, setAlreadysoldTo] = useState('');
-
-  console.log(productSeller);
 
   const fetchProductSeller = async (status) => {
     try {
@@ -95,27 +95,6 @@ function SellerProductContainer({ seller }) {
             dataInputProductSortBar={dataInputProductSortBar}
             setTrigerSearch={setTrigerSearch}
           />
-
-          {/* <div className="sellerorder_container_searchbar_left">
-            <div className="orderresult_container_searchbar">
-              <SellerProductSearchBar
-                sellerId={seller.id}
-                setProductSeller={setProductSeller}
-                navBar={navBar}
-                searchProduct={searchProduct}
-                setSearchProduct={setSearchProduct}
-                setTrigerSearch={setTrigerSearch}
-              />
-            </div>
-          </div>
-
-          <div className="sellerorder_container_searchbar_right">
-            <SellerProductSortBar
-              sellerId={seller.id}
-              setProductSeller={setProductSeller}
-              navBar={navBar}
-            />
-          </div> */}
         </div>
 
         <div className="orderresult_container_item_listbar">
@@ -125,17 +104,40 @@ function SellerProductContainer({ seller }) {
         </div>
 
         <div className="order_neworder_container">
-          <SellerAmountProduct
-            productSeller={productSeller}
-            navBar={navBar}
-            trigerSearch={trigerSearch}
-          />
+          <div className="seller_amount_product_container">
+            <SellerAmountProduct
+              productSeller={productSeller}
+              navBar={navBar}
+              trigerSearch={trigerSearch}
+              viewProduct={viewProduct}
+              setViewProduct={setViewProduct}
+              handleOnClickSortProduct={handleOnClickSortProduct}
+            />
+          </div>
         </div>
 
         <div className="orderresult_container_item">
-          {productSeller.map((el) => (
-            <SellerProductItem key={el.id} productSeller={el} />
-          ))}
+          <div
+            className="orderresult_container_item_product_list"
+            hidden={viewProduct === false ? 'hidden' : ''}
+          >
+            {productSeller.map((el) => (
+              <SellerProductItem
+                key={el.id}
+                productSeller={el}
+                seller={seller}
+                handleOnClickSortProduct={handleOnClickSortProduct}
+              />
+            ))}
+          </div>
+          <div
+            className="orderresult_container_item_product_grid"
+            hidden={viewProduct === true ? 'hidden' : ''}
+          >
+            {productSeller.map((el) => (
+              <SellerProductItemGrid key={el.id} productSeller={el} />
+            ))}
+          </div>
         </div>
       </div>
     </>

@@ -34,11 +34,15 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
 
   const handleOnClickAddressCustomerById = async (customerAddressId) => {
     try {
-      const resAddress = await axios.get(
-        `/address/customer/${customerId}/${customerAddressId}`
-      );
-      setCustomerAddressCurrent(resAddress.data.customerAddress);
-      closeModal();
+      if (!customerAddressId) {
+        alert('คุณยังไม่ได้เลือกที่อยู่');
+      } else {
+        const resAddress = await axios.get(
+          `/address/customer/${customerId}/${customerAddressId}`
+        );
+        setCustomerAddressCurrent(resAddress.data.customerAddress);
+        closeModal();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -126,17 +130,17 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
       <div className="ordertotal_main_content">
         <div className="ordertotal_main_content_title">| ทำการสั่งซื้อ |</div>
         <div className="ordertotal_main_content_address">
-          <div className="ordertotal_main_content_address_title">
-            ที่อยู่ในการจัดส่ง
+          <div className="ordertotal_main_content_address_header">
+            <div className="ordertotal_main_content_address_title">
+              ที่อยู่ในการจัดส่ง
+            </div>
+            <div className="ordertotal_main_content_address_button">
+              <button onClick={handleClickModal}>เพิ่ม/เปลี่ยน ที่อยู่</button>
+            </div>
           </div>
+
           <div className="ordertotal_main_content_address_detail">
             <div className="ordertotal_main_content_address_detail_top">
-              {/* <CustomerAddressDelivery
-                customerAddressCurrent={
-                  customerAddressCurrent || customerAddressDefault
-                }
-              /> */}
-
               {customerAddressDefault || customerAddressCurrent ? (
                 <CustomerAddressDelivery
                   customerAddressCurrent={
@@ -147,32 +151,30 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
                 '- คุณยังไม่มีทีอยู่จัดส่งสินค้า'
               )}
             </div>
-            <div className="ordertotal_main_content_address_detail_buttom">
-              <button onClick={handleClickModal}>เพิ่ม/เปลี่ยน ที่อยู่</button>
-            </div>
-            <div className="modal fade" tabIndex="-1" ref={modalEl}>
-              <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title">ที่อยู่ของฉัน</h5>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      onClick={handleOnClickCloseModal}
-                    ></button>
-                  </div>
+          </div>
+        </div>
 
-                  <div className="modal-body">
-                    <OrderAddressDeliveryModal
-                      closeModal={closeModal}
-                      customerId={customerId}
-                      customerAddressDefaultId={customerAddressDefault.id}
-                      handleOnClickAddressCustomerById={
-                        handleOnClickAddressCustomerById
-                      }
-                    />
-                  </div>
-                </div>
+        <div className="modal fade" tabIndex="-1" ref={modalEl}>
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">ที่อยู่ของฉัน</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={handleOnClickCloseModal}
+                ></button>
+              </div>
+
+              <div className="modal-body">
+                <OrderAddressDeliveryModal
+                  closeModal={closeModal}
+                  customerId={customerId}
+                  customerAddressDefaultId={customerAddressDefault.id}
+                  handleOnClickAddressCustomerById={
+                    handleOnClickAddressCustomerById
+                  }
+                />
               </div>
             </div>
           </div>
@@ -225,7 +227,6 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
         </div>
 
         <div className="ordertotal_button">
-          <div className="item1"></div>
           <button onClick={handleOnClickOrderResult}>สั่งซื้อสินค้า</button>
         </div>
       </div>

@@ -8,11 +8,17 @@ function EditPostReviewContain({
   imageProduct,
   username,
   productRating,
+  productRatingId,
   currentRating,
   currentPostReview,
-  currentImages,
+  currentImageReview1,
+  currentImageReview2,
+  currentImageReview3,
+  currentImageReview4,
+  postImagesId,
   displayUsername,
-  setTrigger,
+  triggerRating,
+  setTriggerRating,
 }) {
   return (
     <>
@@ -24,11 +30,17 @@ function EditPostReviewContain({
         imageProduct={imageProduct}
         username={username}
         productRating={productRating}
+        productRatingId={productRatingId}
         currentRating={currentRating}
         currentPostReview={currentPostReview}
-        currentImages={currentImages}
+        currentImageReview1={currentImageReview1}
+        currentImageReview2={currentImageReview2}
+        currentImageReview3={currentImageReview3}
+        currentImageReview4={currentImageReview4}
+        postImagesId={postImagesId}
         displayUsername={displayUsername}
-        setTrigger={setTrigger}
+        triggerRating={triggerRating}
+        setTriggerRating={setTriggerRating}
       />
     </>
   );

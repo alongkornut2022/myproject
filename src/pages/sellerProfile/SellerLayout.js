@@ -4,7 +4,7 @@ import SellerSidebar from '../../components/sellers/SellerSidebar';
 function SellerDetail() {
   return (
     <div className="home_main_content">
-      <div className="home_main_content_top">
+      <div className="customer_main_content_top">
         <SellerSidebar />
 
         <div className="customer_main_content_right">

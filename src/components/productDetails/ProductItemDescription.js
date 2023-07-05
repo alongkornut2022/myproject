@@ -31,10 +31,12 @@ function ProductItemDescription({ productItem, productSpecs }) {
               </div>
             </div>
           </div>
+
           <div className="item1">
             <div className="item2">จำนวนสินค้า</div>
             <div className="item3">{inventory} ชิ้น</div>
           </div>
+
           <div
             className="item1"
             hidden={
@@ -46,6 +48,7 @@ function ProductItemDescription({ productItem, productSpecs }) {
             <div className="item2">น้ำหนัก</div>
             <div className="item3">{productWeightPiece} กรัม</div>
           </div>
+
           <div className="item1">
             <div className="item2">ส่งจาก</div>
             <div className="item3">จังหวัด{province}</div>

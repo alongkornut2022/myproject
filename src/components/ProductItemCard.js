@@ -1,10 +1,10 @@
-function ProductItemCard({ productItems }) {
+function ProductItemCard({ productItems, stockStart, inventory }) {
   const {
     productName,
     productUnitprice,
     alreadysold,
     image1,
-    inventory,
+    // inventory,
     createdAt,
     discounts,
   } = productItems;
@@ -23,13 +23,20 @@ function ProductItemCard({ productItems }) {
             <div className="productitem_card_discounts_item1">ลด</div>
             <div className="productitem_card_discounts_item2">{discounts}%</div>
           </div>
-          <img src={image1} sizes="200" />
+          <img src={image1} />
         </div>
         <div className="productitem_card_detail">
           <div className="productitem_card_detail_top">
             <div className="productname">{productName}</div>
           </div>
-          <div className="productitem_card_detail_middle"></div>
+          <div className="productitem_card_detail_middle">
+            <div
+              className="productitem_card_detail_inventory"
+              hidden={stockStart ? '' : 'hidden'}
+            >
+              ยอดเต็ม {stockStart} / คงคลัง {inventory}
+            </div>
+          </div>
           <div className="productitem_card_detail_buttom">
             <div className="productitem_card_detail_buttom_left">
               <div

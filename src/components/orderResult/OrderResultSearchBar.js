@@ -26,7 +26,7 @@ function OrderResultSearchBar({ customerId, setOrderCustomer }) {
       <div className="orderresult_searchbar_input">
         <input
           type="text"
-          placeholder="สามารถค้นหาโดยใช้ ชื่อผู้ขาย หมายเลขคำสั่งซื้อ หรือ ชื่อสินค้า"
+          placeholder="ค้นหาโดยใช้ ชื่อผู้ขาย หมายเลขคำสั่งซื้อ หรือ ชื่อสินค้า"
           onChange={(event) => setSearchOrder(event.target.value)}
           onKeyDown={handleOnClickSearchOrder}
         />

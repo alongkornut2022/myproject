@@ -14,7 +14,7 @@ import Register from '../pages/Register';
 import Login from '../pages/Login';
 import AddressBook from '../pages/Customer/AddressBook';
 import Profile from '../pages/Customer/Profile';
-import OrderHistory from '../pages/Customer/OrderHistory';
+
 import PasswordEdit from '../pages/Customer/PasswordEdit';
 import HowToOrderPage from '../pages/HowToOrderPage';
 import PaymentMethodPage from '../pages/PaymentMethodPage';
@@ -62,7 +62,7 @@ function Router() {
                 <Route path="AddressBook/:id" element={<AddressBook />} />
                 <Route path="PasswordEdit/:id" element={<PasswordEdit />} />
                 <Route path="Cart/:id" element={<Cart />} />
-                <Route path="OrderHistory/:id" element={<OrderHistory />} />
+
                 <Route path="Purchase/:customerId" element={<OrderResult />} />
               </Route>
               <Route

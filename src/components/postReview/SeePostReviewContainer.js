@@ -1,8 +1,13 @@
-import { useState } from 'react';
 import SeePostReviewItem from './SeePostReviewItem';
 
-function SeePostReviewContainer({ orderItem, closeModal2 }) {
-  const [trigger, setTrigger] = useState(false);
+function SeePostReviewContainer({
+  orderItem,
+  closeModal2,
+  triggerOrderRating,
+  setTriggerOrderRating,
+  triggerProductRating,
+  setTriggerProductRating,
+}) {
   return (
     <div className="editpostreview_container">
       <div className="editpostreview_modal_item">
@@ -13,13 +18,15 @@ function SeePostReviewContainer({ orderItem, closeModal2 }) {
                 key={el.id}
                 orderItem={el}
                 closeModal2={closeModal2}
-                setTrigger={setTrigger}
-                trigger={trigger}
+                triggerOrderRating={triggerOrderRating}
+                setTriggerOrderRating={setTriggerOrderRating}
+                triggerProductRating={triggerProductRating}
+                setTriggerProductRating={setTriggerProductRating}
               />
             ))}
       </div>
       <div className="editpostreview_modal_buttom">
-        <button onClick={closeModal2}>ตกลง</button>
+        <button onClick={closeModal2}>ปิด</button>
       </div>
     </div>
   );

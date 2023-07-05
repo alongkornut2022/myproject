@@ -2,13 +2,10 @@ import { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ErrorContext } from '../../contexts/ErrorContext';
 import axios from '../../config/axios';
-import { useNavigate } from 'react-router-dom';
 
 function Profile() {
   const { customer } = useContext(AuthContext);
   const { setError } = useContext(ErrorContext);
-
-  const navigate = useNavigate();
 
   const focusUsername = useRef();
   const focusEmail = useRef();
@@ -24,65 +21,6 @@ function Profile() {
   const [editEmail, setEditEmail] = useState(false);
   const [editPhoneNumber, setEditPhoneNumber] = useState(false);
 
-  const onChangeUsername = (event) => setUsername(event.target.value);
-  const onChangeEmail = (event) => setEmail(event.target.value);
-  const onChangePhoneNumber = (event) => setPhoneNumber(event.target.value);
-
-  const focusButtonUsername = () => {
-    // document.getElementById('buttonUsername').addEventListener('click', () => {
-    //   document.getElementById('textUsername').focus();
-    // });
-    focusUsername.current.focus();
-  };
-
-  const focusButtonEmail = () => {
-    // document.getElementById('buttonEmail').addEventListener('click', () => {
-    //   document.getElementById('textEmail').focus();
-    // });
-    focusEmail.current.focus();
-  };
-
-  const focusButtonPhoneNumber = () => {
-    // document
-    //   .getElementById('buttonPhoneNumber')
-    //   .addEventListener('click', () => {
-    //     document.getElementById('textPhoneNumber').focus();
-    //   });
-    focusPhoneNumber.current.focus();
-  };
-
-  const handleClickEditUsename = async (event) => {
-    try {
-      event.preventDefault();
-      setEditUsername(true);
-      focusButtonUsername();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleClickEditEmail = async (event) => {
-    try {
-      event.preventDefault();
-      setEditEmail(true);
-      focusButtonEmail();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleClickEditPhoneNumber = async (event) => {
-    try {
-      event.preventDefault();
-      setEditPhoneNumber(true);
-      focusButtonPhoneNumber();
-    } catch (err) {}
-  };
-
-  const handleClickGender = async (event) => {
-    setGender(event.target.value);
-  };
-
   const handleSubmitUpdate = async (event) => {
     try {
       event.preventDefault();
@@ -93,157 +31,178 @@ function Profile() {
         gender,
         birthDate,
       });
-      navigate(`/customer/profile/${customer.id}`);
+      document.location.reload();
     } catch (err) {
       setError(err.response.data.message);
     }
   };
 
+  const handleOnClickCancle = () => {
+    setUsername(`${customer.username}`);
+    setEmail(`${customer.email}`);
+    setPhoneNumber(`${customer.phoneNumber}`);
+    setGender(`${customer.gender}`);
+    setBirthDate(`${customer.birthDate}`);
+  };
+
   return (
     <>
-      <div className="customer_main_content_right_top">
-        <h3>ข้อมูลส่วนตัว</h3>
-      </div>
+      <div className="customer_main_content_right_top">ข้อมูลส่วนตัว</div>
 
       <div className="customer_main_content_right_middle">
         <div className="customer_main_content_right_middle_left">
-          <form onSubmit={handleSubmitUpdate}>
+          <div>
             <div className="customer_inner_content">
-              <div className="item1">
-                <label for="username">ชื่อผู้ใช้</label>
-              </div>
+              <div className="item1">ชื่อผู้ใช้</div>
               <div className="item2">
                 <input
                   type="text"
+                  minlength="8"
+                  maxlength="30"
                   ref={focusUsername}
-                  // id="textUsername"
                   value={username}
-                  onChange={editusername ? onChangeUsername : ''}
+                  onChange={
+                    editusername
+                      ? (event) => setUsername(event.target.value)
+                      : ''
+                  }
+                  required="required"
                 />
               </div>
+
               <div className="item4">
                 <button
                   type="button"
-                  // id="buttonUsername"
-                  onClick={handleClickEditUsename}
+                  onClick={() => {
+                    focusUsername.current.focus();
+                    setEditUsername(true);
+                  }}
                 >
                   แก้ไข
                 </button>
               </div>
             </div>
-
-            <div className="customer_inner_content">
-              <div className="item1">
-                <label for="email">อีเมล์</label>
-              </div>
-              <div className="item2">
-                <input
-                  type="text"
-                  ref={focusEmail}
-                  // id="textEmail"
-                  value={email}
-                  onChange={editEmail ? onChangeEmail : ''}
-                />
-              </div>
-              <div className="item4">
-                <button
-                  type="button"
-                  // id="buttonEmail"
-                  onClick={handleClickEditEmail}
-                >
-                  แก้ไข
-                </button>
+            <div className="customer_inner_content_validate">
+              <div className="item1"></div>
+              <div className="register_inner_content_validate_profile">
+                (8-30 ตัว ขึ้นต้นด้วยตัวอักษร)
               </div>
             </div>
+          </div>
 
-            <div className="customer_inner_content">
-              <div className="item1">
-                <label for="phoneNumber">หมายเลขโทรศัพท์</label>
-              </div>
-              <div className="item2">
-                <input
-                  type="text"
-                  ref={focusPhoneNumber}
-                  // id="textPhoneNumber"
-                  value={phoneNumber}
-                  onChange={editPhoneNumber ? onChangePhoneNumber : ''}
-                />
-              </div>
-              <div className="item4">
-                <button
-                  type="button"
-                  // id="buttonPhoneNumber"
-                  onClick={handleClickEditPhoneNumber}
-                >
-                  แก้ไข
-                </button>
-              </div>
+          <div className="customer_inner_content">
+            <div className="item1">อีเมล์</div>
+            <div className="item2">
+              <input
+                type="text"
+                maxlength="50"
+                ref={focusEmail}
+                value={email}
+                onChange={
+                  editEmail ? (event) => setEmail(event.target.value) : ''
+                }
+                required="required"
+              />
             </div>
+            <div className="item4">
+              <button
+                type="button"
+                onClick={() => {
+                  focusEmail.current.focus();
+                  setEditEmail(true);
+                }}
+              >
+                แก้ไข
+              </button>
+            </div>
+          </div>
 
-            <div className="customer_inner_content">
-              <div className="item1">
-                <label for="gender">เพศ</label>
-              </div>
-              <div className="item3">
-                <div className="item3_1">
-                  <div>
-                    <input
-                      type="radio"
-                      id="male"
-                      name="gender"
-                      value="MALE"
-                      onClick={handleClickGender}
-                      checked={gender === 'MALE' ? 'checked' : ''}
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      id="female"
-                      name="gender"
-                      value="FEMALE"
-                      onClick={handleClickGender}
-                      checked={gender === 'FEMALE' ? 'checked' : ''}
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      id="other"
-                      name="gender"
-                      value="OTHER"
-                      onClick={handleClickGender}
-                      checked={gender === 'OTHER' ? 'checked' : ''}
-                    />
-                  </div>
+          <div className="customer_inner_content">
+            <div className="item1">หมายเลขโทรศัพท์</div>
+            <div className="item2">
+              <input
+                type="text"
+                minlength="10"
+                maxlength="10"
+                ref={focusPhoneNumber}
+                value={phoneNumber}
+                onChange={
+                  editPhoneNumber
+                    ? (event) =>
+                        setPhoneNumber(event.target.value.replace(/[^\d]/, ''))
+                    : ''
+                }
+                required="required"
+              />
+            </div>
+            <div className="item4">
+              <button
+                type="button"
+                onClick={() => {
+                  focusPhoneNumber.current.focus();
+                  setEditPhoneNumber(true);
+                }}
+              >
+                แก้ไข
+              </button>
+            </div>
+          </div>
+
+          <div className="customer_inner_content">
+            <div className="item1">เพศ</div>
+            <div className="item3">
+              <div className="item3_1">
+                <div>
+                  <input
+                    type="radio"
+                    value="MALE"
+                    onClick={(event) => setGender(event.target.value)}
+                    checked={gender === 'MALE' ? 'checked' : ''}
+                  />
                 </div>
-                <div className="item3_2">
-                  <label for="MALE">ชาย</label>
-                  <label for="FEMALE">หญิง </label>
-                  <label for="OTHER">อื่น ๆ</label>
+                <div>
+                  <input
+                    type="radio"
+                    value="FEMALE"
+                    onClick={(event) => setGender(event.target.value)}
+                    checked={gender === 'FEMALE' ? 'checked' : ''}
+                  />
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    value="OTHER"
+                    onClick={(event) => setGender(event.target.value)}
+                    checked={gender === 'OTHER' ? 'checked' : ''}
+                  />
                 </div>
               </div>
-            </div>
-
-            <div className="customer_inner_content">
-              <div className="item1">
-                <label for="birthday">วัน/เดือน/ปี เกิด</label>
-              </div>
-              <div className="item2">
-                <input
-                  type="date"
-                  id="birthdate"
-                  name="birthdate"
-                  value={birthDate}
-                  onChange={(event) => setBirthDate(event.target.value)}
-                />
+              <div className="item3_2">
+                <label for="MALE">ชาย</label>
+                <label for="FEMALE">หญิง </label>
+                <label for="OTHER">อื่น ๆ</label>
               </div>
             </div>
+          </div>
 
-            <div className="customer_inner_content_submit">
-              <input type="submit" value="บันทึก" />
+          <div className="customer_inner_content">
+            <div className="item1">วัน/เดือน/ปี เกิด</div>
+            <div className="item2">
+              <input
+                type="date"
+                id="birthdate"
+                name="birthdate"
+                value={birthDate}
+                onChange={(event) => setBirthDate(event.target.value)}
+              />
             </div>
-          </form>
+          </div>
+
+          <div className="customer_inner_content_submit">
+            <button onClick={handleSubmitUpdate}> บันทึก </button>
+
+            <button onClick={handleOnClickCancle}>ยกเลิก</button>
+          </div>
         </div>
         <div className="customer_main_content_right_middle_right"></div>
       </div>

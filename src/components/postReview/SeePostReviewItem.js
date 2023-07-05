@@ -1,10 +1,17 @@
 import { Modal } from 'bootstrap';
 import { useEffect, useRef, useState } from 'react';
 import axios from '../../config/axios';
+import EditPostReviewItem from './EditPostReviewItem';
+import PostReviewItem from './PostReviewItem';
 
-import EditPostReviewContain from './EditPostReviewContain';
-
-function SeePostReviewItem({ orderItem, closeModal2, setTrigger, trigger }) {
+function SeePostReviewItem({
+  orderItem,
+  closeModal2,
+  triggerOrderRating,
+  setTriggerOrderRating,
+  triggerProductRating,
+  setTriggerProductRating,
+}) {
   const {
     orderDetailId,
     customerId,
@@ -13,37 +20,70 @@ function SeePostReviewItem({ orderItem, closeModal2, setTrigger, trigger }) {
     image,
     username,
     userPicture,
-    createdAt,
   } = orderItem;
+
+  const modalEl4 = useRef();
+  const [modal4, setModal4] = useState(null);
+
+  const modalEl5 = useRef();
+  const [modal5, setModal5] = useState(null);
 
   const [productRating, setProductRating] = useState([]);
 
-  console.log('see edit', productRating);
+  let productRatingId;
+  let postImagesId;
+  let createdAtProductRating;
 
-  const modalEl = useRef();
-  const [modal, setModal] = useState(null);
+  if (productRating.length > 0) {
+    productRatingId = productRating[0].productRatingId;
+    postImagesId = productRating[0].postImagesId;
+    createdAtProductRating = productRating[0].createdAt;
+  } else {
+    productRatingId = '';
+    postImagesId = '';
+    createdAtProductRating = '';
+  }
 
-  const fetchProductRating = async () => {
-    try {
-      const resProductRating = await axios.get(
-        `/postreview/${orderDetailId}/${productId}/${customerId}`
-      );
-      setProductRating(resProductRating.data.productRating);
-      setTrigger(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const date = new Date(createdAtProductRating);
+  const day = date.getUTCDate();
+  const monthNum = date.getUTCMonth();
+  const month = monthNum + 1;
+  const year = date.getUTCFullYear();
+  const hour = date.getHours();
+  const minutes = date.getMinutes();
+
+  useEffect(() => {
+    const fetchProductRating = async () => {
+      try {
+        const resProductRating = await axios.get(
+          `/postreview/${orderDetailId}/${productId}/${customerId}`
+        );
+        setProductRating(resProductRating.data.productRating);
+        setTriggerProductRating(false);
+        setTriggerOrderRating(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchProductRating();
+  }, [triggerProductRating, triggerOrderRating]);
 
   const deleteProductRating = async () => {
     if (
       window.confirm('คุณแน่ใจหรือว่า ต้องการ "ลบ คะแนนของร้านค้า" ? ') === true
     ) {
       try {
-        await axios.delete(
-          `/postreview/${orderDetailId}/${productId}/${customerId}`
-        );
-        setTrigger(true);
+        if (postImagesId) {
+          await axios.delete(
+            `/postreview/images/${customerId}/${productRatingId}/${postImagesId}`
+          );
+          await axios.delete(`/postreview/${customerId}/${productRatingId}`);
+        } else {
+          await axios.delete(`/postreview/${customerId}/${productRatingId}`);
+        }
+        setTriggerOrderRating(true);
+        setTriggerProductRating(true);
+        // closeModal2();
       } catch (err) {
         console.log(err);
       }
@@ -51,21 +91,35 @@ function SeePostReviewItem({ orderItem, closeModal2, setTrigger, trigger }) {
     }
   };
 
-  const handleClickModal = () => {
-    const modalObj = new Modal(modalEl.current);
-    setModal(modalObj);
+  const handleClickModal4 = () => {
+    const modalObj = new Modal(modalEl4.current);
+    setModal4(modalObj);
     modalObj.show();
+    setTriggerProductRating(true);
   };
-  const handleOnClickCloseModal = () => {
-    closeModal();
+  const handleOnClickCloseModal4 = () => {
+    closeModal4();
+    setTriggerProductRating(false);
   };
-  const closeModal = (event) => {
-    modal.hide();
+  const closeModal4 = (event) => {
+    modal4.hide();
+    setTriggerProductRating(false);
   };
 
-  useEffect(() => {
-    fetchProductRating();
-  }, [trigger]);
+  const handleClickModal5 = () => {
+    const modalObj = new Modal(modalEl5.current);
+    setModal5(modalObj);
+    modalObj.show();
+    setTriggerOrderRating(true);
+  };
+  const handleOnClickCloseModal5 = () => {
+    closeModal5();
+    setTriggerOrderRating(false);
+  };
+  const closeModal5 = (event) => {
+    modal5.hide();
+    setTriggerOrderRating(false);
+  };
 
   return (
     <div className="editpostreview_modal_item_container">
@@ -80,7 +134,18 @@ function SeePostReviewItem({ orderItem, closeModal2, setTrigger, trigger }) {
         </div>
         <div className="editpostreview_modal_item_top_button">
           <div className="editpostreview_modal_item_top_button_edit">
-            <button onClick={handleClickModal}>แก้ไข</button>
+            <button
+              onClick={handleClickModal4}
+              hidden={productRating.length > 0 ? '' : 'hidden'}
+            >
+              แก้ไข
+            </button>
+            <button
+              onClick={handleClickModal5}
+              hidden={productRating.length > 0 ? 'hidden' : ''}
+            >
+              ให้คะแนน
+            </button>
           </div>
           <div className="editpostreview_modal_item_top_button_delete">
             {productRating.length > 0 ? (
@@ -106,46 +171,47 @@ function SeePostReviewItem({ orderItem, closeModal2, setTrigger, trigger }) {
             คะแนน
           </div>
           <div className="editpostreview_modal_item_customer_date">
-            {productRating.length > 0 ? productRating[0].createdAt : ''}
+            {productRating.length > 0
+              ? day + '/' + month + '/' + year + ' ' + hour + ':' + minutes
+              : ''}
           </div>
         </div>
       </div>
 
-      <div className="modal fade" tabIndex="-1" ref={modalEl}>
+      <div className="modal fade" tabIndex="-1" ref={modalEl4}>
+        <div className="modal-dialog modal-dialog-centered modal-lg">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">แก้ไขคะแนนสินค้า</h5>
+            </div>
+
+            <div className="modal-body">
+              <EditPostReviewItem
+                orderItem={orderItem}
+                productRating={productRating.length > 0 ? productRating : ''}
+                triggerProductRating={triggerProductRating}
+                setTriggerProductRating={setTriggerProductRating}
+                setTriggerOrderRating={setTriggerOrderRating}
+                handleOnClickCloseModal4={handleOnClickCloseModal4}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" tabIndex="-1" ref={modalEl5}>
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">ให้คะแนนสินค้า</h5>
-              <button
-                className="btn-close"
-                onClick={handleOnClickCloseModal}
-              ></button>
             </div>
 
             <div className="modal-body">
-              <EditPostReviewContain
-                orderDetailId={orderDetailId}
-                customerId={customerId}
-                productId={productId}
-                productName={productName}
-                imageProduct={image}
-                username={username}
-                productRating={productRating.length > 0 ? productRating : ''}
-                currentRating={
-                  productRating.length > 0 ? productRating[0].rating : ''
-                }
-                currentPostReview={
-                  productRating.length > 0 ? productRating[0].postReview : ''
-                }
-                currentImages={
-                  productRating.length > 0 ? productRating[0].image1 : ''
-                }
-                displayUsername={
-                  productRating.length > 0
-                    ? productRating[0].displayUsername
-                    : ''
-                }
-                setTrigger={setTrigger}
+              <PostReviewItem
+                orderItem={orderItem}
+                closeModal={closeModal5}
+                setTriggerOrderRating={setTriggerOrderRating}
+                etTriggerProductRating={setTriggerProductRating}
               />
             </div>
           </div>

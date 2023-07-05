@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
+import { Modal } from 'bootstrap';
 import axios from '../../config/axios';
 import OrderResultProductItem from './OrderResultProductItem';
-import { Modal } from 'bootstrap';
 import PostReviewContainer from '../postReview/PostReviewContainer';
 import SeePostReviewContainer from '../postReview/SeePostReviewContainer';
 import BuyAgainContainer from '../postReview/BuyAgainContainer';
+import OrderResultItemTopBar from './OrderResultItemTopBar';
+import OrderResultItemBottomBar from './OrderResultItemBottomBar';
 
 function OrderResultItem({ orderCustomer, customerId }) {
   const {
@@ -26,9 +28,11 @@ function OrderResultItem({ orderCustomer, customerId }) {
   const [modal3, setModal3] = useState(null);
 
   const [orderItem, setOrderItem] = useState([]);
-  const [productRating, setProductRating] = useState([]);
+  const [orderRating, setOrderRating] = useState([]);
+  const [triggerOrderRating, setTriggerOrderRating] = useState(false);
+  const [triggerProductRating, setTriggerProductRating] = useState(false);
 
-  // console.log('order', productRating);
+  // console.log('1', orderRating);
 
   const fetchOrderItem = async () => {
     try {
@@ -36,6 +40,18 @@ function OrderResultItem({ orderCustomer, customerId }) {
         `/purchase/order/productitem/${orderDetailId}/customer/${customerId}`
       );
       setOrderItem(resOrderItem.data.orderItem);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchOrderRating = async () => {
+    try {
+      const resOrderRating = await axios.get(
+        `/postreview/order/${customerId}/${orderDetailId}`
+      );
+      setOrderRating(resOrderRating.data.orderRating);
+      setTriggerOrderRating(false);
     } catch (err) {
       console.log(err);
     }
@@ -62,14 +78,16 @@ function OrderResultItem({ orderCustomer, customerId }) {
     fetchOrderItem();
   }, [orderCustomer]);
 
+  useEffect(() => {
+    fetchOrderRating();
+  }, [orderCustomer, triggerOrderRating]);
+
   const handleClickModal = () => {
     const modalObj = new Modal(modalEl.current);
     setModal(modalObj);
     modalObj.show();
   };
-  const handleOnClickCloseModal = () => {
-    closeModal();
-  };
+
   const closeModal = (event) => {
     modal.hide();
   };
@@ -78,12 +96,15 @@ function OrderResultItem({ orderCustomer, customerId }) {
     const modalObj = new Modal(modalEl2.current);
     setModal2(modalObj);
     modalObj.show();
+    setTriggerProductRating(true);
   };
   const handleOnClickCloseModal2 = () => {
     closeModal2();
+    setTriggerProductRating(false);
   };
   const closeModal2 = (event) => {
     modal2.hide();
+    setTriggerProductRating(false);
   };
 
   const handleClickModal3 = () => {
@@ -103,7 +124,7 @@ function OrderResultItem({ orderCustomer, customerId }) {
     closeModal,
     customerId,
     orderDetailId,
-    setProductRating,
+    setTriggerOrderRating,
   };
 
   return (
@@ -111,150 +132,34 @@ function OrderResultItem({ orderCustomer, customerId }) {
       <div className="orderresult_container_item_main">
         <div className="orderresult_item_top">
           <div className="orderresult_item_seller">
-            <div className="orderresult_item_seller_left">
-              ร้านค้า : {shopName}
-            </div>
-            <div className="orderresult_item_seller_right">
-              {status === 'อยู่ระหว่างจัดส่ง' ? (
-                <div className="orderresult_item_seller_right_item">
-                  <div className="orderresult_item_seller_right_item_item1">
-                    {'หมายเลขคำสั่งซื้อ : ' + ' ' + orderDetailId + ' ' + ''}
-                  </div>
-                  | บริษัทขนส่งกำลังนำส่งพัสดุให้คุณ
-                </div>
-              ) : (
-                ''
-              )}
-              {status === 'จัดส่งสำเร็จ' ? (
-                <div className="orderresult_item_seller_right_item">
-                  <div className="orderresult_item_seller_right_item_item1">
-                    {'หมายเลขคำสั่งซื้อ : ' +
-                      ' ' +
-                      orderDetailId +
-                      ' ' +
-                      ' ' +
-                      '| จัดส่งสำเร็จ '}
-                  </div>
-
-                  {productRating.length > 0 ? (
-                    ' | ให้คะแนนแล้ว'
-                  ) : (
-                    <button onClick={handleClickModal}>
-                      | ยังไม่ได้ให้คะแนน
-                    </button>
-                  )}
-                </div>
-              ) : (
-                ''
-              )}
-              {status === 'รอชำระเงิน' ? (
-                <div className="orderresult_item_seller_right_item">
-                  | รอชำระเงิน
-                </div>
-              ) : (
-                ''
-              )}
-              {status === 'ชำระเงินแล้ว' ? (
-                <div className="orderresult_item_seller_right_item">
-                  | ชำระเงินแล้ว
-                </div>
-              ) : (
-                ''
-              )}
-              {status === 'รออนุมัติ' ? (
-                <div className="orderresult_item_seller_right_item">
-                  | รออนุมัติ
-                </div>
-              ) : (
-                ''
-              )}
-              {status === 'อนุมัติแล้ว' ? (
-                <div className="orderresult_item_seller_right_item">
-                  | อนุมัติแล้ว
-                </div>
-              ) : (
-                ''
-              )}
-            </div>
+            <OrderResultItemTopBar
+              orderCustomer={orderCustomer}
+              orderRating={orderRating}
+              handleClickModal={handleClickModal}
+            />
           </div>
+
           <div className="orderresult_item_product">
             {orderItem.map((el) => (
               <OrderResultProductItem key={el.id} orderItem={el} />
             ))}
           </div>
         </div>
-        <div className="orderresult_item_delivery">
-          <div className="orderresult_item_delivery_title">ค่าจัดส่ง : </div>
-          <div className="orderresult_item_delivery_price">
-            ฿ {deliveryPrice}
-          </div>
-        </div>
-        <div className="orderresult_item_middle">
-          <div className="orderresult_item_price_title">รวมการสั่งซื้อ : </div>
-          <div className="orderresult_item_price_amount">฿ {allTotalPrice}</div>
-        </div>
 
-        <div className="orderresult_item_buttom">
-          {status === 'อยู่ระหว่างจัดส่ง' || status === 'จัดส่งสำเร็จ' ? (
-            ''
-          ) : paymentMethod === 'ชำระเงินปลายทาง' ? (
-            <div className="orderresult_item_buttom_standby">
-              <div className="orderresult_item_buttom_standby_item">
-                เก็บเงินปลายทาง
-              </div>
-              <button>รออนุมัติ</button>
-            </div>
-          ) : (
-            <div
-              className={
-                status === 'ชำระเงินแล้ว'
-                  ? 'orderresult_item_buttom_money2'
-                  : 'orderresult_item_buttom_money'
-              }
-            >
-              <div className="orderresult_item_buttom_payment">
-                {status === 'ชำระเงินแล้ว'
-                  ? 'ชำระเงินแล้วผ่าน ' + paymentMethod
-                  : 'ชำระเงินผ่าน'}
-              </div>
-              <button hidden={status === 'ชำระเงินแล้ว' ? 'hidden' : ''}>
-                {paymentMethod}
-              </button>
-            </div>
-          )}
-
-          {status === 'อยู่ระหว่างจัดส่ง' || status === 'จัดส่งสำเร็จ' ? (
-            ''
-          ) : (
-            <button onClick={handleOnClickDeleteOrder}>ยกเลิกคำสั่งซื้อ</button>
-          )}
-
-          {status === 'จัดส่งสำเร็จ' ? (
-            <button onClick={handleClickModal3}>สั่งซื้ออีกครั้ง</button>
-          ) : (
-            ''
-          )}
-
-          {status === 'จัดส่งสำเร็จ' ? (
-            <button onClick={handleClickModal2}>ดูคะแนนร้านค้า</button>
-          ) : (
-            ''
-          )}
-        </div>
+        <OrderResultItemBottomBar
+          orderCustomer={orderCustomer}
+          handleClickModal3={handleClickModal3}
+          handleClickModal2={handleClickModal2}
+          handleOnClickDeleteOrder={handleOnClickDeleteOrder}
+        />
       </div>
 
-      <div className="modal fade" tabIndex="-1" ref={modalEl}>
+      <div className="modal fade" tabIndex="1" ref={modalEl}>
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">ให้คะแนนสินค้า</h5>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={handleOnClickCloseModal}
-              ></button>
             </div>
-
             <div className="modal-body">
               <PostReviewContainer
                 inputPostReviewContainer={inputPostReviewContainer}
@@ -268,20 +173,21 @@ function OrderResultItem({ orderCustomer, customerId }) {
         <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">คะแนนของร้านค้า</h5>
+              <h5 className="modal-title">คะแนนของสินค้า</h5>
               <button
                 type="button"
                 className="btn-close"
                 onClick={handleOnClickCloseModal2}
               ></button>
             </div>
-
             <div className="modal-body">
               <SeePostReviewContainer
                 orderItem={orderItem}
                 closeModal2={closeModal2}
-                customerId={customerId}
-                orderDetailId={orderDetailId}
+                triggerOrderRating={triggerOrderRating}
+                setTriggerOrderRating={setTriggerOrderRating}
+                triggerProductRating={triggerProductRating}
+                setTriggerProductRating={setTriggerProductRating}
               />
             </div>
           </div>
@@ -299,7 +205,6 @@ function OrderResultItem({ orderCustomer, customerId }) {
                 onClick={handleOnClickCloseModal3}
               ></button>
             </div>
-
             <div className="modal-body">
               <BuyAgainContainer
                 shopName={shopName}

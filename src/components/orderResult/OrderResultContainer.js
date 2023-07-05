@@ -30,6 +30,9 @@ function OrderResultContainer() {
 
   return (
     <div className="orderresult_container_main">
+      <div className="addressbook_main_content_right_top">
+        <h5>การสั่งซื้อของฉัน</h5>
+      </div>
       <div className="orderresult_container_navbar">
         <OrderResultNavBar
           fetchOrderCustomer={fetchOrderCustomer}

@@ -1,6 +1,7 @@
 import { Modal } from 'bootstrap';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthSellerContext } from '../../contexts/AuthSellerContext';
+import { ErrorContext } from '../../contexts/ErrorContext';
 import axios from '../../config/axiosSeller';
 import AddressSeller from '../../components/sellers/AddressSeller';
 import AddAddressSeller from '../../components/sellers/AddAddressSeller';
@@ -12,14 +13,18 @@ function SellerAddressBook() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [addressDetail, setAddressDetail] = useState('');
+  const [subDistrict, setSubDistrict] = useState('');
   const [district, setDistrict] = useState('');
   const [province, setProvince] = useState('');
   const [postcode, setPostcode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
+  const [thaiProvinces, setThaiprovinces] = useState([]);
+
   const [sellerAddress, setSellerAddress] = useState([]);
 
   const { seller } = useContext(AuthSellerContext);
+  const { setError } = useContext(ErrorContext);
 
   const fetchAddressSellerAll = async () => {
     try {
@@ -34,24 +39,24 @@ function SellerAddressBook() {
     fetchAddressSellerAll();
   }, []);
 
+  const fetchThaiProvinces = async () => {
+    try {
+      const resThaiProvinces = await axios.get('/thaiaddress/provinces');
+      setThaiprovinces(resThaiProvinces.data.thaiProvinces);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  };
+
   const handleClickModal = () => {
     const modalObj = new Modal(modalEl.current);
     setModal(modalObj);
     modalObj.show();
+    fetchThaiProvinces();
   };
 
   const closeModal = (event) => {
     modal.hide();
-  };
-
-  const ClearInputField = () => {
-    setFirstName('');
-    setLastName('');
-    setAddressDetail('');
-    setDistrict('');
-    setProvince('');
-    setPostcode('');
-    setPhoneNumber('');
   };
 
   const handleOnClickCloseModal = () => {
@@ -59,10 +64,22 @@ function SellerAddressBook() {
     ClearInputField();
   };
 
+  const ClearInputField = () => {
+    setFirstName('');
+    setLastName('');
+    setAddressDetail('');
+    setSubDistrict('');
+    setDistrict('');
+    setProvince('');
+    setPostcode('');
+    setPhoneNumber('');
+  };
+
   const valueInput = {
     firstName,
     lastName,
     addressDetail,
+    subDistrict,
     district,
     province,
     postcode,
@@ -70,6 +87,7 @@ function SellerAddressBook() {
     setFirstName,
     setLastName,
     setAddressDetail,
+    setSubDistrict,
     setDistrict,
     setProvince,
     setPostcode,
@@ -100,6 +118,8 @@ function SellerAddressBook() {
             key={el.id}
             sellerAddress={el}
             fetchData={fetchAddressSellerAll}
+            thaiProvinces={thaiProvinces}
+            fetchThaiProvinces={fetchThaiProvinces}
           />
         ))}
       </div>
@@ -108,11 +128,6 @@ function SellerAddressBook() {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">ที่อยู่ใหม่ร้านค้า</h5>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={handleOnClickCloseModal}
-              ></button>
             </div>
             <div className="modal-body">
               <AddAddressSeller
@@ -120,6 +135,8 @@ function SellerAddressBook() {
                 ClearInputField={ClearInputField}
                 fetchData={fetchAddressSellerAll}
                 valueInput={valueInput}
+                thaiProvinces={thaiProvinces}
+                setThaiprovinces={setThaiprovinces}
               />
             </div>
           </div>

@@ -58,9 +58,9 @@ function ChangePassword() {
             />
           </div>
           <div className="item4">
-            <Link end to="/Login">
+            {/* <Link end to="/Login">
               ลืมรหัสผ่าน
-            </Link>
+            </Link> */}
           </div>
         </div>
 
@@ -88,7 +88,13 @@ function ChangePassword() {
 
         <div className="customer_inner_content">
           <div className="item1"></div>
+
           <div className="item2_1">
+            <div className="register_inner_content_validate1">
+              <div className="register_inner_content_validate">
+                8 ตัวขึ้นไป มี ตัวอักษร (พิมพ์ใหญ่-เล็ก) ตัวเลข และสัญลักษณ์
+              </div>
+            </div>
             <input
               type="checkbox"
               checked={showPassword === true ? 'checked' : ''}

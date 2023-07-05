@@ -7,12 +7,18 @@ import { ErrorContext } from '../contexts/ErrorContext';
 import axios from '../config/axios';
 import EditAddressDelivery from '../components/EditAddressDelivery';
 
-function AddressDelivery({ customerAddress, fetchData }) {
+function AddressDelivery({
+  customerAddress,
+  fetchData,
+  thaiProvinces,
+  fetchThaiProvinces,
+}) {
   const {
     id: customerAddressId,
     firstName,
     lastName,
     addressDetail,
+    subDistrict,
     district,
     province,
     postcode,
@@ -26,14 +32,28 @@ function AddressDelivery({ customerAddress, fetchData }) {
   const { customer } = useContext(AuthContext);
   const { setError } = useContext(ErrorContext);
 
+  const [thaiAddressId, setThaiAddressId] = useState([]);
+
   const handleOnClickSetAddressDefault = async () => {
     try {
       await axios.patch(
         `/address/customer/status/${customerAddressId}/${customer.id}`
       );
     } catch (err) {
+      setError(err.response.data.message);
     } finally {
       document.location.reload();
+    }
+  };
+
+  const fetchThaiAddressId = async () => {
+    try {
+      const resThaiAddressId = await axios.get(
+        `/thaiaddress/total?subDistrict=${subDistrict}&&district=${district}&&province=${province}&&postcode=${postcode}`
+      );
+      setThaiAddressId(resThaiAddressId.data.thaiAddressId);
+    } catch (err) {
+      setError(err.response.data.message);
     }
   };
 
@@ -68,6 +88,8 @@ function AddressDelivery({ customerAddress, fetchData }) {
     const modalObj = new Modal(modalEl.current);
     setModal(modalObj);
     modalObj.show();
+    fetchThaiProvinces();
+    fetchThaiAddressId();
   };
 
   const closeModal = (event) => {
@@ -78,59 +100,32 @@ function AddressDelivery({ customerAddress, fetchData }) {
     <>
       <div className="address_delivery">
         <div className="address_delivery_top">
-          <div className="username_delivery">
-            <div className="address_delivery_title">ชื่อ-สกุล ผู้รับสินค้า</div>
-            <div className="address_delivery_input">
-              {firstName} {lastName}
+          <div className="address_delivery_top_content">
+            <div className="address_delivery_item0">
+              ชื่อ-สกุล {firstName} {lastName}
             </div>
+            <div>||</div>
+            <div className="address_delivery_item2"> {phoneNumber}</div>
           </div>
 
-          <div className="address_delivery_phonenumber">
-            <div className="address_delivery_title_2">โทรศัพท์</div>
-            <div className="address_delivery_input">{phoneNumber}</div>
+          <div className="address_delivery_top_content">
+            <div className="address_delivery_item1">{addressDetail}</div>
           </div>
-          <div className="address_delivery_status">
-            <div
-              className={
-                status === 'default' ? 'status_title' : 'status_title2'
-              }
-            >
-              {status === 'default' ? 'ค่าเริ่มต้น' : ''}
-            </div>
-          </div>
-        </div>
 
-        <div className="address_delivery_middle">
-          <div className="address_detial">
-            <div className="address_delivery_title">ที่อยู่</div>
-            <div className="address_delivery_input">{addressDetail}</div>
+          <div className="address_delivery_top_content">
+            <div className="address_delivery_item1">
+              ตำบล/แขวง {subDistrict},
+            </div>
+            <div className="address_delivery_item2">อำเภอ/เขต {district}</div>
           </div>
-          <div className="address_delivery_district">
-            <div className="address_delivery_title_2">อำเภอ/เขต</div>
-            <div className="address_delivery_input">{district}</div>
-          </div>
-          <div className="address_delivery_status">
-            <button
-              type="button"
-              disabled={status === 'default' ? 'disabled' : ''}
-              onClick={handleOnClickSetAddressDefault}
-            >
-              ตั้งเป็นค่าเริ่มต้น
-            </button>
+
+          <div className="address_delivery_top_content">
+            <div className="address_delivery_item1">จังหวัด {province},</div>
+            <div className="address_delivery_item2">{postcode}</div>
           </div>
         </div>
 
         <div className="address_delivery_bottom">
-          <div className="address_delivery_province">
-            <div className="address_delivery_title">จังหวัด</div>
-            <div className="address_delivery_input">{province}</div>
-          </div>
-
-          <div className="address_delivery_postcard">
-            <div className="address_delivery_title_2">รหัสไปรษณีย์ </div>
-            <div className="address_delivery_input">{postcode}</div>
-          </div>
-
           <div className="address_delivery_edit">
             <button
               type="button"
@@ -142,6 +137,24 @@ function AddressDelivery({ customerAddress, fetchData }) {
             </button>
             <button type="button" onClick={handleOnClickDeleteCustomerAddress}>
               ลบ
+            </button>
+          </div>
+          <div className="address_delivery_status">
+            <div
+              className={
+                status === 'default' ? 'status_title' : 'status_title2'
+              }
+            >
+              {status === 'default' ? 'ค่าเริ่มต้น' : ''}
+            </div>
+          </div>
+          <div className="address_delivery_status">
+            <button
+              type="button"
+              disabled={status === 'default' ? 'disabled' : ''}
+              onClick={handleOnClickSetAddressDefault}
+            >
+              ตั้งเป็นค่าเริ่มต้น
             </button>
           </div>
         </div>
@@ -163,6 +176,8 @@ function AddressDelivery({ customerAddress, fetchData }) {
                 customerAddress={customerAddress}
                 closeModal={closeModal}
                 fetchData={fetchData}
+                thaiProvinces={thaiProvinces}
+                thaiAddressId={thaiAddressId ? thaiAddressId : ''}
               />
             </div>
           </div>

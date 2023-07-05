@@ -8,7 +8,7 @@ function NewProduct() {
   const fetchNewProduct = async (limit, offset) => {
     try {
       const resNewProduct = await axios.get(
-        `/products/sort?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
+        `/products/sort?limit=${limit}&&offset=${offset}&&orderBy=ps.created_at desc`
       );
       setNewProduct(resNewProduct.data.productSort);
     } catch (err) {}

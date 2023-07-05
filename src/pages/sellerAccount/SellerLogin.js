@@ -28,6 +28,12 @@ function SellerLogin() {
     }
   };
 
+  const handleOnClickCancle = () => {
+    setEmailOrPhoneNumber('');
+    setPassword('');
+    setShowPassword(false);
+  };
+
   return (
     <div className="home_main_content">
       <div className="login_title">เข้าสู่ระบบ : "ผู้ขาย"</div>
@@ -40,10 +46,12 @@ function SellerLogin() {
                 <input
                   type="text"
                   placeholder="อีเมล์ หรือ หมายเลขโทรศัพท์"
+                  maxlength="50"
                   value={emailOrPhoneNumber}
                   onChange={(event) =>
                     setEmailOrPhoneNumber(event.target.value)
                   }
+                  required="required"
                 />
               </div>
               <div className="login_inner_content_left_middle">
@@ -56,6 +64,7 @@ function SellerLogin() {
                     placeholder="รหัสผ่าน"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
+                    required="required"
                   />
                 </div>
               </div>
@@ -92,7 +101,9 @@ function SellerLogin() {
               <button type="submit">เข้าสู่ระบบ "ผู้ขาย"</button>
             </div>
             <div>
-              <button type="reset">ยกเลิก</button>
+              <button type="button" onClick={handleOnClickCancle}>
+                ยกเลิก
+              </button>
             </div>
           </div>
         </form>

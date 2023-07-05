@@ -3,8 +3,9 @@ import axios from '../../config/axios';
 import { Modal } from 'bootstrap';
 import SellerOrderProductItem from './SellerOrderProductItem';
 import SellerAddresses from './SellerAddresses';
+import SellerOrderListBar from './SellerOrderListBar';
 
-function SellerOrderItem({ orderSeller, sellerId }) {
+function SellerOrderItem({ orderSeller, sellerId, handleOnClickSearchOrder }) {
   const {
     orderDetailId,
     customerName,
@@ -94,28 +95,39 @@ function SellerOrderItem({ orderSeller, sellerId }) {
               </div>
             </div>
           </div>
+
           <div className="order_item_product_container">
-            <div className="order_item_product_item1">
-              {orderItem.map((el) => (
-                <SellerOrderProductItem key={el.id} orderItem={el} />
-              ))}
+            <div className="order_item_product_container_left">
+              <div className="order_item_product_item1">
+                {orderItem.map((el) => (
+                  <SellerOrderProductItem key={el.id} orderItem={el} />
+                ))}
+              </div>
             </div>
-            <div className="order_item_product_item2">
-              <div className="item2_1">฿ {productTotalPrice}</div>
-              <div className="item2_2"> {paymentMethod}</div>
-            </div>
-            <div className="order_item_product_item3">{newStatus}</div>
-            <div className="order_item_product_item4">
-              <div>{deliveryOption}</div>
-              <button onClick={handleClickModal}>ที่อยู่จัดส่งพัสดุ</button>
-            </div>
-            <div
-              className="order_item_product_item5"
-              hidden={newStatus === 'ที่ต้องจัดส่ง' ? '' : 'hidden'}
-            >
-              <button>
-                <i class="fa-sharp fa-solid fa-truck-fast"></i> แจ้งจัดส่งสินค้า
-              </button>
+
+            <SellerOrderListBar
+              handleOnClickSearchOrder={handleOnClickSearchOrder}
+            />
+
+            <div className="order_item_product_container_right">
+              <div className="order_item_product_item2">
+                <div className="item2_1">฿ {productTotalPrice}</div>
+                <div className="item2_2"> {paymentMethod}</div>
+              </div>
+              <div className="order_item_product_item3">{newStatus}</div>
+              <div className="order_item_product_item4">
+                <div>{deliveryOption}</div>
+                <button onClick={handleClickModal}>ที่อยู่จัดส่งพัสดุ</button>
+              </div>
+              <div
+                className="order_item_product_item5"
+                hidden={newStatus === 'ที่ต้องจัดส่ง' ? '' : 'hidden'}
+              >
+                <button>
+                  <i class="fa-sharp fa-solid fa-truck-fast"></i>{' '}
+                  แจ้งจัดส่งสินค้า
+                </button>
+              </div>
             </div>
           </div>
         </div>

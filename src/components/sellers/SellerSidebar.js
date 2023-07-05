@@ -8,6 +8,7 @@ import axios from '../../config/axiosSeller';
 // import Spinner from '../Spinner';
 import SellerItem from './SellerItem';
 import NavbarSeller from './NavbarSeller';
+import NavbarSellerMobile from './NavbarSellerMobile';
 
 function SellerSidebar() {
   const { seller } = useContext(AuthSellerContext);
@@ -51,6 +52,9 @@ function SellerSidebar() {
 
       <div className="customer_main_content_left_buttom">
         <NavbarSeller />
+      </div>
+      <div className="customer_main_content_left_buttom_mobile">
+        <NavbarSellerMobile />
       </div>
     </div>
   );

@@ -1,9 +1,14 @@
-function CategoryItemOption({ category }) {
+function CategoryItemOption({ category, selectCategory }) {
   const { categoryName } = category;
 
   return (
     <>
-      <option value={categoryName}>{categoryName}</option>
+      <option
+        value={categoryName}
+        selected={selectCategory === categoryName ? 'selected' : ''}
+      >
+        {categoryName}
+      </option>
     </>
   );
 }

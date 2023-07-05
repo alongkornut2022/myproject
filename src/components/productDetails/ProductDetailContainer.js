@@ -18,7 +18,6 @@ function ProductDetailContainer({ productId }) {
   const [productSeller, setProductSeller] = useState([]);
 
   const sellerId = productItem.map((item) => item.sellerId);
-  console.log(sellerId);
 
   useEffect(() => {
     const fetchProductItem = async () => {

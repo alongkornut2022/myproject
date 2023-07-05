@@ -36,7 +36,14 @@ function Header({ category }) {
         <div className="header_top">
           <div className="header_top_left">
             <div hidden={seller || customer ? 'hidden' : ''}>
-              <i class="fa-solid fa-shop"></i> ร้านค้า |
+              <div className="header_top_left_shop">
+                <i class="fa-solid fa-shop"></i> ร้านค้า |
+              </div>
+            </div>
+            <div className="header_top_left_logo">
+              <Link end to="/HomePage">
+                Logo
+              </Link>
             </div>
             <div hidden={seller || customer ? 'hidden' : ''}>
               <Link end to="/seller/register">

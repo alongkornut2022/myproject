@@ -48,7 +48,7 @@ function SellerOrderSearchBar({
 
   return (
     <>
-      <div className="sellerorder_container_searchbar_main ">
+      <div className="sellerorder_container_searchbar_main">
         <div className="sellerorder_container_searchbar_left">
           <div className="sellerorder_container_searchbar_left_inner">
             <div className="sellerorder_container_searchbar_right_ordercustomer">

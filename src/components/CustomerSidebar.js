@@ -6,6 +6,7 @@ import defaultUserPicture from '../assets/images/userpicture.png';
 import NavbarCustomer from './NavbarCustomer';
 import axios from '../config/axios';
 import Spinner from './Spinner';
+import NavbarCustomerMobile from './NavbarCustomerMobile';
 
 function CustomerSidebar() {
   const { customer } = useContext(AuthContext);
@@ -67,9 +68,11 @@ function CustomerSidebar() {
           </div>
         </div>
       </div>
-
       <div className="customer_main_content_left_buttom">
         <NavbarCustomer />
+      </div>
+      <div className="customer_main_content_left_buttom_mobile">
+        <NavbarCustomerMobile />
       </div>
     </div>
   );

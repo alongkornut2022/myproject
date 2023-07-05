@@ -6,6 +6,7 @@ import ProductRatingNavBar from './ProductRatingNavBar';
 function ProductRating({ productId }) {
   const [productRating, setProductRating] = useState([]);
   const [ratingBar, setRatingBar] = useState();
+  const [trigerRating, setTrigerRating] = useState(false);
 
   const fetchProductRating = async (rating) => {
     try {
@@ -14,6 +15,7 @@ function ProductRating({ productId }) {
       );
       setProductRating(resProductRating.data.productRating);
       setRatingBar(rating);
+      setTrigerRating(false);
     } catch (err) {
       console.log(err);
     }
@@ -21,7 +23,7 @@ function ProductRating({ productId }) {
 
   useEffect(() => {
     fetchProductRating('All');
-  }, []);
+  }, [trigerRating]);
 
   return (
     <>
@@ -36,7 +38,11 @@ function ProductRating({ productId }) {
       </div>
       <div className="productdetail_review">
         {productRating.map((el) => (
-          <ProductDetailReviewItem key={el.id} productRating={el} />
+          <ProductDetailReviewItem
+            key={el.id}
+            productRating={el}
+            setTrigerRating={setTrigerRating}
+          />
         ))}
       </div>
     </>

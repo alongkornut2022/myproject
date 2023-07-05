@@ -37,7 +37,7 @@ function SellerAddresses({ orderSeller, sellerId }) {
     <>
       <div className="order_selleraddresses_container">
         <div className="order_selleraddresses_seller_main">
-          <div className="item1">ผู้ส่งสินค้า (ร้านค้า)</div>
+          <div className="item1">ผู้ส่งสินค้า (ร้านค้า : ผู้ขาย)</div>
           <div className="item2">ขื่อร้านค้า : {shopName}</div>
           <div className="item2">ที่อยู่ : {addressDetail}</div>
           <div className="item2">อำเภอ/เขต : {district}</div>
@@ -45,7 +45,7 @@ function SellerAddresses({ orderSeller, sellerId }) {
           <div className="item2">รหัสไปรษณีย์ : {postcode}</div>
         </div>
         <div className="order_selleraddresses_customer_main">
-          <div className="item1">ผู้รับสินค้า (ลูกค้า)</div>
+          <div className="item1">ผู้รับสินค้า (ลูกค้า : ผู้ซื้อ)</div>
           <div className="item2">ชื่อ : {fNameCustomer}</div>
           <div className="item2">นามสกุล : {lNameCustomer}</div>
           <div className="item2">ที่อยู่: {addressCustomer}</div>

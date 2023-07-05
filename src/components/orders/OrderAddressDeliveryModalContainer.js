@@ -1,5 +1,6 @@
 import { Modal } from 'bootstrap';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { ErrorContext } from '../../contexts/ErrorContext';
 import axios from '../../config/axios';
 import OrderAddressDeliveryModalItem from './OrderAddressDeliveryModalItem';
 import AddAddressDelivery from '../AddAddressDelivery';
@@ -12,46 +13,29 @@ function OrderAddressDeliveryModalContainer({
   const modalEl = useRef();
   const [modal, setModal] = useState(null);
 
-  const [customerAddressAll, setCustomerAddressAll] = useState([]);
-  const [customerAddressId, setCustomerAddressId] = useState(
-    customerAddressDefaultId
-  );
+  const { setError } = useContext(ErrorContext);
 
-  // console.log(customerAddressId);
+  const [customerAddressAll, setCustomerAddressAll] = useState([]);
+  const [customerAddressId, setCustomerAddressId] = useState();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [addressDetail, setAddressDetail] = useState('');
+  const [subDistrict, setSubDistrict] = useState('');
   const [district, setDistrict] = useState('');
   const [province, setProvince] = useState('');
   const [postcode, setPostcode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
-  const valueInput = {
-    firstName,
-    lastName,
-    addressDetail,
-    district,
-    province,
-    postcode,
-    phoneNumber,
-    setFirstName,
-    setLastName,
-    setAddressDetail,
-    setDistrict,
-    setProvince,
-    setPostcode,
-    setPhoneNumber,
-  };
+  const [thaiProvinces, setThaiprovinces] = useState([]);
 
-  const ClearInputField = () => {
-    setFirstName('');
-    setLastName('');
-    setAddressDetail('');
-    setDistrict('');
-    setProvince('');
-    setPostcode('');
-    setPhoneNumber('');
+  const fetchThaiProvinces = async () => {
+    try {
+      const resThaiProvinces = await axios.get('/thaiaddress/provinces');
+      setThaiprovinces(resThaiProvinces.data.thaiProvinces);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
   };
 
   const fetchAddressCustomerAll = async () => {
@@ -67,10 +51,15 @@ function OrderAddressDeliveryModalContainer({
     fetchAddressCustomerAll();
   }, []);
 
+  useEffect(() => {
+    setCustomerAddressId(customerAddressDefaultId);
+  }, []);
+
   const handleClickModal = () => {
     const modalObj = new Modal(modalEl.current);
     setModal(modalObj);
     modalObj.show();
+    fetchThaiProvinces();
   };
 
   const closeModal = (event) => {
@@ -80,6 +69,36 @@ function OrderAddressDeliveryModalContainer({
   const handleOnClickCloseModal = () => {
     closeModal();
     ClearInputField();
+  };
+
+  const ClearInputField = () => {
+    setFirstName('');
+    setLastName('');
+    setAddressDetail('');
+    setSubDistrict('');
+    setDistrict('');
+    setProvince('');
+    setPostcode('');
+    setPhoneNumber('');
+  };
+
+  const valueInput = {
+    firstName,
+    lastName,
+    addressDetail,
+    subDistrict,
+    district,
+    province,
+    postcode,
+    phoneNumber,
+    setFirstName,
+    setLastName,
+    setAddressDetail,
+    setSubDistrict,
+    setDistrict,
+    setProvince,
+    setPostcode,
+    setPhoneNumber,
   };
 
   return (
@@ -94,6 +113,8 @@ function OrderAddressDeliveryModalContainer({
               setCustomerAddressId={setCustomerAddressId}
               customerAddressId={customerAddressId}
               customerAddressDefaultId={customerAddressDefaultId}
+              thaiProvinces={thaiProvinces}
+              fetchThaiProvinces={fetchThaiProvinces}
             />
           ))}
         </div>
@@ -132,6 +153,8 @@ function OrderAddressDeliveryModalContainer({
                 ClearInputField={ClearInputField}
                 fetchData={fetchAddressCustomerAll}
                 valueInput={valueInput}
+                thaiProvinces={thaiProvinces}
+                setThaiprovinces={setThaiprovinces}
               />
             </div>
           </div>

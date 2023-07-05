@@ -107,7 +107,7 @@ function CartContainer({
   return (
     <>
       <div className="addressbook_main_content_right_top">
-        <h4>ตะกร้าสินค้า</h4>
+        <h5>ตะกร้าสินค้า</h5>
       </div>
 
       <div className="product_cart_main_content">
@@ -163,7 +163,7 @@ function CartContainer({
               onClick={(event) => handleOnClickAllCheckBoxProduct(event)}
             ></input>
           </div>
-          <div className="item2">เลือกทั้งหมด</div>
+          <div className="item2">ทั้งหมด</div>
           <div className="item2_1">
             <button onClick={handleOnClickDeleteCart}>ลบ</button>
           </div>

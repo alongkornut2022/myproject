@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { AuthSellerContext } from '../../contexts/AuthSellerContext';
 import { ErrorContext } from '../../contexts/ErrorContext';
 import axios from '../../config/axiosSeller';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function SellerChangePassword() {
   const [oldPassword, setOldPassword] = useState('');
@@ -10,7 +10,7 @@ function SellerChangePassword() {
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const { seller, logout } = useContext(AuthSellerContext);
+  const { seller, logoutSeller } = useContext(AuthSellerContext);
   const { setError } = useContext(ErrorContext);
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ function SellerChangePassword() {
         newPassword,
         confirmNewPassword,
       });
-      logout();
+      logoutSeller();
       navigate('/seller/login');
     } catch (err) {
       setError(err.response.data.message);
@@ -89,6 +89,11 @@ function SellerChangePassword() {
         <div className="customer_inner_content">
           <div className="item1"></div>
           <div className="item2_1">
+            <div className="register_inner_content_validate1">
+              <div className="register_inner_content_validate">
+                8 ตัวขึ้นไป มี ตัวอักษร (พิมพ์ใหญ่-เล็ก) ตัวเลข และสัญลักษณ์
+              </div>
+            </div>
             <input
               type="checkbox"
               checked={showPassword === true ? 'checked' : ''}

@@ -15,6 +15,7 @@ function ProductItemImages({ productItem, size, sizeMain }) {
     image7,
     image8,
     image9,
+    inventory,
   } = productItem;
 
   const modalEl = useRef();
@@ -76,13 +77,23 @@ function ProductItemImages({ productItem, size, sizeMain }) {
   return (
     <>
       <div className="productitem_image_main">
-        <img
-          src={imageMain}
-          width={sizeMain}
-          height={sizeMain}
-          alt=""
-          onClick={onClickModalImages}
-        />
+        <div className="productitem_image_main_inner">
+          <img
+            src={imageMain}
+            width={sizeMain}
+            height={sizeMain}
+            alt=""
+            onClick={onClickModalImages}
+          />
+          <div
+            className="productitem_image_main_outofstock"
+            hidden={inventory === 0 ? '' : 'hidden'}
+          >
+            <div className="productitem_image_main_outofstock_item">
+              สินค้าหมด
+            </div>
+          </div>
+        </div>
       </div>
       <div
         className={

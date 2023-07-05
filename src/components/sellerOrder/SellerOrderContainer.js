@@ -4,6 +4,7 @@ import SellerOrderItem from './SellerOrderItem';
 import SellerOrderNavBar from './SellerOrderNavBar';
 import SellerOrderSearchBar from './SellerOrderSearchBar';
 import SellerNewOrder from './SellerNewOrder';
+import SellerOrderListBar from './SellerOrderListBar';
 
 function SellerOrderContainer({ seller }) {
   const [orderSeller, setOrderSeller] = useState([]);
@@ -81,43 +82,23 @@ function SellerOrderContainer({ seller }) {
           />
         </div>
 
-        <div className="orderresult_container_item_listbar">
-          <div className="orderresult_container_item_listbar_item1">สินค้า</div>
-          <div className="sellerorder_container_item_listbar_item2">
-            <div className="orderresult_container_item_listbar_icon">
-              <button
-                onClick={() =>
-                  handleOnClickSearchOrder('od.product_total_price desc')
-                }
-              >
-                <i class="fa-solid fa-chevron-up fa-xs"></i>
-              </button>
-            </div>
-            ยอดรวมคำสั่งซื้อ
-            <div className="orderresult_container_item_listbar_icon">
-              <button
-                onClick={() =>
-                  handleOnClickSearchOrder('od.product_total_price')
-                }
-              >
-                <i class="fa-solid fa-chevron-down fa-xs"></i>
-              </button>
-            </div>
-          </div>
-          <div className="orderresult_container_item_listbar_item3">สถานะ</div>
-          <div className="orderresult_container_item_listbar_item4">
-            รูปแบบจัดส่ง
-          </div>
-          <div className="orderresult_container_item_listbar_item5">
-            ดำเนินการ
-          </div>
-        </div>
-
         <div className="order_neworder_container">
           <SellerNewOrder
             seller={seller}
             handleOnClickSearchOrder={handleOnClickSearchOrder}
             navBar={navBar}
+          />
+        </div>
+
+        <div className="sellerorder_container_item_listbar">
+          <div className="sellerorder_container_item_listbar_left">
+            <div className="sellerorder_container_item_listbar_item1">
+              สินค้า
+            </div>
+          </div>
+
+          <SellerOrderListBar
+            handleOnClickSearchOrder={handleOnClickSearchOrder}
           />
         </div>
 
@@ -127,6 +108,7 @@ function SellerOrderContainer({ seller }) {
               key={el.id}
               orderSeller={el}
               sellerId={seller.id}
+              handleOnClickSearchOrder={handleOnClickSearchOrder}
             />
           ))}
         </div>

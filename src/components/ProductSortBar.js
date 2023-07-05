@@ -37,7 +37,7 @@ function ProductSortBar({ dataSortBar }) {
                   : 'item2'
               }
             >
-              <button onClick={onClickNewProduct}>สินค้าล่าสุด</button>
+              <button onClick={onClickNewProduct}>ล่าสุด</button>
             </div>
             <div
               className={

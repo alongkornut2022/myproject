@@ -3,6 +3,7 @@ function OrderAddressDelivery({ customerAddressCurrent }) {
     firstName,
     lastName,
     addressDetail,
+    subDistrict,
     district,
     province,
     postcode,
@@ -11,15 +12,34 @@ function OrderAddressDelivery({ customerAddressCurrent }) {
   } = customerAddressCurrent;
   return (
     <>
-      <div className="item1">
-        {firstName} {lastName},
+      <div className="ordertotal_main_content_address_detail_content">
+        <div className="ordertotal_main_content_address_detail_content_left">
+          <div className="item1">
+            {firstName} {lastName}
+          </div>
+          <div className="item3">|| {phoneNumber}</div>
+        </div>
+        <div className="ordertotal_main_content_address_detail_content_right">
+          <div className={status === 'default' ? 'item4' : 'item4_2'}>
+            {status === 'default' ? 'ค่าเริ่มต้น' : ''}
+          </div>
+        </div>
       </div>
-      <div className="item2">{phoneNumber},</div>
-      <div className="item3">
-        {addressDetail}, อำเภอ/เขต {district}, จังหวัด {province}, {postcode}
+
+      <div className="ordertotal_main_content_address_detail_content">
+        <div className="item3">{addressDetail}</div>
       </div>
-      <div className={status === 'default' ? 'item4' : 'item4_2'}>
-        {status === 'default' ? 'ค่าเริ่มต้น' : ''}
+
+      <div className="ordertotal_main_content_address_detail_content">
+        <div className="item3">
+          ตำบล/แขวง {subDistrict}, อำเภอ/เขต {district}
+        </div>
+      </div>
+
+      <div className="ordertotal_main_content_address_detail_content">
+        <div className="item3">
+          จังหวัด {province}, {postcode}
+        </div>
       </div>
     </>
   );

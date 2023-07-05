@@ -2,13 +2,10 @@ import { useContext, useRef, useState } from 'react';
 import { AuthSellerContext } from '../../contexts/AuthSellerContext';
 import { ErrorContext } from '../../contexts/ErrorContext';
 import axios from '../../config/axiosSeller';
-import { useNavigate } from 'react-router-dom';
 
 function SellerProfile() {
   const { seller } = useContext(AuthSellerContext);
   const { setError } = useContext(ErrorContext);
-
-  const navigate = useNavigate();
 
   const focusShopName = useRef();
   const focusEmail = useRef();
@@ -22,50 +19,6 @@ function SellerProfile() {
   const [editEmail, setEditEmail] = useState(false);
   const [editPhoneNumber, setEditPhoneNumber] = useState(false);
 
-  const onChangeShopName = (event) => setShopName(event.target.value);
-  const onChangeEmail = (event) => setEmail(event.target.value);
-  const onChangePhoneNumber = (event) => setPhoneNumber(event.target.value);
-
-  const focusButtonShopName = () => {
-    focusShopName.current.focus();
-  };
-
-  const focusButtonEmail = () => {
-    focusEmail.current.focus();
-  };
-
-  const focusButtonPhoneNumber = () => {
-    focusPhoneNumber.current.focus();
-  };
-
-  const handleClickEditShopName = async (event) => {
-    try {
-      event.preventDefault();
-      setEditShopName(true);
-      focusButtonShopName();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleClickEditEmail = async (event) => {
-    try {
-      event.preventDefault();
-      setEditEmail(true);
-      focusButtonEmail();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleClickEditPhoneNumber = async (event) => {
-    try {
-      event.preventDefault();
-      setEditPhoneNumber(true);
-      focusButtonPhoneNumber();
-    } catch (err) {}
-  };
-
   const handleSubmitUpdate = async (event) => {
     try {
       event.preventDefault();
@@ -74,10 +27,16 @@ function SellerProfile() {
         email,
         phoneNumber,
       });
-      navigate(`/seller/profile/${seller.id}`);
+      document.location.reload();
     } catch (err) {
       setError(err.response.data.message);
     }
+  };
+
+  const handleOnClickCancle = () => {
+    setShopName(`${seller.shopName}`);
+    setEmail(`${seller.email}`);
+    setPhoneNumber(`${seller.phoneNumber}`);
   };
 
   return (
@@ -88,23 +47,44 @@ function SellerProfile() {
 
       <div className="customer_main_content_right_middle">
         <div className="customer_main_content_right_middle_left">
-          <form onSubmit={handleSubmitUpdate}>
-            <div className="customer_inner_content">
-              <div className="item1">
-                <label for="username">ชื่อร้านค้า</label>
+          <form onSubmit={handleSubmitUpdate} onReset={handleOnClickCancle}>
+            <div>
+              <div className="customer_inner_content">
+                <div className="item1">
+                  <label for="username">ชื่อร้านค้า</label>
+                </div>
+                <div className="item2">
+                  <input
+                    type="text"
+                    maxlength="50"
+                    ref={focusShopName}
+                    value={shopName}
+                    onChange={
+                      editShopName
+                        ? (event) => setShopName(event.target.value)
+                        : ''
+                    }
+                    required="required"
+                  />
+                </div>
+                <div className="item4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      focusShopName.current.focus();
+                      setEditShopName(true);
+                    }}
+                  >
+                    แก้ไข
+                  </button>
+                </div>
               </div>
-              <div className="item2">
-                <input
-                  type="text"
-                  ref={focusShopName}
-                  value={shopName}
-                  onChange={editShopName ? onChangeShopName : ''}
-                />
-              </div>
-              <div className="item4">
-                <button type="button" onClick={handleClickEditShopName}>
-                  แก้ไข
-                </button>
+
+              <div className="customer_inner_content_validate">
+                <div className="item1"></div>
+                <div className="register_inner_content_validate_profile">
+                  (ไม่เกิน 50 ตัว)
+                </div>
               </div>
             </div>
 
@@ -115,13 +95,23 @@ function SellerProfile() {
               <div className="item2">
                 <input
                   type="text"
+                  maxlength="50"
                   ref={focusEmail}
                   value={email}
-                  onChange={editEmail ? onChangeEmail : ''}
+                  onChange={
+                    editEmail ? (event) => setEmail(event.target.value) : ''
+                  }
+                  required="required"
                 />
               </div>
               <div className="item4">
-                <button type="button" onClick={handleClickEditEmail}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    focusEmail.current.focus();
+                    setEditEmail(true);
+                  }}
+                >
                   แก้ไข
                 </button>
               </div>
@@ -134,13 +124,29 @@ function SellerProfile() {
               <div className="item2">
                 <input
                   type="text"
+                  minlength="10"
+                  maxlength="10"
                   ref={focusPhoneNumber}
                   value={phoneNumber}
-                  onChange={editPhoneNumber ? onChangePhoneNumber : ''}
+                  onChange={
+                    editPhoneNumber
+                      ? (event) =>
+                          setPhoneNumber(
+                            event.target.value.replace(/[^\d]/, '')
+                          )
+                      : ''
+                  }
+                  required="required"
                 />
               </div>
               <div className="item4">
-                <button type="button" onClick={handleClickEditPhoneNumber}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    focusPhoneNumber.current.focus();
+                    setEditPhoneNumber(true);
+                  }}
+                >
                   แก้ไข
                 </button>
               </div>
@@ -148,6 +154,7 @@ function SellerProfile() {
 
             <div className="customer_inner_content_submit">
               <input type="submit" value="บันทึก" />
+              <input type="reset" value="ยกเลิก" />
             </div>
           </form>
         </div>

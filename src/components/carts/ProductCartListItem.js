@@ -92,15 +92,15 @@ function ProductCartListItem({
           <Link end to={`/ProductDetail/${productId}`}>
             <img src={image} />
           </Link>
-          <div className="item2_shopname">
-            <div>
-              <i class="fa-solid fa-shop fa-lg"></i> {shopName}
-            </div>
-          </div>
         </div>
 
         <div className="item3">
           <div className="item3_1">
+            <div className="item2_shopname">
+              <div>
+                <i class="fa-solid fa-shop fa-lg"></i> {shopName}
+              </div>
+            </div>
             <Link end to={`/ProductDetail/${productId}`}>
               {productName}
             </Link>
@@ -134,11 +134,7 @@ function ProductCartListItem({
 
           <div className="item3_4">{productTotalPriceCart}</div>
         </div>
-        <div className="item4">
-          <div className="address_delivery_change">
-            {/* <button>แก้ไข</button> */}
-          </div>
-        </div>
+        {/* <div className="item4"></div> */}
       </div>
     </>
   );

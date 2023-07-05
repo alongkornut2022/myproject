@@ -47,7 +47,7 @@ function SellerProductSortBar({
   const handleOnClickSearchProduct = async () => {
     try {
       const resProductSort = await axios.get(
-        `sellers/products/searchmultichoice/${sellerId}?navBar=${navBar}&&productName=${productName}&&selectCategory=${selectCategory}&&priceStart=${priceStart}&&priceTo=${priceTo}&&stockstartStart=${stockstartStart}&&stockstartTo=${stockstartTo}&&inventoryStart=${inventoryStart}&&inventoryTo=${inventoryTo}&&alreadysoldStart=${alreadysoldStart}&&alreadysoldTo=${alreadysoldTo}`
+        `sellers/products/search/${sellerId}?navBar=${navBar}&&productName=${productName}&&selectCategory=${selectCategory}&&priceStart=${priceStart}&&priceTo=${priceTo}&&stockstartStart=${stockstartStart}&&stockstartTo=${stockstartTo}&&inventoryStart=${inventoryStart}&&inventoryTo=${inventoryTo}&&alreadysoldStart=${alreadysoldStart}&&alreadysoldTo=${alreadysoldTo}`
       );
       setProductSeller(resProductSort.data.productSeller);
       setTrigerSearch(true);
@@ -57,6 +57,7 @@ function SellerProductSortBar({
   };
 
   const handleOnClickReset = () => {
+    setSelectCategory('หมวดหมู่ทั้งหมด');
     setProductName('');
     setPriceStart('');
     setPriceTo('');

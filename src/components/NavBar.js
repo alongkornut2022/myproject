@@ -28,12 +28,12 @@ function NavBar() {
         </div>
         <div className="item">
           <Link end to="/HowToOrderPage">
-            <i class="fa-solid fa-shop fa-lg"></i> วิธีการสั่งซื้อ
+            {/* <i class="fa-solid fa-shop fa-lg"></i> วิธีการสั่งซื้อ */}
           </Link>
         </div>
         <div className="item">
           <Link end to="/PaymentMethodPage">
-            <i class="fa-regular fa-credit-card fa-lg"></i> วิธีการชำระเงิน
+            {/* <i class="fa-regular fa-credit-card fa-lg"></i> วิธีการชำระเงิน */}
           </Link>
         </div>
 

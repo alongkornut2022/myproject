@@ -2,8 +2,8 @@ function ProductRatingNavBar({ fetchProductRating, ratingBar }) {
   return (
     <>
       <div className="productdetail_rating_navbar_left">
-        <div>คะแนนเต็ม 5</div>
-        <div>star</div>
+        <div>คะแนนเต็ม</div>
+        <div> 5 ดาว</div>
       </div>
       <div className="productdetail_rating_navbar_right">
         <div

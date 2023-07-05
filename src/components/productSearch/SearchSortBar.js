@@ -41,7 +41,7 @@ function SearchSortBar({ dataSortBar }) {
                   )
                 }
               >
-                สินค้าล่าสุด
+                ล่าสุด
               </button>
             </div>
             <div

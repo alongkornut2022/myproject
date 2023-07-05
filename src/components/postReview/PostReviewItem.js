@@ -1,25 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from '../../config/axios';
+import PostReviewAddPhoto from './PostReviewAddPhoto';
+import RadioRating from './RadioRating';
 
 function PostReviewItem({
   orderItem,
-  customerId,
   closeModal,
-  setProductRating,
+  setTriggerOrderRating,
+  setTriggerProductRating,
 }) {
-  const { orderDetailId, productId, productName, image, username } = orderItem;
+  const { orderDetailId, customerId, productId, productName, image, username } =
+    orderItem;
 
   const [rating, setRating] = useState(null);
   const [quelity, setQuelity] = useState(null);
-  const [postReview, setPostReview] = useState(null);
-  const [imageReview, setImageReview] = useState(null);
+  const [postReview, setPostReview] = useState('');
   const [checkboxUsername, setCheckboxUsername] = useState(0);
 
-  const uploadImageEl = useRef();
-
-  const handleOnClickImgaeReview = () => {
-    uploadImageEl.current.click();
-  };
+  const [imageReview1, setImageReview1] = useState(null);
+  const [imageReview2, setImageReview2] = useState(null);
+  const [imageReview3, setImageReview3] = useState(null);
+  const [imageReview4, setImageReview4] = useState(null);
 
   let usernameStr = '*';
   let i;
@@ -44,20 +45,46 @@ function PostReviewItem({
   const handleOnClickSubmit = async () => {
     try {
       if (rating) {
-        if (imageReview) {
+        if (imageReview1 || imageReview2 || imageReview3 || imageReview4) {
           const formData = new FormData();
-          formData.append('imageReview', imageReview);
-          await axios.post(
-            `/postreview/${orderDetailId}/${productId}/${customerId}?rating=${rating}&&postReview=${postReview}&&checkboxUsername=${checkboxUsername}`,
+          if (imageReview1) {
+            formData.append('imageReview', imageReview1);
+          }
+          if (imageReview2) {
+            formData.append('imageReview', imageReview2);
+          }
+          if (imageReview3) {
+            formData.append('imageReview', imageReview3);
+          }
+          if (imageReview4) {
+            formData.append('imageReview', imageReview4);
+          }
+
+          const resPostImages = await axios.post(
+            `/postreview/images/${customerId}`,
             formData
+          );
+
+          await axios.post(
+            `/postreview/${orderDetailId}/${productId}/${customerId}`,
+            {
+              rating,
+              checkboxUsername,
+              postReview,
+              postImagesId: resPostImages.data.postImages.id,
+            }
           );
           alert('คุณให้คะแนนสินค้า  ' + productName + '  แล้ว');
         } else {
           await axios.post(
-            `/postreview/${orderDetailId}/${productId}/${customerId}?rating=${rating}&&postReview=${postReview}&&checkboxUsername=${checkboxUsername}`
+            `/postreview/${orderDetailId}/${productId}/${customerId}`,
+            { rating, checkboxUsername, postReview }
           );
           alert('คุณให้คะแนนสินค้า  ' + productName + '  แล้ว');
         }
+        setTriggerOrderRating(true);
+        setTriggerProductRating(true);
+        handleOnClickClose();
       } else {
         alert('คุณยังไม่ได้ให้คะแนนสินค้า');
       }
@@ -66,15 +93,17 @@ function PostReviewItem({
     }
   };
 
-  const fetchProductRating = async () => {
-    try {
-      const resProductRating = await axios.get(
-        `/postreview/${orderDetailId}/${productId}/${customerId}`
-      );
-      setProductRating(resProductRating.data.productRating);
-    } catch (err) {
-      console.log(err);
-    }
+  const handleOnClickClose = () => {
+    closeModal();
+    setRating(null);
+    setQuelity(null);
+    setPostReview('');
+    setCheckboxUsername(0);
+    setImageReview1(null);
+    setImageReview2(null);
+    setImageReview3(null);
+    setImageReview4(null);
+    setTriggerOrderRating(false);
   };
 
   const handleCheckboxUsername = (event) => {
@@ -89,9 +118,16 @@ function PostReviewItem({
     showQuelity();
   }, [rating]);
 
-  useEffect(() => {
-    fetchProductRating();
-  }, []);
+  const dataInputAddPhoto = {
+    imageReview1,
+    setImageReview1,
+    imageReview2,
+    setImageReview2,
+    imageReview3,
+    setImageReview3,
+    imageReview4,
+    setImageReview4,
+  };
 
   return (
     <div className="postreview_modal_item_container">
@@ -102,94 +138,27 @@ function PostReviewItem({
         <div className="postreview_modal_item_product_title">{productName}</div>
       </div>
       <div className="postreview_modal_item_quelity">
-        <div className="postreview_modal_item_quelity_title">คุณภาพสินค้า</div>
-        <div className="postreview_modal_item_quelity_rating">
-          <input
-            type="radio"
-            name="rating"
-            value="1"
-            onClick={(event) => setRating(event.target.value)}
-            checked={rating == 1 ? 'checked' : ''}
-          />
-
-          <input
-            type="radio"
-            name="rating"
-            value="2"
-            onClick={(event) => setRating(event.target.value)}
-            checked={rating == 2 ? 'checked' : ''}
-          />
-
-          <input
-            type="radio"
-            name="rating"
-            value="3"
-            onClick={(event) => setRating(event.target.value)}
-            checked={rating == 3 ? 'checked' : ''}
-          />
-
-          <input
-            type="radio"
-            name="rating"
-            value="4"
-            onClick={(event) => setRating(event.target.value)}
-            checked={rating == 4 ? 'checked' : ''}
-          />
-
-          <input
-            type="radio"
-            name="rating"
-            value="5"
-            onClick={(event) => setRating(event.target.value)}
-            checked={rating == 5 ? 'checked' : ''}
-          />
-        </div>
-        <div className="postreview_modal_item_quelity_score">{quelity}</div>
+        <RadioRating rating={rating} setRating={setRating} quelity={quelity} />
       </div>
       <div className="postreview_modal_item_comment">
         <div className="postreview_modal_item_comment_textarea">
           <textarea
             rows="4"
             placeholder="เขียนรีวิวสินค้า เช่น คุณภาพ รูปลักษณ์"
+            value={postReview}
             onChange={(event) => {
               setPostReview(event.target.value);
             }}
           />
         </div>
-        <div className="postreview_modal_item_comment_file">
-          <div className="postreview_modal_item_comment_file_image">
-            {imageReview ? <img src={URL.createObjectURL(imageReview)} /> : ''}
-          </div>
-          <div className="postreview_modal_item_comment_file_handleimage">
-            <div className="item1">
-              <button type="button" onClick={handleOnClickImgaeReview}>
-                <i class="fa-solid fa-camera fa-xl"></i> เพื่ม รูปภาพ
-              </button>
-            </div>
-            <div className="item2">
-              {imageReview ? (
-                <button onClick={() => setImageReview(null)}>ลบรูปภาพ</button>
-              ) : (
-                ''
-              )}
-            </div>
-          </div>
 
-          <input
-            type="file"
-            ref={uploadImageEl}
-            onChange={(event) => {
-              if (event.target.files[0]) {
-                setImageReview(event.target.files[0]);
-              }
-            }}
-          />
-        </div>
+        <PostReviewAddPhoto dataInputAddPhoto={dataInputAddPhoto} />
       </div>
       <div className="postreview_modal_item_product_userrevirw">
         <div className="postreview_modal_item_product_userrevirw_checkbox">
           <input
             type="checkbox"
+            checked={checkboxUsername === 1 ? 'checked' : ''}
             onClick={(event) => handleCheckboxUsername(event)}
           />
         </div>
@@ -202,6 +171,7 @@ function PostReviewItem({
       </div>
       <div className="postreview_modal_item_submit">
         <button onClick={handleOnClickSubmit}>ยืนยัน</button>
+        <button onClick={handleOnClickClose}>ปิด</button>
       </div>
     </div>
   );

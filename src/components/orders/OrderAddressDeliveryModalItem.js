@@ -1,5 +1,7 @@
 import { Modal } from 'bootstrap';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
+import { ErrorContext } from '../../contexts/ErrorContext';
+import axios from '../../config/axios';
 import EditAddressDelivery from '../EditAddressDelivery';
 
 function OrderAddressDeliveryModalItem({
@@ -8,18 +10,28 @@ function OrderAddressDeliveryModalItem({
   setCustomerAddressId,
   customerAddressId,
   customerAddressDefaultId,
+  thaiProvinces,
+  fetchThaiProvinces,
 }) {
   const {
     id,
     firstName,
     lastName,
     addressDetail,
+    subDistrict,
     district,
     province,
     postcode,
     phoneNumber,
     status,
   } = customerAddressAll;
+
+  const modalEl = useRef();
+  const [modal, setModal] = useState(null);
+
+  const { setError } = useContext(ErrorContext);
+
+  const [thaiAddressId, setThaiAddressId] = useState([]);
 
   const handleOnClickSetCurrentAddress = (event) => {
     if (event.currentTarget.checked) {
@@ -29,13 +41,23 @@ function OrderAddressDeliveryModalItem({
     }
   };
 
-  const modalEl = useRef();
-  const [modal, setModal] = useState(null);
+  const fetchThaiAddressId = async () => {
+    try {
+      const resThaiAddressId = await axios.get(
+        `/thaiaddress/total?subDistrict=${subDistrict}&&district=${district}&&province=${province}&&postcode=${postcode}`
+      );
+      setThaiAddressId(resThaiAddressId.data.thaiAddressId);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  };
 
   const handleClickModal = () => {
     const modalObj = new Modal(modalEl.current);
     setModal(modalObj);
     modalObj.show();
+    fetchThaiProvinces();
+    fetchThaiAddressId();
   };
 
   const closeModal = (event) => {
@@ -48,11 +70,7 @@ function OrderAddressDeliveryModalItem({
         <div className="order_address_delivery_modal_item_checkbox">
           <input
             type="checkbox"
-            checked={
-              customerAddressId === id || customerAddressDefaultId === id
-                ? 'checked'
-                : ''
-            }
+            checked={customerAddressId === id ? 'checked' : ''}
             onClick={handleOnClickSetCurrentAddress}
           />
         </div>
@@ -63,9 +81,12 @@ function OrderAddressDeliveryModalItem({
             </div>
             <div className="item1_2">| {phoneNumber}</div>
           </div>
-          <div className="item2">{addressDetail}</div>
+          <div className="item2">ที่อยู่ {addressDetail}</div>
           <div className="item3">
-            อำเภอ/เขต {district} จังหวัด {province} {postcode}
+            ตำบล/แขวง {subDistrict} อำเภอ/เขต {district}
+          </div>
+          <div className="item3">
+            จังหวัด {province} {postcode}
           </div>
         </div>
         <div className="order_address_delivery_modal_item_edit">
@@ -99,6 +120,8 @@ function OrderAddressDeliveryModalItem({
                 customerAddress={customerAddressAll}
                 closeModal={closeModal}
                 fetchData={fetchData}
+                thaiProvinces={thaiProvinces}
+                thaiAddressId={thaiAddressId ? thaiAddressId : ''}
               />
             </div>
           </div>

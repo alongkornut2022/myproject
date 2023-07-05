@@ -36,7 +36,7 @@ function CategorySortBar({ dataSortBar }) {
                   handleOnClickNewProduct(categoryName, paginationLimit, 0)
                 }
               >
-                สินค้าล่าสุด
+                ล่าสุด
               </button>
             </div>
             <div
