@@ -52,8 +52,12 @@ function PostReviewAddPhoto({ dataInputAddPhoto }) {
           type="file"
           ref={uploadImageEl1}
           onChange={(event) => {
-            if (event.target.files[0]) {
-              setImageReview1(event.target.files[0]);
+            if (event.target.files[0].size > 1048576) {
+              alert('รูปภาพขนาดต้องไม่เกิน 1 MB');
+            } else {
+              if (event.target.files[0]) {
+                setImageReview1(event.target.files[0]);
+              }
             }
           }}
           hidden="hidden"
@@ -90,8 +94,12 @@ function PostReviewAddPhoto({ dataInputAddPhoto }) {
           type="file"
           ref={uploadImageEl2}
           onChange={(event) => {
-            if (event.target.files[0]) {
-              setImageReview2(event.target.files[0]);
+            if (event.target.files[0].size > 1048576) {
+              alert('รูปภาพขนาดต้องไม่เกิน 1 MB');
+            } else {
+              if (event.target.files[0]) {
+                setImageReview2(event.target.files[0]);
+              }
             }
           }}
           hidden="hidden"
@@ -128,8 +136,12 @@ function PostReviewAddPhoto({ dataInputAddPhoto }) {
           type="file"
           ref={uploadImageEl3}
           onChange={(event) => {
-            if (event.target.files[0]) {
-              setImageReview3(event.target.files[0]);
+            if (event.target.files[0].size > 1048576) {
+              alert('รูปภาพขนาดต้องไม่เกิน 1 MB');
+            } else {
+              if (event.target.files[0]) {
+                setImageReview3(event.target.files[0]);
+              }
             }
           }}
           hidden="hidden"
@@ -166,12 +178,19 @@ function PostReviewAddPhoto({ dataInputAddPhoto }) {
           type="file"
           ref={uploadImageEl4}
           onChange={(event) => {
-            if (event.target.files[0]) {
-              setImageReview4(event.target.files[0]);
+            if (event.target.files[0].size > 1048576) {
+              alert('รูปภาพขนาดต้องไม่เกิน 1 MB');
+            } else {
+              if (event.target.files[0]) {
+                setImageReview4(event.target.files[0]);
+              }
             }
           }}
           hidden="hidden"
         />
+      </div>
+      <div className="sellerproductadd_input_validate">
+        (รูปภาพขนาดไม่เกิน 1 MB)
       </div>
     </>
   );

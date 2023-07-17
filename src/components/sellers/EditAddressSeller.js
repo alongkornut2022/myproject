@@ -148,7 +148,6 @@ function EditAddressSeller({
               maxLength="50"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              required="required"
             />
           </div>
 

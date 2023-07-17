@@ -53,7 +53,7 @@ function OrderAddressDeliveryModalContainer({
 
   useEffect(() => {
     setCustomerAddressId(customerAddressDefaultId);
-  }, []);
+  }, [customerAddressDefaultId]);
 
   const handleClickModal = () => {
     const modalObj = new Modal(modalEl.current);
@@ -112,7 +112,6 @@ function OrderAddressDeliveryModalContainer({
               fetchData={fetchAddressCustomerAll}
               setCustomerAddressId={setCustomerAddressId}
               customerAddressId={customerAddressId}
-              customerAddressDefaultId={customerAddressDefaultId}
               thaiProvinces={thaiProvinces}
               fetchThaiProvinces={fetchThaiProvinces}
             />

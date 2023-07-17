@@ -15,7 +15,7 @@ function ProductBestBuy() {
   };
 
   useEffect(() => {
-    fetchProductBestBuy(20, 1);
+    fetchProductBestBuy(24, 1);
   }, []);
 
   return (

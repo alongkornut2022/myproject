@@ -4,7 +4,7 @@ function ProductDeliveryContainer({ productDeliveryContainerData }) {
   const {
     customerId,
     sellerId,
-    cartCheckout,
+    cartProduct,
     cartIdsBySeller,
     customerPostcodeZone,
     sellerPostcodeZone,
@@ -26,7 +26,7 @@ function ProductDeliveryContainer({ productDeliveryContainerData }) {
     areaGroup = 'areaG3';
   }
 
-  const totalWeight = cartCheckout.reduce(
+  const totalWeight = cartProduct.reduce(
     (acc, item) => acc + +item.productWeightTotal,
     0
   );

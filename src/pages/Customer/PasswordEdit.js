@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ErrorContext } from '../../contexts/ErrorContext';
 import axios from '../../config/axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function ChangePassword() {
   const [oldPassword, setOldPassword] = useState('');
@@ -22,7 +22,7 @@ function ChangePassword() {
         newPassword,
         confirmNewPassword,
       });
-      logout();
+      await logout();
       navigate('/login');
     } catch (err) {
       setError(err.response.data.message);
@@ -47,68 +47,76 @@ function ChangePassword() {
   return (
     <>
       <div className="customer_main_content_right_top">ตั้งค่ารหัสผ่านใหม่</div>
-      <div className="customer_main_content_right_middle">
-        <div className="customer_inner_content">
-          <div className="item1">รหัสผ่านปัจจุบัน</div>
-          <div className="item2">
-            <input
-              type={showPassword === false ? 'password' : 'text'}
-              value={oldPassword}
-              onChange={(event) => setOldPassword(event.target.value)}
-            />
-          </div>
-          <div className="item4">
-            {/* <Link end to="/Login">
+      <form
+        onSubmit={handleSubmitPasswordEdit}
+        onReset={handleResetPasswordEdit}
+      >
+        <div className="customer_main_content_right_middle">
+          <div className="customer_inner_content">
+            <div className="item1">รหัสผ่านปัจจุบัน</div>
+            <div className="item2">
+              <input
+                type={showPassword === false ? 'password' : 'text'}
+                value={oldPassword}
+                onChange={(event) => setOldPassword(event.target.value)}
+                required="required"
+              />
+            </div>
+            <div className="item4">
+              {/* <Link end to="/Login">
               ลืมรหัสผ่าน
             </Link> */}
-          </div>
-        </div>
-
-        <div className="customer_inner_content">
-          <div className="item1">รหัสผ่านใหม่</div>
-          <div className="item2">
-            <input
-              type={showPassword === false ? 'password' : 'text'}
-              value={newPassword}
-              onChange={(event) => setNewPassword(event.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className="customer_inner_content">
-          <div className="item1">ยืนยันรหัสผ่านใหม่</div>
-          <div className="item2">
-            <input
-              type={showPassword === false ? 'password' : 'text'}
-              value={confirmNewPassword}
-              onChange={(event) => setConfirmNewPassword(event.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className="customer_inner_content">
-          <div className="item1"></div>
-
-          <div className="item2_1">
-            <div className="register_inner_content_validate1">
-              <div className="register_inner_content_validate">
-                8 ตัวขึ้นไป มี ตัวอักษร (พิมพ์ใหญ่-เล็ก) ตัวเลข และสัญลักษณ์
-              </div>
             </div>
-            <input
-              type="checkbox"
-              checked={showPassword === true ? 'checked' : ''}
-              onClick={(event) => handleOnClickShowPassword(event)}
-            />
-            Show Password
+          </div>
+
+          <div className="customer_inner_content">
+            <div className="item1">รหัสผ่านใหม่</div>
+            <div className="item2">
+              <input
+                type={showPassword === false ? 'password' : 'text'}
+                value={newPassword}
+                onChange={(event) => setNewPassword(event.target.value)}
+                required="required"
+              />
+            </div>
+          </div>
+
+          <div className="customer_inner_content">
+            <div className="item1">ยืนยันรหัสผ่านใหม่</div>
+            <div className="item2">
+              <input
+                type={showPassword === false ? 'password' : 'text'}
+                value={confirmNewPassword}
+                onChange={(event) => setConfirmNewPassword(event.target.value)}
+                required="required"
+              />
+            </div>
+          </div>
+
+          <div className="customer_inner_content">
+            <div className="item1"></div>
+
+            <div className="item2_1">
+              <div className="register_inner_content_validate1">
+                <div className="register_inner_content_validate">
+                  8 ตัวขึ้นไป มี ตัวอักษร (พิมพ์ใหญ่-เล็ก) ตัวเลข และสัญลักษณ์
+                </div>
+              </div>
+              <input
+                type="checkbox"
+                checked={showPassword === true ? 'checked' : ''}
+                onClick={(event) => handleOnClickShowPassword(event)}
+              />
+              Show Password
+            </div>
+          </div>
+
+          <div className="customer_inner_content_submit">
+            <button type="submit">บันทึก</button>
+            <button type="reset">ยกเลิก</button>
           </div>
         </div>
-
-        <div className="customer_inner_content_submit">
-          <button onClick={handleSubmitPasswordEdit}>บันทึก</button>
-          <button onClick={handleResetPasswordEdit}>ยกเลิก</button>
-        </div>
-      </div>
+      </form>
     </>
   );
 }

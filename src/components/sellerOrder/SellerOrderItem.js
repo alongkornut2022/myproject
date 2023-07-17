@@ -53,28 +53,14 @@ function SellerOrderItem({ orderSeller, sellerId, handleOnClickSearchOrder }) {
   const handleOnClickCloseModal = () => {
     closeModal();
   };
-  const closeModal = (event) => {
+  const closeModal = () => {
     modal.hide();
   };
 
   const date = new Date(createdAt);
   const day = date.getUTCDate();
   const monthNum = date.getUTCMonth();
-  // const monthNameEng = [
-  //   'January',
-  //   'February',
-  //   'March',
-  //   'April',
-  //   'May',
-  //   'June',
-  //   'July',
-  //   'August',
-  //   'September',
-  //   'October',
-  //   'November',
-  //   'December',
-  // ];
-  // const month = monthNameEng[monthNum];
+
   const month = monthNum + 1;
   const year = date.getUTCFullYear();
   const hour = date.getHours();

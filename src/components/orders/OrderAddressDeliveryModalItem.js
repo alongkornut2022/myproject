@@ -9,7 +9,6 @@ function OrderAddressDeliveryModalItem({
   fetchData,
   setCustomerAddressId,
   customerAddressId,
-  customerAddressDefaultId,
   thaiProvinces,
   fetchThaiProvinces,
 }) {

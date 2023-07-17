@@ -17,11 +17,14 @@ function CustomerSidebar() {
   const HandleOnClickSaveUserPicture = async () => {
     try {
       setLoading(true);
-      const formData = new FormData();
-      formData.append('userPicture', userPicture);
-      await axios.patch(`/customers/profilepic/${customer.id}`, formData);
-      setUserPicture(null);
-      document.location.reload();
+      if (userPicture === null) {
+      } else {
+        const formData = new FormData();
+        formData.append('userPicture', userPicture);
+        await axios.patch(`/customers/profilepic/${customer.id}`, formData);
+        setUserPicture(null);
+        document.location.reload();
+      }
     } catch (err) {
     } finally {
       setLoading(false);
@@ -60,11 +63,18 @@ function CustomerSidebar() {
               type="file"
               ref={usePic}
               onChange={(event) => {
-                if (event.target.files[0]) {
-                  setUserPicture(event.target.files[0]);
+                if (event.target.files[0].size > 1048576) {
+                  alert('รูปภาพขนาดต้องไม่เกิน 1 MB');
+                } else {
+                  if (event.target.files[0]) {
+                    setUserPicture(event.target.files[0]);
+                  }
                 }
               }}
             />
+          </div>
+          <div className="customer_main_content_left_top_right_validate">
+            (ไม่เกิน 1 MB)
           </div>
         </div>
       </div>

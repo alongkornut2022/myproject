@@ -17,18 +17,18 @@ function ProductDetailContainer({ productId }) {
   const [productSpecs, setProductSpecs] = useState('');
   const [productSeller, setProductSeller] = useState([]);
 
-  const sellerId = productItem.map((item) => item.sellerId);
-
   useEffect(() => {
     const fetchProductItem = async () => {
       try {
-        const resProductItem = await axios.get(`/products/${productId}`);
+        const resProductItem = await axios.get(`/products/byid/${productId}`);
         setProductItem(resProductItem.data.productItem);
         setProductSpecs(resProductItem.data.productSpecs);
       } catch (err) {}
     };
     fetchProductItem();
   }, [productId]);
+
+  const sellerId = productItem.map((item) => item.sellerId);
 
   useEffect(() => {
     const fetchProductSeller = async () => {
@@ -65,7 +65,7 @@ function ProductDetailContainer({ productId }) {
               productItem={el}
               productId={productId}
               customerId={customer ? customer.id : ''}
-              customer={customer}
+              customer={customer ? customer : ''}
             />
           ))}
         </div>
@@ -104,14 +104,6 @@ function ProductDetailContainer({ productId }) {
         <br></br>
         <div>
           <ProductOfSeller productSeller={productSeller} />
-
-          {/* {productItem.map((el) => (
-            <ProductOfSeller
-              key={el.id}
-              productItem={el}
-              productSeller={productSeller}
-            />
-          ))} */}
         </div>
       </div>
 

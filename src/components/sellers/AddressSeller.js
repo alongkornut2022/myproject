@@ -100,7 +100,7 @@ function AddressSeller({
         <div className="address_delivery_top">
           <div className="address_delivery_top_content">
             <div className="address_delivery_item0">
-              ชื่อ-สกุล หรือ ร้านค้า {firstName} {lastName}
+              ชื่อ-สกุล (หรือร้านค้า) {firstName} {lastName}
             </div>
             <div>||</div>
             <div className="address_delivery_item2"> {phoneNumber}</div>

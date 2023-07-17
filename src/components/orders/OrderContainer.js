@@ -21,7 +21,6 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
   const navigate = useNavigate();
 
   let customerAddressId;
-
   if (customerAddressCurrent) {
     customerAddressId = customerAddressCurrent.id;
   } else {
@@ -29,7 +28,6 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
   }
 
   const allTotalPrice = productItemPrice.reduce((acc, item) => acc + item, 0);
-
   const resultTotalPrice = allTotalPrice + deliveryTotalPrice;
 
   const handleOnClickAddressCustomerById = async (customerAddressId) => {
@@ -53,7 +51,7 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
       const resMyCartBySeller = await axios.get(
         `/cart/seller/${cartIds}/${customerId}`
       );
-      setCartSellerIds(resMyCartBySeller.data.sellers);
+      setCartSellerIds(resMyCartBySeller.data.cartBySeller);
       setProductItemPrice(resMyCartBySeller.data.productTotalPrice);
     } catch (err) {
       console.log(err);
@@ -86,12 +84,8 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
     modalObj.show();
   };
 
-  const closeModal = (event) => {
+  const closeModal = () => {
     modal.hide();
-  };
-
-  const handleOnClickCloseModal = () => {
-    closeModal();
   };
 
   const sellerIdsArr = [];
@@ -101,7 +95,7 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
   }
   const sellerIds = sellerIdsArr.join(',');
 
-  const handleOnClickOrderResult = async () => {
+  const handleOnClickCreateOrderResult = async () => {
     if (!customerAddressId) {
       alert('คุณยังไม่มีที่อยู่จัดส่งสินค้า');
     } else if (deliveryTotalPrice === 0) {
@@ -128,7 +122,7 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
   return (
     <>
       <div className="ordertotal_main_content">
-        <div className="ordertotal_main_content_title">| ทำการสั่งซื้อ |</div>
+        <div className="ordertotal_main_content_title">สั่งซื้อสินค้า</div>
         <div className="ordertotal_main_content_address">
           <div className="ordertotal_main_content_address_header">
             <div className="ordertotal_main_content_address_title">
@@ -159,11 +153,6 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">ที่อยู่ของฉัน</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={handleOnClickCloseModal}
-                ></button>
               </div>
 
               <div className="modal-body">
@@ -181,7 +170,7 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
         </div>
 
         <div className="product_sell_list">
-          <div className="product_sell_list_title">สินค้าสั่งซื้อแล้ว</div>
+          <div className="product_sell_list_title">รายการสินค้าสั่งซื้อ</div>
           <div className="product_sell_listbar_top">
             <div className="item1"></div>
             <div className="item2">สินค้า</div>
@@ -227,7 +216,9 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
         </div>
 
         <div className="ordertotal_button">
-          <button onClick={handleOnClickOrderResult}>สั่งซื้อสินค้า</button>
+          <button onClick={handleOnClickCreateOrderResult}>
+            สั่งซื้อสินค้า
+          </button>
         </div>
       </div>
     </>

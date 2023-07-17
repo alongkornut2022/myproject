@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from '../../config/axios';
 
 function ProductDelivery({ productDeliveryData }) {
@@ -15,24 +15,7 @@ function ProductDelivery({ productDeliveryData }) {
     setTrigerDelivery,
   } = productDeliveryData;
 
-  // const [deliveryCartIds, setDeliveryCartIds] = useState('');
-
   const cartIdsBySellers = cartIdsBySeller.join(',');
-
-  // const fetchCartIds = async () => {
-  //   try {
-  //     const deliveryCartIds = await axios.get(
-  //       `/delivery/cartIds/${cartIdsBySeller}/${customerId}`
-  //     );
-  //     setDeliveryCartIds(deliveryCartIds.data.deliveryCartIds);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchCartIds();
-  // }, []);
 
   const handleOnChangeDeliveryPrice = async (optionDeliveryDefault) => {
     try {
@@ -48,7 +31,6 @@ function ProductDelivery({ productDeliveryData }) {
   };
 
   const createDelivery = async (optionDelivery, cartIdsBySellers) => {
-    console.log(cartIdsBySellers);
     try {
       await axios.post(
         `/delivery/create/${sellerId}/${customerId}/${cartIdsBySellers}`,
@@ -79,17 +61,9 @@ function ProductDelivery({ productDeliveryData }) {
     createDelivery('เลือกประเภทการส่ง', cartIdsBySellers);
   }, [cartIdsBySellers]);
 
-  // useEffect(() => {
-  //   handleOnChangeDeliveryPrice('เลือกประเภทการส่ง');
-  // }, []);
-
   useEffect(() => {
     handleOnChangeDeliveryPrice();
   }, [optionDelivery]);
-
-  // useEffect(() => {
-  //   deliveryCartIds === cartIdsBySeller ? updateDelivery() : createDelivery();
-  // }, [deliveryPrice]);
 
   useEffect(() => {
     updateDelivery();

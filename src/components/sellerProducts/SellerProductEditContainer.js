@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from '../../config/axiosSeller';
 import CategoryOption from '../category/CategoryOption';
 import SellerProductAddPhoto from '../sellerProductsAdd/SellerProductAddPhoto';
-import { useNavigate } from 'react-router-dom';
 import Spinner from '../Spinner';
 
 function SellerProductEditContainer({
@@ -10,9 +9,9 @@ function SellerProductEditContainer({
   productItem,
   productSpecInput,
   modal,
-  setTrigerModal,
   productId,
-  fetchProductItem,
+  fetchProductSeller,
+  navBar,
 }) {
   const [category, setCategory] = useState([]);
   const [selectCategory, setSelectCategory] = useState(
@@ -41,8 +40,6 @@ function SellerProductEditContainer({
   const [image9, setImage9] = useState(productItem.image9);
 
   const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -130,12 +127,27 @@ function SellerProductEditContainer({
       const indexImageUpdateStr = indexImageUpdateArr.join(',');
       const indexImageNullStr = indexImageNull.join(',');
 
+      const productSpecTextfile = new Blob([productSpec], {
+        type: 'text/plain',
+      });
+
+      const formData2 = new FormData();
+      formData2.append('productSpec', productSpecTextfile);
+
+      const productSpecs = await axios.patch(
+        `sellers/products/spec/${seller.id}/${productId}`,
+        formData2
+      );
+
       const productImages = await axios.patch(
         `sellers/products/images/${seller.id}/${productId}?indexImageUpdateStr=${indexImageUpdateStr}&&indexImageNullStr=${indexImageNullStr}`,
         formData
       );
 
-      if (productImages.data.message === 'update images success') {
+      if (
+        productImages.data.message === 'update images success' &&
+        productSpecs.data.message === 'update spec success'
+      ) {
         const productItem = await axios.patch(
           `sellers/products/${seller.id}/${productId}`,
           {
@@ -143,7 +155,6 @@ function SellerProductEditContainer({
             productName,
             productUnitPrice,
             productWeight,
-            productSpec,
             productStock,
             productStatus,
           }
@@ -151,17 +162,47 @@ function SellerProductEditContainer({
         if (productItem.data.message === 'update product success') {
           alert('แก้ไข สินค้า "สำเร็จ" ');
           await modal.hide();
-          fetchProductItem();
+
+          fetchProductSeller(navBar);
         } else {
           alert('แก้ไข สินค้า "ไม่สำเร็จ" ');
         }
       } else {
         alert('แก้ไข รูปภาพสินค้า "ไม่สำเร็จ" ');
       }
-      setLoading(false);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleOnClickCloseReset = () => {
+    setSelectCategory(productItem.categoryName);
+    setProductName(productItem.productName);
+    setProductUnitPrice(productItem.productUnitprice);
+    setProductSpec(`${productSpecInput}`);
+    setProductStock(productItem.stockStart);
+    setProductWeight(productItem.productWeightPiece);
+    setProductStatus(productItem.productStatus);
+    setImage1(productItem.image1);
+    setImage2(productItem.image2);
+    setImage3(productItem.image3);
+    setImage4(productItem.image4);
+    setImage5(productItem.image5);
+    setImage6(productItem.image6);
+    setImage7(productItem.image7);
+    setImage8(productItem.image8);
+    setImage9(productItem.image9);
+  };
+
+  useEffect(() => {
+    handleOnClickCloseReset();
+  }, [productItem]);
+
+  const handleOnClickCloseModal = () => {
+    modal.hide();
+    handleOnClickCloseReset();
   };
 
   const dataInputAddPhoto = {
@@ -185,30 +226,6 @@ function SellerProductEditContainer({
     setImage9,
   };
 
-  const handleOnClickCloseReset = () => {
-    setSelectCategory(productItem.categoryName);
-    setProductName(productItem.productName);
-    setProductUnitPrice(productItem.productUnitprice);
-    setProductSpec(`${productSpecInput}`);
-    setProductStock(productItem.stockStart);
-    setProductWeight(productItem.productWeightPiece);
-    setProductStatus(productItem.productStatus);
-    setImage1(productItem.image1);
-    setImage2(productItem.image2);
-    setImage3(productItem.image3);
-    setImage4(productItem.image4);
-    setImage5(productItem.image5);
-    setImage6(productItem.image6);
-    setImage7(productItem.image7);
-    setImage8(productItem.image8);
-    setImage9(productItem.image9);
-  };
-
-  const handleOnClickCloseModal = () => {
-    modal.hide();
-    handleOnClickCloseReset();
-  };
-
   return (
     <>
       <div className="sellerproductadd_container_main">
@@ -220,7 +237,7 @@ function SellerProductEditContainer({
             <div className="sellerproductadd_input">
               <input
                 type="text"
-                maxlength="120"
+                maxlength="200"
                 value={productName}
                 onChange={(event) => setProductName(event.target.value)}
               />
@@ -293,7 +310,7 @@ function SellerProductEditContainer({
               <textarea
                 rows="10"
                 cols="100"
-                maxlength="1000"
+                maxlength="5000"
                 value={productSpec}
                 onChange={(event) => setProductSpec(event.target.value)}
               />

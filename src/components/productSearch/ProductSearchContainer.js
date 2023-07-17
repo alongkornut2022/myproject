@@ -13,6 +13,7 @@ function ProductSearchContainer({ categorySearch, keySearch }) {
 
   const [allProductSearch, setAllProductSearch] = useState([]);
   const [orderBy, setOrderBy] = useState('p.product_name');
+
   const productPagination = allProductSearch;
   const productLength = productPagination.length;
   const paginationLimit = 10;

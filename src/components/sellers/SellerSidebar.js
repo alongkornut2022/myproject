@@ -18,12 +18,15 @@ function SellerSidebar() {
 
   const HandleOnClickSaveUserPicture = async () => {
     try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append('shopPicture', shopPicture);
-      await axios.patch(`/sellers/profilepic/${seller.id}`, formData);
-      setShopPicture(null);
-      document.location.reload();
+      if (shopPicture === null) {
+      } else {
+        setLoading(true);
+        const formData = new FormData();
+        formData.append('shopPicture', shopPicture);
+        await axios.patch(`/sellers/profilepic/${seller.id}`, formData);
+        setShopPicture(null);
+        document.location.reload();
+      }
     } catch (err) {
     } finally {
       setLoading(false);

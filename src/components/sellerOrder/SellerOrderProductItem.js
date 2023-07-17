@@ -4,6 +4,8 @@ import axios from '../../config/axiosSeller';
 
 function SellerOrderProductItem({ orderItem }) {
   const {
+    orderDetailId,
+    customerId,
     productId,
     productName,
     image,
@@ -13,22 +15,24 @@ function SellerOrderProductItem({ orderItem }) {
     productItemTotalPrice,
   } = orderItem;
 
-  const [productRating, setProductRating] = useState([]);
+  const [productRatingReview, setProductRatingReview] = useState([]);
+  const [comment, setComment] = useState([]);
 
-  const fetchProductRating = async (rating) => {
+  const fecthProductRatingReview = async () => {
     try {
-      const resProductRating = await axios.get(
-        `/postreview/product/${productId}?rating=${rating}`
+      const resProductRatingReview = await axios.get(
+        `/postreview/productreview/${orderDetailId}/${productId}/${customerId}`
       );
-      setProductRating(resProductRating.data.productRating);
+      setProductRatingReview(resProductRatingReview.data.productRatingReview);
+      setComment(resProductRatingReview.data.comment);
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    fetchProductRating('All');
-  }, []);
+    fecthProductRatingReview();
+  }, [orderItem]);
 
   const productItemTotalPriceNoDiscounts = productUnitPrice * amount;
   return (
@@ -49,7 +53,11 @@ function SellerOrderProductItem({ orderItem }) {
               <div className="sellerorder_item_product_title_rating">
                 <div
                   className="orderresult_item_product_review"
-                  hidden={productRating.length > 0 ? '' : 'hidden'}
+                  hidden={
+                    productRatingReview.length > 0 || productRatingReview
+                      ? ''
+                      : 'hidden'
+                  }
                 >
                   <Link end to={`/ProductDetail/${productId}`}>
                     มีรีวิวสินค้า
@@ -58,11 +66,7 @@ function SellerOrderProductItem({ orderItem }) {
                 <div
                   className="orderresult_item_product_review"
                   hidden={
-                    productRating.length > 0
-                      ? productRating[0].comment
-                        ? ''
-                        : 'hidden'
-                      : 'hidden'
+                    productRatingReview ? (comment ? '' : 'hidden') : 'hidden'
                   }
                 >
                   / ตอบแล้ว
@@ -70,11 +74,7 @@ function SellerOrderProductItem({ orderItem }) {
                 <div
                   className="orderresult_item_product_review"
                   hidden={
-                    productRating.length > 0
-                      ? productRating[0].comment
-                        ? 'hidden'
-                        : ''
-                      : 'hidden'
+                    productRatingReview ? (comment ? 'hidden' : '') : 'hidden'
                   }
                 >
                   / ยังไม่ตอบ

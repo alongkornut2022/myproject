@@ -1,7 +1,7 @@
 import PostReviewItem from './PostReviewItem';
 
 function PostReviewContainer({ inputPostReviewContainer }) {
-  const { orderItem, closeModal, customerId, setTriggerOrderRating } =
+  const { orderItem, closeModal, setTriggerOrderRating } =
     inputPostReviewContainer;
   return (
     <div className="postreview_container">
@@ -10,15 +10,11 @@ function PostReviewContainer({ inputPostReviewContainer }) {
           <PostReviewItem
             key={el.id}
             orderItem={el}
-            customerId={customerId}
             closeModal={closeModal}
             setTriggerOrderRating={setTriggerOrderRating}
           />
         ))}
       </div>
-      {/* <div className="postreview_modal_buttom">
-        <button>ยืนยัน</button>
-      </div> */}
     </div>
   );
 }

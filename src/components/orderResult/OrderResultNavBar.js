@@ -11,6 +11,7 @@ function OrderResultNavBar({ fetchOrderCustomer, navBar }) {
             ทั้งหมด
           </button>
         </div>
+
         <div
           className={
             navBar === 'รอชำระเงิน' || navBar === 'รออนุมัติ'
@@ -41,6 +42,7 @@ function OrderResultNavBar({ fetchOrderCustomer, navBar }) {
           </button>
         </div>
       </div>
+
       <div className="orderresult_container_navbar_left">
         <div
           className={
@@ -56,6 +58,7 @@ function OrderResultNavBar({ fetchOrderCustomer, navBar }) {
             อยู่ระหว่างจัดส่ง
           </button>
         </div>
+
         <div
           className={
             navBar === 'จัดส่งสำเร็จ'
@@ -70,6 +73,7 @@ function OrderResultNavBar({ fetchOrderCustomer, navBar }) {
             จัดส่งสำเร็จ
           </button>
         </div>
+
         <div
           className={
             navBar === 'ยกเลิก' ? 'orderresult_navbar2' : 'orderresult_navbar'

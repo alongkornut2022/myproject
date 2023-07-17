@@ -11,7 +11,7 @@ function App() {
     if (error) {
       const toast = new Toast(toastEl.current);
       toast.show();
-      setTimeout(() => setError(null), 8000);
+      setTimeout(() => setError(null), 10000);
     }
   }, [error]);
 

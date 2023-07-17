@@ -17,7 +17,9 @@ function OrderResultItemBottomBar({
       </div>
 
       <div className="orderresult_item_buttom">
-        {status === 'อยู่ระหว่างจัดส่ง' || status === 'จัดส่งสำเร็จ' ? (
+        {status === 'อยู่ระหว่างจัดส่ง' ||
+        status === 'จัดส่งสำเร็จ' ||
+        status === 'ยกเลิก' ? (
           ''
         ) : paymentMethod === 'ชำระเงินปลายทาง' ? (
           <div className="orderresult_item_buttom_standby">
@@ -45,13 +47,15 @@ function OrderResultItemBottomBar({
           </div>
         )}
 
-        {status === 'อยู่ระหว่างจัดส่ง' || status === 'จัดส่งสำเร็จ' ? (
+        {status === 'อยู่ระหว่างจัดส่ง' ||
+        status === 'จัดส่งสำเร็จ' ||
+        status === 'ยกเลิก' ? (
           ''
         ) : (
           <button onClick={handleOnClickDeleteOrder}>ยกเลิกคำสั่งซื้อ</button>
         )}
 
-        {status === 'จัดส่งสำเร็จ' ? (
+        {status === 'จัดส่งสำเร็จ' || status === 'ยกเลิก' ? (
           <button onClick={handleClickModal3}>สั่งซื้ออีกครั้ง</button>
         ) : (
           ''

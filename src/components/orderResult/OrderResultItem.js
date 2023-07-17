@@ -9,14 +9,7 @@ import OrderResultItemTopBar from './OrderResultItemTopBar';
 import OrderResultItemBottomBar from './OrderResultItemBottomBar';
 
 function OrderResultItem({ orderCustomer, customerId }) {
-  const {
-    orderDetailId,
-    shopName,
-    allTotalPrice,
-    paymentMethod,
-    status,
-    deliveryPrice,
-  } = orderCustomer;
+  const { orderDetailId, shopName } = orderCustomer;
 
   const modalEl = useRef();
   const [modal, setModal] = useState(null);
@@ -31,8 +24,6 @@ function OrderResultItem({ orderCustomer, customerId }) {
   const [orderRating, setOrderRating] = useState([]);
   const [triggerOrderRating, setTriggerOrderRating] = useState(false);
   const [triggerProductRating, setTriggerProductRating] = useState(false);
-
-  // console.log('1', orderRating);
 
   const fetchOrderItem = async () => {
     try {
@@ -62,9 +53,7 @@ function OrderResultItem({ orderCustomer, customerId }) {
       window.confirm('คุณแน่ใจหรือว่า ต้องการ "ยกเลิกคำสั่งซื้อ" ? ') === true
     ) {
       try {
-        await axios.delete(
-          `/purchase/order/${orderDetailId}/customer/${customerId}`
-        );
+        await axios.patch(`/purchase/order/${orderDetailId}/${customerId}`);
       } catch (err) {
         console.log(err);
       } finally {
@@ -88,7 +77,7 @@ function OrderResultItem({ orderCustomer, customerId }) {
     modalObj.show();
   };
 
-  const closeModal = (event) => {
+  const closeModal = () => {
     modal.hide();
   };
 
@@ -98,11 +87,8 @@ function OrderResultItem({ orderCustomer, customerId }) {
     modalObj.show();
     setTriggerProductRating(true);
   };
-  const handleOnClickCloseModal2 = () => {
-    closeModal2();
-    setTriggerProductRating(false);
-  };
-  const closeModal2 = (event) => {
+
+  const closeModal2 = () => {
     modal2.hide();
     setTriggerProductRating(false);
   };
@@ -112,17 +98,14 @@ function OrderResultItem({ orderCustomer, customerId }) {
     setModal3(modalObj);
     modalObj.show();
   };
-  const handleOnClickCloseModal3 = () => {
-    closeModal3();
-  };
-  const closeModal3 = (event) => {
+
+  const closeModal3 = () => {
     modal3.hide();
   };
 
   const inputPostReviewContainer = {
     orderItem,
     closeModal,
-    customerId,
     orderDetailId,
     setTriggerOrderRating,
   };
@@ -177,7 +160,7 @@ function OrderResultItem({ orderCustomer, customerId }) {
               <button
                 type="button"
                 className="btn-close"
-                onClick={handleOnClickCloseModal2}
+                onClick={closeModal2}
               ></button>
             </div>
             <div className="modal-body">
@@ -202,7 +185,7 @@ function OrderResultItem({ orderCustomer, customerId }) {
               <button
                 type="button"
                 className="btn-close"
-                onClick={handleOnClickCloseModal3}
+                onClick={closeModal3}
               ></button>
             </div>
             <div className="modal-body">

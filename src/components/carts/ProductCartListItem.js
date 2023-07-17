@@ -65,15 +65,11 @@ function ProductCartListItem({
 
   useEffect(() => {
     setProductTotalPriceCart(newProductUnitPrice * amountCart);
-  }, [amountCartIncrease]);
-
-  useEffect(() => {
-    setProductTotalPriceCart(newProductUnitPrice * amountCart);
-  }, [amountCartDecrease]);
+  }, [amountCart]);
 
   useEffect(() => {
     handleOnClickUpdateCart();
-  }, [amountCart, productTotalPriceCart]);
+  }, [productTotalPriceCart]);
 
   return (
     <>
@@ -82,9 +78,18 @@ function ProductCartListItem({
           <input
             type="checkbox"
             checked={findCartId === true ? 'checked' : ''}
-            onClick={(event) =>
-              handleOnClickCheckBoxProduct(event, productTotalPriceCart, cartId)
-            }
+            disabled={inventory === 0 ? 'true' : ''}
+            onClick={(event) => {
+              if (amountCart === '') {
+                alert('กรุณากรอก "จำนวน" สินค้า');
+              } else {
+                handleOnClickCheckBoxProduct(
+                  event,
+                  productTotalPriceCart,
+                  cartId
+                );
+              }
+            }}
           ></input>
         </div>
 
@@ -104,6 +109,12 @@ function ProductCartListItem({
             <Link end to={`/ProductDetail/${productId}`}>
               {productName}
             </Link>
+            <div
+              className="product_cart_listitem_outofstock"
+              hidden={inventory === 0 ? '' : 'hidden'}
+            >
+              * สินค้าหมด
+            </div>
           </div>
 
           <div className="item3_2">
@@ -116,20 +127,25 @@ function ProductCartListItem({
             <div className="item3_2_2">฿{newProductUnitPrice}</div>
           </div>
           <div className="item3_3">
-            <button onClick={amountCartDecrease}>-</button>
-            <input
-              type="text"
-              placeholder={amountCart}
-              value={
-                amountCart <= inventory ? amountCart : setAmountCart(inventory)
-              }
-              onChange={(e) =>
-                setAmountCart(
-                  e.target.value.replace(/[^\d]/, '').replace(/^0/, '')
-                )
-              }
-            />
-            <button onClick={amountCartIncrease}>+</button>
+            <div className="inner">
+              <button onClick={amountCartDecrease}>-</button>
+              <input
+                type="text"
+                placeholder={amountCart}
+                value={
+                  amountCart <= inventory
+                    ? amountCart
+                    : setAmountCart(inventory)
+                }
+                onChange={(e) =>
+                  setAmountCart(
+                    e.target.value.replace(/[^\d]/, '').replace(/^0/, '')
+                  )
+                }
+              />
+              <button onClick={amountCartIncrease}>+</button>
+            </div>
+            <div className="inner2">คงเหลือ {inventory} ชิ้น </div>
           </div>
 
           <div className="item3_4">{productTotalPriceCart}</div>

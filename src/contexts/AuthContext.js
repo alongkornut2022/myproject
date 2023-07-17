@@ -66,11 +66,19 @@ function AuthContextProvider({ children }) {
   const logout = () => {
     removeAccessToken();
     setCustomer(null);
+    window.location.reload();
     navigate('/');
   };
 
   return (
-    <AuthContext.Provider value={{ register, customer, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        register,
+        customer,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

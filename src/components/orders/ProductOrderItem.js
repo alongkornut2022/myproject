@@ -1,4 +1,4 @@
-function ProductOrderItem({ cartCheckout }) {
+function ProductOrderItem({ cartProduct }) {
   const {
     image,
     productName,
@@ -6,7 +6,7 @@ function ProductOrderItem({ cartCheckout }) {
     amount,
     productTotalPrice,
     discounts,
-  } = cartCheckout;
+  } = cartProduct;
 
   const newProductUnitPrice =
     productUnitPrice - Math.floor((productUnitPrice * discounts) / 100);

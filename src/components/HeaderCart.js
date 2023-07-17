@@ -1,23 +1,10 @@
+import { useContext } from 'react';
+import { CartContext } from '../contexts/CartContext';
 import { Link } from 'react-router-dom';
-import axios from '../config/axios';
 import addtocart from '../images/cart.jpg';
-import { useEffect, useState } from 'react';
 
 function HeaderCart({ customer }) {
-  const customerId = customer.id;
-
-  const [carts, setCarts] = useState([]);
-
-  const fetchMyCart = async () => {
-    try {
-      const resMyCart = await axios.get(`/cart/${customerId}`);
-      setCarts(resMyCart.data.carts);
-    } catch (err) {}
-  };
-
-  useEffect(() => {
-    fetchMyCart();
-  }, []);
+  const { carts } = useContext(CartContext);
 
   return (
     <>

@@ -5,16 +5,16 @@ import SellerProductEditContainer from './SellerProductEditContainer';
 function SellerProductEditModal({
   seller,
   productId,
-  trigerModal,
-  setTrigerModal,
   modal,
+  fetchProductSeller,
+  navBar,
 }) {
   const [productItem, setProductItem] = useState([]);
   const [productSpecInput, setProductSpecInput] = useState([]);
 
   const fetchProductItem = async () => {
     try {
-      const resProductItem = await axios.get(`products/${productId}`);
+      const resProductItem = await axios.get(`products/byid/${productId}`);
       setProductItem(resProductItem.data.productItem);
       setProductSpecInput(resProductItem.data.productSpecs);
     } catch (err) {
@@ -23,7 +23,7 @@ function SellerProductEditModal({
   };
   useEffect(() => {
     fetchProductItem();
-  }, [trigerModal]);
+  }, [productId]);
 
   return (
     <>
@@ -34,9 +34,9 @@ function SellerProductEditModal({
           seller={seller}
           productSpecInput={productSpecInput}
           modal={modal}
-          setTrigerModal={setTrigerModal}
           productId={productId}
-          fetchProductItem={fetchProductItem}
+          fetchProductSeller={fetchProductSeller}
+          navBar={navBar}
         />
       ))}
     </>

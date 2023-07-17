@@ -15,7 +15,7 @@ function NewProduct() {
   };
 
   useEffect(() => {
-    fetchNewProduct(20, 1);
+    fetchNewProduct(24, 1);
   }, []);
 
   return (

@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import axios from '../../config/axiosSeller';
 
 function ProductComment({ productRating, sellerIds, setTrigerRating }) {
-  const { productRatingId, sellerId, postReview, comment, commentId } =
+  const { productRatingId, sellerId, rating, postReview, comment, commentId } =
     productRating;
 
   const [commentWrite, setCommentWrite] = useState(comment);
@@ -57,7 +57,7 @@ function ProductComment({ productRating, sellerIds, setTrigerRating }) {
     <>
       <div
         className="review_right_comment_item"
-        hidden={postReview ? '' : 'hidden'}
+        hidden={rating ? '' : 'hidden'}
       >
         การตอบกลับจากผู้ขาย
       </div>

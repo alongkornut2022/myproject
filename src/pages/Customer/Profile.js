@@ -63,7 +63,10 @@ function Profile() {
                   value={username}
                   onChange={
                     editusername
-                      ? (event) => setUsername(event.target.value)
+                      ? (event) =>
+                          setUsername(
+                            event.target.value.replace(/^[\W0-9]/, '')
+                          )
                       : ''
                   }
                   required="required"
@@ -85,7 +88,7 @@ function Profile() {
             <div className="customer_inner_content_validate">
               <div className="item1"></div>
               <div className="register_inner_content_validate_profile">
-                (8-30 ตัว ขึ้นต้นด้วยตัวอักษร)
+                (ชื่อผู้ใช้ 8-30 ตัว ขึ้นต้นด้วยตัวอักษร)
               </div>
             </div>
           </div>

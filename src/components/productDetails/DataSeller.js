@@ -5,38 +5,11 @@ function DataSeller({ productItem, productSeller }) {
   const { shopName, shopPicture, shopCreatedAt } = productItem;
 
   const date = new Date(shopCreatedAt);
-  const day = date.getUTCDate();
-  const monthNum = date.getUTCMonth();
-  // const monthNameEng = [
-  //   'January',
-  //   'February',
-  //   'March',
-  //   'April',
-  //   'May',
-  //   'June',
-  //   'July',
-  //   'August',
-  //   'September',
-  //   'October',
-  //   'November',
-  //   'December',
-  // ];
-  // const monthNameThai = [
-  //   'มกราคม',
-  //   'กุมภาพันธ์',
-  //   'มีนาคม',
-  //   'เมษายน',
-  //   'พฤษภาคม',
-  //   'มิถุนายน',
-  //   'กรกฎาคม',
-  //   'สิงหาคม',
-  //   'กันยายน',
-  //   'ตุลาคม',
-  //   'พฤษจิกายน',
-  //   'ธันวาคม',
-  // ];
-  const month = monthNum + 1;
-  const year = date.getUTCFullYear();
+  // const day = date.getUTCDate();
+  // const monthNum = date.getUTCMonth();
+
+  // const month = monthNum + 1;
+  // const year = date.getUTCFullYear();
 
   return (
     <>
@@ -57,7 +30,7 @@ function DataSeller({ productItem, productSeller }) {
       <div className="productitem_seller_right">
         <div className="productitem_seller_right_top">
           <div className="item1">คะแนน </div>
-          <div className="item2"> ยังไม่มีคะแนน</div>
+          <div className="item2">-</div>
           <div className="item1">เข้าร่วมเมื่อ </div>
           <div className="item2">
             {/* {day}/{month}/{year}  */}

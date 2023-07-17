@@ -33,11 +33,11 @@ function NavbarSeller() {
               คำสั่งซื้อของฉัน
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink end to={`/seller/delivery/${seller.id}`}>
               จัดส่งสินค้า
             </NavLink>
-          </li>
+          </li> */}
         </ul>
         <h5>สินค้า</h5>
         <ul>

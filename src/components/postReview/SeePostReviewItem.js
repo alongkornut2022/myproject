@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import axios from '../../config/axios';
 import EditPostReviewItem from './EditPostReviewItem';
 import PostReviewItem from './PostReviewItem';
+import defaultUserPicture from '../../assets/images/userpicture.png';
 
 function SeePostReviewItem({
   orderItem,
@@ -30,19 +31,12 @@ function SeePostReviewItem({
 
   const [productRating, setProductRating] = useState([]);
 
-  let productRatingId;
-  let postImagesId;
-  let createdAtProductRating;
-
-  if (productRating.length > 0) {
-    productRatingId = productRating[0].productRatingId;
-    postImagesId = productRating[0].postImagesId;
-    createdAtProductRating = productRating[0].createdAt;
-  } else {
-    productRatingId = '';
-    postImagesId = '';
-    createdAtProductRating = '';
-  }
+  const productRatingId =
+    productRating.length > 0 ? productRating[0].productRatingId : '';
+  const postImagesId =
+    productRating.length > 0 ? productRating[0].postImagesId : '';
+  const createdAtProductRating =
+    productRating.length > 0 ? productRating[0].createdAt : '';
 
   const date = new Date(createdAtProductRating);
   const day = date.getUTCDate();
@@ -52,21 +46,18 @@ function SeePostReviewItem({
   const hour = date.getHours();
   const minutes = date.getMinutes();
 
-  useEffect(() => {
-    const fetchProductRating = async () => {
-      try {
-        const resProductRating = await axios.get(
-          `/postreview/${orderDetailId}/${productId}/${customerId}`
-        );
-        setProductRating(resProductRating.data.productRating);
-        setTriggerProductRating(false);
-        setTriggerOrderRating(false);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchProductRating();
-  }, [triggerProductRating, triggerOrderRating]);
+  const fetchProductRating = async () => {
+    try {
+      const resProductRating = await axios.get(
+        `/postreview/${orderDetailId}/${productId}/${customerId}`
+      );
+      setProductRating(resProductRating.data.productRating);
+      setTriggerProductRating(false);
+      setTriggerOrderRating(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const deleteProductRating = async () => {
     if (
@@ -83,7 +74,6 @@ function SeePostReviewItem({
         }
         setTriggerOrderRating(true);
         setTriggerProductRating(true);
-        // closeModal2();
       } catch (err) {
         console.log(err);
       }
@@ -97,11 +87,8 @@ function SeePostReviewItem({
     modalObj.show();
     setTriggerProductRating(true);
   };
-  const handleOnClickCloseModal4 = () => {
-    closeModal4();
-    setTriggerProductRating(false);
-  };
-  const closeModal4 = (event) => {
+
+  const closeModal4 = () => {
     modal4.hide();
     setTriggerProductRating(false);
   };
@@ -112,14 +99,15 @@ function SeePostReviewItem({
     modalObj.show();
     setTriggerOrderRating(true);
   };
-  const handleOnClickCloseModal5 = () => {
-    closeModal5();
-    setTriggerOrderRating(false);
-  };
-  const closeModal5 = (event) => {
+
+  const closeModal5 = () => {
     modal5.hide();
     setTriggerOrderRating(false);
   };
+
+  useEffect(() => {
+    fetchProductRating();
+  }, [triggerProductRating, triggerOrderRating]);
 
   return (
     <div className="editpostreview_modal_item_container">
@@ -158,7 +146,7 @@ function SeePostReviewItem({
       </div>
       <div className="editpostreview_modal_item_buttom">
         <div className="editpostreview_modal_item_customer_left">
-          <img src={userPicture} />
+          <img src={userPicture || defaultUserPicture} />
         </div>
         <div className="editpostreview_modal_item_customer_right">
           <div className="editpostreview_modal_item_customer_username">
@@ -189,10 +177,9 @@ function SeePostReviewItem({
               <EditPostReviewItem
                 orderItem={orderItem}
                 productRating={productRating.length > 0 ? productRating : ''}
-                triggerProductRating={triggerProductRating}
-                setTriggerProductRating={setTriggerProductRating}
-                setTriggerOrderRating={setTriggerOrderRating}
-                handleOnClickCloseModal4={handleOnClickCloseModal4}
+                closeModal4={closeModal4}
+                closeModal2={closeModal2}
+                fetchProductRating={fetchProductRating}
               />
             </div>
           </div>
@@ -211,7 +198,7 @@ function SeePostReviewItem({
                 orderItem={orderItem}
                 closeModal={closeModal5}
                 setTriggerOrderRating={setTriggerOrderRating}
-                etTriggerProductRating={setTriggerProductRating}
+                setTriggerProductRating={setTriggerProductRating}
               />
             </div>
           </div>

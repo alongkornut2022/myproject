@@ -46,45 +46,52 @@ function PostReviewItem({
     try {
       if (rating) {
         if (imageReview1 || imageReview2 || imageReview3 || imageReview4) {
-          const formData = new FormData();
-          if (imageReview1) {
-            formData.append('imageReview', imageReview1);
-          }
-          if (imageReview2) {
-            formData.append('imageReview', imageReview2);
-          }
-          if (imageReview3) {
-            formData.append('imageReview', imageReview3);
-          }
-          if (imageReview4) {
-            formData.append('imageReview', imageReview4);
-          }
-
-          const resPostImages = await axios.post(
-            `/postreview/images/${customerId}`,
-            formData
-          );
-
-          await axios.post(
-            `/postreview/${orderDetailId}/${productId}/${customerId}`,
-            {
-              rating,
-              checkboxUsername,
-              postReview,
-              postImagesId: resPostImages.data.postImages.id,
+          if (imageReview1 === null) {
+            alert('กรุณาเลือกรูปภาพที่ 1 ก่อน');
+          } else {
+            const formData = new FormData();
+            if (imageReview1) {
+              formData.append('imageReview', imageReview1);
             }
-          );
-          alert('คุณให้คะแนนสินค้า  ' + productName + '  แล้ว');
+            if (imageReview2) {
+              formData.append('imageReview', imageReview2);
+            }
+            if (imageReview3) {
+              formData.append('imageReview', imageReview3);
+            }
+            if (imageReview4) {
+              formData.append('imageReview', imageReview4);
+            }
+
+            const resPostImages = await axios.post(
+              `/postreview/images/${customerId}`,
+              formData
+            );
+
+            await axios.post(
+              `/postreview/${orderDetailId}/${productId}/${customerId}`,
+              {
+                rating,
+                checkboxUsername,
+                postReview,
+                postImagesId: resPostImages.data.postImages.id,
+              }
+            );
+            alert('คุณให้คะแนนสินค้า  ' + productName + '  แล้ว');
+            setTriggerOrderRating(true);
+            setTriggerProductRating(true);
+            handleOnClickClose();
+          }
         } else {
           await axios.post(
             `/postreview/${orderDetailId}/${productId}/${customerId}`,
             { rating, checkboxUsername, postReview }
           );
           alert('คุณให้คะแนนสินค้า  ' + productName + '  แล้ว');
+          setTriggerOrderRating(true);
+          setTriggerProductRating(true);
+          handleOnClickClose();
         }
-        setTriggerOrderRating(true);
-        setTriggerProductRating(true);
-        handleOnClickClose();
       } else {
         alert('คุณยังไม่ได้ให้คะแนนสินค้า');
       }

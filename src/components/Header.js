@@ -1,12 +1,10 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import buttonSearch from '../images/download.png';
-
-import UserItemCustomer from './UserItemCustomer';
 import { AuthContext } from '../contexts/AuthContext';
 import { AuthSellerContext } from '../contexts/AuthSellerContext';
 import CategoryOption from './category/CategoryOption';
 import HeaderCart from './HeaderCart';
+import UserItemCustomer from './UserItemCustomer';
 import UserItemSeller from './sellers/UserItemSeller';
 
 function Header({ category }) {
@@ -23,7 +21,7 @@ function Header({ category }) {
   const handleEnterSearch = async (event) => {
     if (event.key === 'Enter') {
       try {
-        navigate(`Product/search/${keyword}`);
+        navigate(`/Product/search/${keyword}`);
       } catch (err) {
         console.log(err);
       }
@@ -99,12 +97,6 @@ function Header({ category }) {
               >
                 <HeaderCart customer={customer ? customer : ''} />
               </div>
-              {/* <div className="header_right_useritem">
-                {customer ? <UserItemCustomer /> : null}
-              </div>
-              <div className="header_right_useritem">
-                {seller ? <UserItemSeller /> : null}
-              </div> */}
             </div>
           </div>
         </div>

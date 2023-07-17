@@ -13,32 +13,32 @@ function SellerItemOrder({
 }) {
   const { sellerId, shopName, shopPicture, sellerPostcode } = cartSellerIds;
 
-  const [cartCheckout, setCartCheckout] = useState([]);
+  const [cartProduct, setCartProduct] = useState([]);
   const [customerPostcodeZone, setCustomerPostcodeZone] = useState();
   const [sellerPostcodeZone, setSellerPostcodeZone] = useState();
   const [deliveryPrice, setDeliveryPrice] = useState(0);
   const [optionDelivery, setOptionDelivery] = useState('เลือกประเภทการส่ง');
 
-  const amount = cartCheckout.length;
-  const productTotalPrice = cartCheckout.reduce(
+  const amount = cartProduct.length;
+  const productTotalPrice = cartProduct.reduce(
     (acc, item) => acc + item.productTotalPrice,
     0
   );
 
   const cartIdsBySeller = [];
-  for (let item of cartCheckout) {
+  for (let item of cartProduct) {
     let i = item.cartId;
     cartIdsBySeller.push(i);
   }
 
   const totalprice = productTotalPrice + deliveryPrice;
 
-  const fetchMyCartCheckout = async () => {
+  const fetchMyCartProduct = async () => {
     try {
-      const resMyCart = await axios.get(
-        `/cart/checkout/${sellerId}/${cartIds}/${customerId}`
+      const resMyCartProduct = await axios.get(
+        `/cart/product/${sellerId}/${cartIds}/${customerId}`
       );
-      setCartCheckout(resMyCart.data.cartCheckout);
+      setCartProduct(resMyCartProduct.data.cartProduct);
     } catch (err) {
       console.log(err);
     }
@@ -67,7 +67,7 @@ function SellerItemOrder({
   };
 
   useEffect(() => {
-    fetchMyCartCheckout();
+    fetchMyCartProduct();
   }, []);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ function SellerItemOrder({
   const productDeliveryContainerData = {
     customerId,
     sellerId,
-    cartCheckout,
+    cartProduct,
     cartIdsBySeller,
     customerPostcodeZone,
     sellerPostcodeZone,
@@ -102,8 +102,8 @@ function SellerItemOrder({
           <div className="item2">{shopName}</div>
         </div>
         <div className="product_ordertotal_item_product">
-          {cartCheckout.map((el) => (
-            <ProductOrderItem key={el.id} cartCheckout={el} />
+          {cartProduct.map((el) => (
+            <ProductOrderItem key={el.id} cartProduct={el} />
           ))}
         </div>
         <div className="ordertotal_main_content_delivery">

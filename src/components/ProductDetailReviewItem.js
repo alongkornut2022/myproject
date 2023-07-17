@@ -24,21 +24,7 @@ function ProductDetailReviewItem({ productRating, setTrigerRating }) {
   const date = new Date(createdAt);
   const day = date.getUTCDate();
   const monthNum = date.getUTCMonth();
-  // const monthNameEng = [
-  //   'January',
-  //   'February',
-  //   'March',
-  //   'April',
-  //   'May',
-  //   'June',
-  //   'July',
-  //   'August',
-  //   'September',
-  //   'October',
-  //   'November',
-  //   'December',
-  // ];
-  // const month = monthNameEng[monthNum];
+
   const month = monthNum + 1;
   const year = date.getUTCFullYear();
   const hour = date.getHours();
@@ -69,10 +55,11 @@ function ProductDetailReviewItem({ productRating, setTrigerRating }) {
               {image4 ? <img src={image4} /> : ''}
             </div>
           </div>
+
           <div
             className="review_right_comment"
             hidden={
-              postReview
+              rating
                 ? comment
                   ? ''
                   : seller

@@ -1,14 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from '../../config/axios';
 import ProductCartListItem from './ProductCartListItem';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function CartContainer({
-  customer,
-  // carts,
-  // allProductTotalPrice,
-  // setAllProductTotalPrice,
-}) {
+function CartContainer({ customer }) {
   const [carts, setCarts] = useState([]);
   const [amountProducts, setAmountProcucts] = useState(0);
   const [allProductTotalPrice, setAllProductTotalPrice] = useState(0);
@@ -37,10 +32,8 @@ function CartContainer({
     0
   );
 
-  // console.log(sumAllProductTotalPrice);
-  // console.log('selectCarts', selectCarts);
-
   const sumCartId = carts.map((item) => item.cartId);
+
   const handleOnClickAllCheckBoxProduct = (event) => {
     if (event.currentTarget.checked) {
       if (selectCarts.length > 0) {
@@ -78,6 +71,16 @@ function CartContainer({
 
   const cartIds = selectCarts.join(',');
 
+  const handleOnClickSendOrder = async () => {
+    try {
+      if (cartIds.length < 1) {
+        alert('คุณยังไม่ได้เลือกสินค้า');
+      } else {
+        navigate(`/purchase/${customerId}/checkout/${cartIds}`);
+      }
+    } catch (err) {}
+  };
+
   const handleOnClickDeleteCart = async () => {
     if (selectCarts.length === 0) {
       alert('คุณยังไม่ได้เลือกสินค้า');
@@ -92,16 +95,6 @@ function CartContainer({
       } else {
       }
     }
-  };
-
-  const handleOnClickSendOrder = async () => {
-    try {
-      if (cartIds.length < 1) {
-        alert('คุณยังไม่ได้เลือกสินค้า');
-      } else {
-        navigate(`/purchase/${customerId}/checkout/${cartIds}`);
-      }
-    } catch (err) {}
   };
 
   return (
@@ -131,6 +124,7 @@ function CartContainer({
           <div className="item5">ราคารวม</div>
           <div className="item6"></div>
         </div>
+
         <div>
           <h5>
             {carts.length > 0 ? '' : '- ยังไม่มีรายการสินค้าในตระกร้าสินค้า'}
@@ -165,7 +159,9 @@ function CartContainer({
           </div>
           <div className="item2">ทั้งหมด</div>
           <div className="item2_1">
-            <button onClick={handleOnClickDeleteCart}>ลบ</button>
+            <button onClick={handleOnClickDeleteCart}>
+              <i class="fa-sharp fa-solid fa-trash"></i> ลบ
+            </button>
           </div>
           <div className="item3_1">รวมสินค้า</div>
           <div className="item3_2">{amountProducts}</div>

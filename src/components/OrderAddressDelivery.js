@@ -15,9 +15,12 @@ function OrderAddressDelivery({ customerAddressCurrent }) {
       <div className="ordertotal_main_content_address_detail_content">
         <div className="ordertotal_main_content_address_detail_content_left">
           <div className="item1">
-            {firstName} {lastName}
+            {firstName} {lastName} ||
           </div>
-          <div className="item3">|| {phoneNumber}</div>
+
+          <div className="item1">
+            <i class="fa-sharp fa-solid fa-phone"></i> {phoneNumber}
+          </div>
         </div>
         <div className="ordertotal_main_content_address_detail_content_right">
           <div className={status === 'default' ? 'item4' : 'item4_2'}>

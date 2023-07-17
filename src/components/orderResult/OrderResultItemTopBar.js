@@ -5,15 +5,18 @@ function OrderResultItemTopBar({
 }) {
   const { orderDetailId, shopName, status, createdAt } = orderCustomer;
 
-  const date = new Date(createdAt);
-  const day = date.getDate();
-  const monthNum = date.getMonth();
-  const month = monthNum + 1;
-  const year = date.getFullYear();
-  const hourNum = date.getHours();
-  const minutesNum = date.getMinutes();
-  const hour = hourNum > 9 ? hourNum : '0' + hourNum;
-  const minutes = minutesNum > 9 ? minutesNum : '0' + minutesNum;
+  const dateInput = new Date(createdAt);
+
+  const date = dateInput.toLocaleString('en-GB', { timeZone: 'UTC' });
+
+  // const day = date.getDate();
+  // const monthNum = date.getMonth();
+  // const month = monthNum + 1;
+  // const year = date.getFullYear();
+  // const hourNum = date.getHours();
+  // const minutesNum = date.getMinutes();
+  // const hour = hourNum > 9 ? hourNum : '0' + hourNum;
+  // const minutes = minutesNum > 9 ? minutesNum : '0' + minutesNum;
 
   return (
     <>
@@ -22,7 +25,8 @@ function OrderResultItemTopBar({
           ร้านค้า : {shopName}
         </div>
         <div>
-          วันสั่งซื้อ : {day}/{month}/{year} {hour}:{minutes}
+          วันสั่งซื้อ : {date.toLocaleString('en-GB', { timeZone: 'UTC' })}
+          {/* วันสั่งซื้อ : {day}/{month}/{year} {hour}:{minutes} */}
         </div>
       </div>
       <div className="orderresult_item_seller_right">
@@ -82,6 +86,16 @@ function OrderResultItemTopBar({
               {'หมายเลขคำสั่งซื้อ : ' + ' ' + orderDetailId + ' ' + ''}
             </div>
             | อนุมัติแล้ว
+          </div>
+        ) : (
+          ''
+        )}
+        {status === 'ยกเลิก' ? (
+          <div className="orderresult_item_seller_right_item">
+            <div className="orderresult_item_seller_right_item_item1">
+              {'หมายเลขคำสั่งซื้อ : ' + ' ' + orderDetailId + ' ' + ''}
+            </div>
+            | ยกเลิก
           </div>
         ) : (
           ''

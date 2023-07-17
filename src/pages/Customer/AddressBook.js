@@ -125,11 +125,6 @@ function AddressBook() {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">ที่อยู่ใหม่</h5>
-              {/* <button
-                type="button"
-                className="btn-close"
-                onClick={handleOnClickCloseModal}
-              ></button> */}
             </div>
             <div className="modal-body">
               <AddAddressDelivery

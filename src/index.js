@@ -10,7 +10,7 @@ import App from './App';
 import ErrorContextProvider from './contexts/ErrorContext';
 import AuthContextProvider from './contexts/AuthContext';
 import AuthSellerContextProvider from './contexts/AuthSellerContext';
-// import AddressCustomerContextProvider from './contexts/AddressCustomerContext';
+import CartContextProvider from './contexts/CartContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,9 +19,9 @@ root.render(
       <ErrorContextProvider>
         <AuthContextProvider>
           <AuthSellerContextProvider>
-            {/* <AddressCustomerContextProvider> */}
-            <App />
-            {/* </AddressCustomerContextProvider> */}
+            <CartContextProvider>
+              <App />
+            </CartContextProvider>
           </AuthSellerContextProvider>
         </AuthContextProvider>
       </ErrorContextProvider>

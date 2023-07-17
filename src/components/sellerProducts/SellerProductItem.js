@@ -8,6 +8,8 @@ function SellerProductItem({
   productSeller,
   seller,
   handleOnClickSortProduct,
+  fetchProductSeller,
+  navBar,
 }) {
   const {
     productId,
@@ -19,8 +21,6 @@ function SellerProductItem({
     inventory,
   } = productSeller;
 
-  const [trigerModal, setTrigerModal] = useState(false);
-
   const modalEl = useRef();
   const [modal, setModal] = useState(null);
 
@@ -28,7 +28,6 @@ function SellerProductItem({
     const modalObj = new Modal(modalEl.current);
     setModal(modalObj);
     modalObj.show();
-    setTrigerModal(true);
   };
 
   return (
@@ -84,9 +83,9 @@ function SellerProductItem({
               <SellerProductEditModal
                 productId={productId}
                 seller={seller}
-                trigerModal={trigerModal}
-                setTrigerModal={setTrigerModal}
                 modal={modal}
+                fetchProductSeller={fetchProductSeller}
+                navBar={navBar}
               />
             </div>
           </div>

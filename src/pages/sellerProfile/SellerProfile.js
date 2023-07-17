@@ -61,7 +61,8 @@ function SellerProfile() {
                     value={shopName}
                     onChange={
                       editShopName
-                        ? (event) => setShopName(event.target.value)
+                        ? (event) =>
+                            setShopName(event.target.value.replace(/^[\W]/, ''))
                         : ''
                     }
                     required="required"
@@ -83,7 +84,7 @@ function SellerProfile() {
               <div className="customer_inner_content_validate">
                 <div className="item1"></div>
                 <div className="register_inner_content_validate_profile">
-                  (ไม่เกิน 50 ตัว)
+                  (ชื่อร้านค้า ไม่เกิน 50 ตัว)
                 </div>
               </div>
             </div>

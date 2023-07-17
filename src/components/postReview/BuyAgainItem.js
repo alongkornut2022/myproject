@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 function BuyAgainItem({ orderItem, closeModal3 }) {
   const { productId, productName, image, amount, productUnitPrice } = orderItem;
 
-  console.log(orderItem);
-
   const navigate = useNavigate();
 
   const handleOnClickProductDetail = () => {

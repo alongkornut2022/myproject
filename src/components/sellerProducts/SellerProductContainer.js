@@ -127,6 +127,8 @@ function SellerProductContainer({ seller }) {
                 productSeller={el}
                 seller={seller}
                 handleOnClickSortProduct={handleOnClickSortProduct}
+                fetchProductSeller={fetchProductSeller}
+                navBar={navBar}
               />
             ))}
           </div>

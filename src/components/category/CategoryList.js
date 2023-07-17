@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CategoryItemList from './CategoryItemList';
 import axios from '../../config/axios';
 

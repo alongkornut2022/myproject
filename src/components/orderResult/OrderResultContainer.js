@@ -10,12 +10,11 @@ function OrderResultContainer() {
   const [navBar, setNavBar] = useState();
 
   const { customer } = useContext(AuthContext);
-  const customerId = customer.id;
 
   const fetchOrderCustomer = async (status) => {
     try {
       const resOrderCustomer = await axios.get(
-        `/purchase/order/${customerId}?status=${status}`
+        `/purchase/order/${customer.id}?status=${status}`
       );
       setOrderCustomer(resOrderCustomer.data.orderCustomer);
       setNavBar(status);
@@ -43,7 +42,7 @@ function OrderResultContainer() {
       {navBar === 'ทั้งหมด' ? (
         <div className="orderresult_container_searchbar">
           <OrderResultSearchBar
-            customerId={customerId}
+            customerId={customer.id}
             setOrderCustomer={setOrderCustomer}
           />
         </div>
@@ -56,7 +55,7 @@ function OrderResultContainer() {
           <OrderResultItem
             key={el.id}
             orderCustomer={el}
-            customerId={customerId}
+            customerId={customer.id}
           />
         ))}
       </div>

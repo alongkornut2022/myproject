@@ -132,7 +132,7 @@ function AddAddressSeller({
           <div className="item1">
             <input
               type="text"
-              placeholder="ชื่อ"
+              placeholder="ชื่อ (หรือ ชื่อร้านค้า)"
               maxLength="50"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
@@ -140,11 +140,10 @@ function AddAddressSeller({
             />
             <input
               type="text"
-              placeholder="นามสกุล"
+              placeholder="นามสกุล (กรณีไม่ใช้ ชื่อร้านค้า)"
               maxLength="50"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              required="required"
             />
           </div>
 

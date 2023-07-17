@@ -103,10 +103,10 @@ function SellerAddressBook() {
         <div>
           <div
             className="address_delivery_change"
-            hidden={sellerAddress ? 'hidden' : ''}
+            hidden={sellerAddress.length > 0 ? 'hidden' : ''}
           >
             <button type="button" onClick={handleClickModal}>
-              เพิ่มที่อยู่
+              เพิ่มที่อยู่ร้านค้า
             </button>
           </div>
         </div>
@@ -127,7 +127,7 @@ function SellerAddressBook() {
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">ที่อยู่ใหม่ร้านค้า</h5>
+              <h5 className="modal-title">เพิ่มที่อยู่ร้านค้า</h5>
             </div>
             <div className="modal-body">
               <AddAddressSeller

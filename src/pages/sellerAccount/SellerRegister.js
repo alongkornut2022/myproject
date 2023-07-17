@@ -61,7 +61,9 @@ function SellerRegister() {
                     placeholder="ชื่อร้านค้า (ไม่เกิน 50 ตัว)"
                     maxlength="50"
                     value={shopName}
-                    onChange={(event) => setShopName(event.target.value)}
+                    onChange={(event) =>
+                      setShopName(event.target.value.replace(/^[\W]/, ''))
+                    }
                     required="required"
                   />
                 </div>
