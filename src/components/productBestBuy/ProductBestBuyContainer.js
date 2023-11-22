@@ -24,7 +24,9 @@ function ProductBestBuyContainer() {
           `/products/sort?limit=${limit}&&offset=${offset}&&orderBy=ps.alreadysold desc`
         );
         setAllProductBestBuy(resAllProductBestBuy.data.productSort);
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchAllProductBestBuy('', '');
   }, []);
@@ -39,7 +41,9 @@ function ProductBestBuyContainer() {
       setSortPrice(null);
       setPageNumberShow(pageNumber);
       setCurrentOffset(offset);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -59,6 +63,7 @@ function ProductBestBuyContainer() {
   return (
     <>
       <ProductSortBar dataSortBar={dataSortBar} />
+
       <div className="category_main_productitem">
         {productBestBuy.map((el) => (
           <ProductItemBestBuy key={el.id} productBestBuy={el} />

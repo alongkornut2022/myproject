@@ -1,8 +1,8 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import axios from '../../config/axiosSeller';
 
 function ProductComment({ productRating, sellerIds, setTrigerRating }) {
-  const { productRatingId, sellerId, rating, postReview, comment, commentId } =
+  const { productRatingId, sellerId, rating, comment, commentId } =
     productRating;
 
   const [commentWrite, setCommentWrite] = useState(comment);

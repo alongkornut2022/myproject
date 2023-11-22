@@ -1,10 +1,38 @@
+import axios from '../../config/axios';
+
 function OrderResultItemBottomBar({
   orderCustomer,
   handleClickModal3,
   handleClickModal2,
+  handleClickModal4,
+  handleClickModal5,
   handleOnClickDeleteOrder,
 }) {
-  const { allTotalPrice, paymentMethod, status, deliveryPrice } = orderCustomer;
+  const {
+    orderDetailId,
+    customerId,
+    deliveryId,
+    allTotalPrice,
+    paymentMethod,
+    status,
+    deliveryPrice,
+  } = orderCustomer;
+
+  const handOnClickReceived = async () => {
+    if (
+      window.confirm(
+        'คุณต้องการ แจ้งยืนยัน ได้รับสินค้าเรียบร้อยแล้ว หรือไม่'
+      ) == true
+    ) {
+      try {
+        await axios.patch(
+          `/delivery/recived/${customerId}/${deliveryId}/${orderDetailId}`
+        );
+        alert('แจ้งยืนยันการรับสินค้า เรียบร้อย');
+      } catch (err) {}
+    } else {
+    }
+  };
   return (
     <>
       <div className="orderresult_item_delivery">
@@ -41,7 +69,23 @@ function OrderResultItemBottomBar({
                 ? 'ชำระเงินแล้วผ่าน ' + paymentMethod
                 : 'ชำระเงินผ่าน'}
             </div>
-            <button hidden={status === 'ชำระเงินแล้ว' ? 'hidden' : ''}>
+            <button
+              hidden={
+                status === 'ชำระเงินแล้ว' || paymentMethod != 'Credit Card'
+                  ? 'hidden'
+                  : ''
+              }
+            >
+              {paymentMethod}
+            </button>
+            <button
+              onClick={handleClickModal4}
+              hidden={
+                status === 'ชำระเงินแล้ว' || paymentMethod != 'การโอนเงิน'
+                  ? 'hidden'
+                  : ''
+              }
+            >
               {paymentMethod}
             </button>
           </div>
@@ -63,6 +107,20 @@ function OrderResultItemBottomBar({
 
         {status === 'จัดส่งสำเร็จ' ? (
           <button onClick={handleClickModal2}>ดูคะแนนสินค้า</button>
+        ) : (
+          ''
+        )}
+
+        {status === 'อยู่ระหว่างจัดส่ง' ? (
+          <div className="orderresult_item_buttom_money">
+            <button onClick={handOnClickReceived}>แจ้งได้รับสินค้าแล้ว</button>
+          </div>
+        ) : (
+          ''
+        )}
+
+        {status === 'จัดส่งสำเร็จ' ? (
+          <button onClick={handleClickModal5}>สรุปการสั่งซื้อสินค้า</button>
         ) : (
           ''
         )}

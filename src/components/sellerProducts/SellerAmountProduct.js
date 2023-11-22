@@ -1,7 +1,6 @@
 function SellerAmountProduct({
   productSeller,
   navBar,
-  searchProduct,
   trigerSearch,
   viewProduct,
   setViewProduct,

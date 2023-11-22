@@ -19,21 +19,6 @@ function ProductItemImages({ productItem, size, sizeMain }) {
   } = productItem;
 
   const modalEl = useRef();
-  const [modal, setModal] = useState(null);
-
-  const [imageMain, setImageMain] = useState(image1);
-  const [imageShow1, setImageShow1] = useState(image1);
-  const [imageShow2, setImageShow2] = useState(image2);
-  const [imageShow3, setImageShow3] = useState(image3);
-  const [imageShow4, setImageShow4] = useState(image4);
-  const [imageShow5, setImageShow5] = useState(image5);
-  const [count, setCount] = useState(0);
-
-  const onClickModalImages = () => {
-    const modalObj = new Modal(modalEl.current);
-    setModal(modalObj);
-    modalObj.show();
-  };
 
   const arrayImages = [
     image1,
@@ -48,6 +33,14 @@ function ProductItemImages({ productItem, size, sizeMain }) {
   ];
 
   const newArrayImage = arrayImages.filter((item) => item != null);
+
+  const [imageMain, setImageMain] = useState(newArrayImage[0]);
+  const [imageShow1, setImageShow1] = useState(newArrayImage[0]);
+  const [imageShow2, setImageShow2] = useState(newArrayImage[1]);
+  const [imageShow3, setImageShow3] = useState(newArrayImage[2]);
+  const [imageShow4, setImageShow4] = useState(newArrayImage[3]);
+  const [imageShow5, setImageShow5] = useState(newArrayImage[4]);
+  const [count, setCount] = useState(0);
 
   const handleOnClickArrowLeft = () => {
     if (count === newArrayImage.length - 5) {
@@ -70,8 +63,9 @@ function ProductItemImages({ productItem, size, sizeMain }) {
     setImageShow5(newArrayImage[count + 4]);
   }, [count]);
 
-  const closeModal = (event) => {
-    modal.hide();
+  const onClickModalImages = () => {
+    const modalObj = new Modal(modalEl.current);
+    modalObj.show();
   };
 
   return (
@@ -108,7 +102,7 @@ function ProductItemImages({ productItem, size, sizeMain }) {
           </button>
         ) : null}
 
-        <div className="productitem_image_overview_item ">
+        <div className="productitem_image_overview_item">
           <img
             src={imageShow1}
             width={size}
@@ -120,8 +114,9 @@ function ProductItemImages({ productItem, size, sizeMain }) {
             }}
           />
         </div>
-        <div className="productitem_image_overview_item ">
-          {image2 ? (
+
+        <div className="productitem_image_overview_item">
+          {imageShow2 ? (
             <img
               src={imageShow2}
               width={size}
@@ -134,8 +129,9 @@ function ProductItemImages({ productItem, size, sizeMain }) {
             />
           ) : null}
         </div>
-        <div className="productitem_image_overview_item ">
-          {image3 ? (
+
+        <div className="productitem_image_overview_item">
+          {imageShow3 ? (
             <img
               src={imageShow3}
               width={size}
@@ -148,8 +144,9 @@ function ProductItemImages({ productItem, size, sizeMain }) {
             />
           ) : null}
         </div>
-        <div className="productitem_image_overview_item ">
-          {image4 ? (
+
+        <div className="productitem_image_overview_item">
+          {imageShow4 ? (
             <img
               src={imageShow4}
               width={size}
@@ -162,8 +159,9 @@ function ProductItemImages({ productItem, size, sizeMain }) {
             />
           ) : null}
         </div>
-        <div className="productitem_image_overview_item ">
-          {image5 ? (
+
+        <div className="productitem_image_overview_item">
+          {imageShow5 ? (
             <img
               src={imageShow5}
               width={size}
@@ -198,6 +196,7 @@ function ProductItemImages({ productItem, size, sizeMain }) {
                 sizeMainModal="450"
                 imageMain={imageMain}
                 setImageMain={setImageMain}
+                newArrayImage={newArrayImage}
               />
             </div>
           </div>

@@ -1,28 +1,12 @@
-import { useState } from 'react';
-import arrowLeft from '../../images/chevron-left.svg';
-import arrowRight from '../../images/chevron-right.svg';
-
 function ProductImagesModal({
   productItem,
   size,
   sizeMainModal,
   imageMain,
   setImageMain,
+  newArrayImage,
 }) {
-  const {
-    productName,
-    image1,
-    image2,
-    image3,
-    image4,
-    image5,
-    image6,
-    image7,
-    image8,
-    image9,
-  } = productItem;
-
-  // const [imageShowModal, setImageModal] = useState();
+  const { productName } = productItem;
 
   return (
     <>
@@ -36,82 +20,40 @@ function ProductImagesModal({
           </div>
           <div className="item">
             <div className="images_madal_item">
-              {image1 ? (
+              {newArrayImage[0] ? (
                 <img
-                  src={image1}
+                  src={newArrayImage[0]}
                   width={size}
                   height={size}
                   alt=""
                   onClick={() => {
-                    setImageMain(image1);
+                    setImageMain(newArrayImage[0]);
                   }}
                 />
               ) : null}
             </div>
             <div className="images_madal_item">
-              {image2 ? (
+              {newArrayImage[1] ? (
                 <img
-                  src={image2}
+                  src={newArrayImage[1]}
                   width={size}
                   height={size}
                   alt=""
                   onClick={() => {
-                    setImageMain(image2);
+                    setImageMain(newArrayImage[1]);
                   }}
                 />
               ) : null}
             </div>
             <div className="images_madal_item">
-              {image3 ? (
+              {newArrayImage[2] ? (
                 <img
-                  src={image3}
+                  src={newArrayImage[2]}
                   width={size}
                   height={size}
                   alt=""
                   onClick={() => {
-                    setImageMain(image3);
-                  }}
-                />
-              ) : null}
-            </div>
-          </div>
-          <div className="item">
-            <div className="images_madal_item">
-              {image4 ? (
-                <img
-                  src={image4}
-                  width={size}
-                  height={size}
-                  alt=""
-                  onClick={() => {
-                    setImageMain(image4);
-                  }}
-                />
-              ) : null}
-            </div>
-            <div className="images_madal_item">
-              {image5 ? (
-                <img
-                  src={image5}
-                  width={size}
-                  height={size}
-                  alt=""
-                  onClick={() => {
-                    setImageMain(image5);
-                  }}
-                />
-              ) : null}
-            </div>
-            <div className="images_madal_item">
-              {' '}
-              {image6 ? (
-                <img
-                  src={image6}
-                  width={size}
-                  height={size}
-                  alt=""
-                  onClick={() => {
-                    setImageMain(image6);
+                    setImageMain(newArrayImage[2]);
                   }}
                 />
               ) : null}
@@ -119,41 +61,81 @@ function ProductImagesModal({
           </div>
           <div className="item">
             <div className="images_madal_item">
-              {image7 ? (
+              {newArrayImage[3] ? (
                 <img
-                  src={image7}
+                  src={newArrayImage[3]}
                   width={size}
                   height={size}
                   alt=""
                   onClick={() => {
-                    setImageMain(image7);
+                    setImageMain(newArrayImage[3]);
                   }}
                 />
               ) : null}
             </div>
             <div className="images_madal_item">
-              {image8 ? (
+              {newArrayImage[4] ? (
                 <img
-                  src={image8}
+                  src={newArrayImage[4]}
                   width={size}
                   height={size}
                   alt=""
                   onClick={() => {
-                    setImageMain(image8);
+                    setImageMain(newArrayImage[4]);
                   }}
                 />
               ) : null}
             </div>
             <div className="images_madal_item">
-              {' '}
-              {image9 ? (
+              {newArrayImage[5] ? (
                 <img
-                  src={image9}
+                  src={newArrayImage[5]}
                   width={size}
                   height={size}
                   alt=""
                   onClick={() => {
-                    setImageMain(image9);
+                    setImageMain(newArrayImage[5]);
+                  }}
+                />
+              ) : null}
+            </div>
+          </div>
+          <div className="item">
+            <div className="images_madal_item">
+              {newArrayImage[6] ? (
+                <img
+                  src={newArrayImage[6]}
+                  width={size}
+                  height={size}
+                  alt=""
+                  onClick={() => {
+                    setImageMain(newArrayImage[6]);
+                  }}
+                />
+              ) : null}
+            </div>
+            <div className="images_madal_item">
+              {newArrayImage[7] ? (
+                <img
+                  src={newArrayImage[7]}
+                  width={size}
+                  height={size}
+                  alt=""
+                  onClick={() => {
+                    setImageMain(newArrayImage[7]);
+                  }}
+                />
+              ) : null}
+            </div>
+            <div className="images_madal_item">
+              {newArrayImage[8] ? (
+                <img
+                  src={newArrayImage[8]}
+                  width={size}
+                  height={size}
+                  alt=""
+                  onClick={() => {
+                    setImageMain(newArrayImage[8]);
                   }}
                 />
               ) : null}

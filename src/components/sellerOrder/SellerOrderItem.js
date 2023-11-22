@@ -11,8 +11,11 @@ function SellerOrderItem({ orderSeller, sellerId, handleOnClickSearchOrder }) {
     customerName,
     // allTotalPrice,
     productTotalPrice,
+    paymentId,
     paymentMethod,
+    paymentImage,
     status,
+    deliveryId,
     // deliveryPrice,
     deliveryOption,
     createdAt,
@@ -20,6 +23,9 @@ function SellerOrderItem({ orderSeller, sellerId, handleOnClickSearchOrder }) {
 
   const modalEl = useRef();
   const [modal, setModal] = useState(null);
+
+  const modalEl2 = useRef();
+  const [modal2, setModal2] = useState(null);
 
   const [orderItem, setOrderItem] = useState([]);
 
@@ -45,6 +51,18 @@ function SellerOrderItem({ orderSeller, sellerId, handleOnClickSearchOrder }) {
     fetchOrderItem();
   }, [orderSeller]);
 
+  const handOnClickDelivery = async () => {
+    if (window.confirm('คุณต้องการ แจ้งจัดส่งพัสดุ หรือไม่') == true) {
+      try {
+        await axios.patch(
+          `/sellers/order/delivery/${sellerId}/${deliveryId}/${orderDetailId}`
+        );
+        alert('แจ้งจัดส่งพัสดุ เรียบร้อย');
+      } catch (err) {}
+    } else {
+    }
+  };
+
   const handleClickModal = () => {
     const modalObj = new Modal(modalEl.current);
     setModal(modalObj);
@@ -55,6 +73,15 @@ function SellerOrderItem({ orderSeller, sellerId, handleOnClickSearchOrder }) {
   };
   const closeModal = () => {
     modal.hide();
+  };
+  const handleClickModal2 = () => {
+    const modalObj = new Modal(modalEl2.current);
+    setModal2(modalObj);
+    modalObj.show();
+  };
+
+  const closeModal2 = () => {
+    modal2.hide();
   };
 
   const date = new Date(createdAt);
@@ -98,7 +125,19 @@ function SellerOrderItem({ orderSeller, sellerId, handleOnClickSearchOrder }) {
             <div className="order_item_product_container_right">
               <div className="order_item_product_item2">
                 <div className="item2_1">฿ {productTotalPrice}</div>
-                <div className="item2_2"> {paymentMethod}</div>
+                <div className="item2_2">
+                  {paymentMethod === 'การโอนเงิน' &&
+                  (status === 'ชำระเงินแล้ว' ||
+                    status === 'อนุมัติแล้ว' ||
+                    status === 'อยู่ระหว่างจัดส่ง' ||
+                    status === 'จัดส่งสำเร็จ') ? (
+                    <div className="button_transferslip">
+                      <button onClick={handleClickModal2}>Transfer Slip</button>
+                    </div>
+                  ) : (
+                    paymentMethod
+                  )}
+                </div>
               </div>
               <div className="order_item_product_item3">{newStatus}</div>
               <div className="order_item_product_item4">
@@ -109,7 +148,7 @@ function SellerOrderItem({ orderSeller, sellerId, handleOnClickSearchOrder }) {
                 className="order_item_product_item5"
                 hidden={newStatus === 'ที่ต้องจัดส่ง' ? '' : 'hidden'}
               >
-                <button>
+                <button onClick={handOnClickDelivery}>
                   <i class="fa-sharp fa-solid fa-truck-fast"></i>{' '}
                   แจ้งจัดส่งสินค้า
                 </button>
@@ -135,6 +174,27 @@ function SellerOrderItem({ orderSeller, sellerId, handleOnClickSearchOrder }) {
 
             <div className="modal-body">
               <SellerAddresses orderSeller={orderSeller} sellerId={sellerId} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" tabIndex="-1" ref={modalEl2}>
+        <div className="modal-dialog modal-dialog-centered modal">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">หลักฐานการโอนเงิน (Transfer Slip)</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={closeModal2}
+              ></button>
+            </div>
+
+            <div className="modal-body">
+              <div className="transferslip_image">
+                <img src={paymentImage} width="300" />
+              </div>
             </div>
           </div>
         </div>

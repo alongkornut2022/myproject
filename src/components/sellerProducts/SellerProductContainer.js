@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from '../../config/axiosSeller';
 import SellerProductNavBar from './SellerProductNavBar';
-import SellerProductSortBar from './SellerProductSortBar';
+import SellerProductSearchBar from './SellerProductSearchBar';
 import SellerAmountProduct from './SellerAmountProduct';
 import SellerProductItem from './SellerProductItem';
 import SellerProductListBar from './SellerProductListBar';
@@ -88,7 +88,7 @@ function SellerProductContainer({ seller }) {
         </div>
 
         <div className="sellerorder_container_searchbar">
-          <SellerProductSortBar
+          <SellerProductSearchBar
             sellerId={seller.id}
             setProductSeller={setProductSeller}
             navBar={navBar}

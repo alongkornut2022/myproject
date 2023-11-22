@@ -418,7 +418,7 @@ function SellerProductAddPhoto({ dataInputAddPhoto }) {
           {/* -------- */}
         </div>
         <div className="sellerproductadd_input_validate">
-          (รูปภาพขนาดไม่เกิน 1 MB)
+          (รูปภาพขนาดไม่เกิน 1 MB และ ต้องมีรูปหน้าปก)
         </div>
       </div>
     </>

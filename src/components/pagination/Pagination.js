@@ -47,6 +47,7 @@ function Pagination({
       >
         &lt;
       </button>
+
       <div className="pagination_number">
         {paginationTotal.map((el) => (
           <PaginationItem
@@ -58,6 +59,7 @@ function Pagination({
           />
         ))}
       </div>
+
       <button
         className="pagination_button"
         onClick={() =>

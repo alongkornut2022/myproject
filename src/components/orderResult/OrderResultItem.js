@@ -7,9 +7,11 @@ import SeePostReviewContainer from '../postReview/SeePostReviewContainer';
 import BuyAgainContainer from '../postReview/BuyAgainContainer';
 import OrderResultItemTopBar from './OrderResultItemTopBar';
 import OrderResultItemBottomBar from './OrderResultItemBottomBar';
+import TransferMoneyContainer from './TransferMoneyContainer';
+import OrderResultFinal from './OrderResultFinal';
 
 function OrderResultItem({ orderCustomer, customerId }) {
-  const { orderDetailId, shopName } = orderCustomer;
+  const { orderDetailId, shopName, status } = orderCustomer;
 
   const modalEl = useRef();
   const [modal, setModal] = useState(null);
@@ -20,10 +22,18 @@ function OrderResultItem({ orderCustomer, customerId }) {
   const modalEl3 = useRef();
   const [modal3, setModal3] = useState(null);
 
+  const modalEl4 = useRef();
+  const [modal4, setModal4] = useState(null);
+
+  const modalEl5 = useRef();
+  const [modal5, setModal5] = useState(null);
+
   const [orderItem, setOrderItem] = useState([]);
   const [orderRating, setOrderRating] = useState([]);
   const [triggerOrderRating, setTriggerOrderRating] = useState(false);
   const [triggerProductRating, setTriggerProductRating] = useState(false);
+
+  const [orderDetailById, setOrderDetailById] = useState('');
 
   const fetchOrderItem = async () => {
     try {
@@ -60,6 +70,17 @@ function OrderResultItem({ orderCustomer, customerId }) {
         document.location.reload();
       }
     } else {
+    }
+  };
+
+  const fetchOrderDetailById = async () => {
+    try {
+      const resOrderDetailById = await axios.get(
+        `/purchase/order/detailById/${customerId}/${orderDetailId}`
+      );
+      setOrderDetailById(resOrderDetailById.data.orderDetailData);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -103,6 +124,28 @@ function OrderResultItem({ orderCustomer, customerId }) {
     modal3.hide();
   };
 
+  const handleClickModal4 = () => {
+    const modalObj = new Modal(modalEl4.current);
+    setModal4(modalObj);
+    modalObj.show();
+    fetchOrderDetailById();
+  };
+
+  const closeModal4 = () => {
+    modal4.hide();
+  };
+
+  const handleClickModal5 = () => {
+    const modalObj = new Modal(modalEl5.current);
+    setModal5(modalObj);
+    modalObj.show();
+    fetchOrderDetailById();
+  };
+
+  const closeModal5 = () => {
+    modal5.hide();
+  };
+
   const inputPostReviewContainer = {
     orderItem,
     closeModal,
@@ -133,6 +176,8 @@ function OrderResultItem({ orderCustomer, customerId }) {
           orderCustomer={orderCustomer}
           handleClickModal3={handleClickModal3}
           handleClickModal2={handleClickModal2}
+          handleClickModal4={handleClickModal4}
+          handleClickModal5={handleClickModal5}
           handleOnClickDeleteOrder={handleOnClickDeleteOrder}
         />
       </div>
@@ -194,6 +239,61 @@ function OrderResultItem({ orderCustomer, customerId }) {
                 orderItem={orderItem}
                 closeModal3={closeModal3}
               />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" tabIndex="-1" ref={modalEl4}>
+        <div className="modal-dialog modal-dialog-centered modal">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">แจ้งการโอนเงิน</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={closeModal4}
+              ></button>
+            </div>
+            <div className="modal-body">
+              {orderDetailById.length > 0
+                ? orderDetailById.map((el) => (
+                    <TransferMoneyContainer
+                      key={el.orderDetailId}
+                      orderDetailById={el}
+                      customerId={customerId}
+                      closeModal4={closeModal4}
+                    />
+                  ))
+                : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" tabIndex="-1" ref={modalEl5}>
+        <div className="modal-dialog modal-dialog-centered modal">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">สรุปการสั่งซื้อสินค้า</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={closeModal5}
+              ></button>
+            </div>
+            <div className="modal-body">
+              {orderDetailById.length > 0
+                ? orderDetailById.map((el) => (
+                    <OrderResultFinal
+                      key={el.orderDetailId}
+                      orderDetailById={el}
+                      orderItem={orderItem}
+                      shopName={shopName}
+                      closeModal4={closeModal5}
+                    />
+                  ))
+                : ''}
             </div>
           </div>
         </div>

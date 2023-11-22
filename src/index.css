@@ -4047,6 +4047,29 @@ footer {
   padding: 10px;
 }
 
+/* เพิ่มเติม */
+
+.button_purchase button {
+  width: fit-content;
+  border: none;
+  padding: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 2px;
+  background-color: #4caf50;
+  color: #ffffff;
+}
+.button_transferslip button {
+  width: fit-content;
+  border: none;
+  padding: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 2px;
+  background-color: unset;
+  color: rgb(0, 93, 186);
+}
+
 /***** Responsive *****/
 
 @media (min-width: 1200px) {

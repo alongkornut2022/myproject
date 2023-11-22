@@ -55,13 +55,8 @@ function AddressBook() {
     fetchThaiProvinces();
   };
 
-  const closeModal = (event) => {
+  const closeModal = () => {
     modal.hide();
-  };
-
-  const handleOnClickCloseModal = () => {
-    closeModal();
-    ClearInputField();
   };
 
   const ClearInputField = () => {
@@ -120,6 +115,7 @@ function AddressBook() {
           />
         ))}
       </div>
+
       <div className="modal fade" tabIndex="-1" ref={modalEl}>
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">

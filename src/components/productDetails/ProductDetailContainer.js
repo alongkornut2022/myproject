@@ -23,7 +23,9 @@ function ProductDetailContainer({ productId }) {
         const resProductItem = await axios.get(`/products/byid/${productId}`);
         setProductItem(resProductItem.data.productItem);
         setProductSpecs(resProductItem.data.productSpecs);
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchProductItem();
   }, [productId]);
@@ -33,9 +35,16 @@ function ProductDetailContainer({ productId }) {
   useEffect(() => {
     const fetchProductSeller = async () => {
       try {
-        const resProductSeller = await axios.get(`/products/shop/${sellerId}`);
-        setProductSeller(resProductSeller.data.productSeller);
-      } catch (err) {}
+        if (sellerId.length === 0) {
+        } else {
+          const resProductSeller = await axios.get(
+            `/products/shop/${sellerId}`
+          );
+          setProductSeller(resProductSeller.data.productSeller);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchProductSeller();
   }, [productItem]);

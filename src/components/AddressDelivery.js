@@ -92,7 +92,7 @@ function AddressDelivery({
     fetchThaiAddressId();
   };
 
-  const closeModal = (event) => {
+  const closeModal = () => {
     modal.hide();
   };
 

@@ -6,7 +6,7 @@ function PaymentMethod({ setPaymentMethod }) {
         <select onChange={(event) => setPaymentMethod(event.target.value)}>
           <option>เลือกประเภทการชำระเงิน</option>
           <option>Credit Card</option>
-          <option>Mobile Banking</option>
+          <option>การโอนเงิน</option>
           <option>ชำระเงินปลายทาง</option>
         </select>
       </div>

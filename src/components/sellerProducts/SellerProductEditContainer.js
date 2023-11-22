@@ -57,118 +57,131 @@ function SellerProductEditContainer({
     try {
       setLoading(true);
 
-      const formData = new FormData();
-      const indexImageUpdateArr = [];
-      const indexImageNull = [];
-
-      if (typeof image1 === 'object' && image1) {
-        formData.append('productImages', image1);
-        indexImageUpdateArr.push('0');
-      } else if (image1 === null) {
-        indexImageNull.push('0');
-      }
-
-      if (typeof image2 === 'object' && image2) {
-        formData.append('productImages', image2);
-        indexImageUpdateArr.push('1');
-      } else if (image2 === null) {
-        indexImageNull.push('1');
-      }
-
-      if (typeof image3 === 'object' && image3) {
-        formData.append('productImages', image3);
-        indexImageUpdateArr.push('2');
-      } else if (image3 === null) {
-        indexImageNull.push('2');
-      }
-
-      if (typeof image4 === 'object' && image4) {
-        formData.append('productImages', image4);
-        indexImageUpdateArr.push('3');
-      } else if (image4 === null) {
-        indexImageNull.push('3');
-      }
-
-      if (typeof image5 === 'object' && image5) {
-        formData.append('productImages', image5);
-        indexImageUpdateArr.push('4');
-      } else if (image5 === null) {
-        indexImageNull.push('4');
-      }
-
-      if (typeof image6 === 'object' && image6) {
-        formData.append('productImages', image6);
-        indexImageUpdateArr.push('5');
-      } else if (image6 === null) {
-        indexImageNull.push('5');
-      }
-
-      if (typeof image7 === 'object' && image7) {
-        formData.append('productImages', image7);
-        indexImageUpdateArr.push('6');
-      } else if (image7 === null) {
-        indexImageNull.push('6');
-      }
-
-      if (typeof image8 === 'object' && image8) {
-        formData.append('productImages', image8);
-        indexImageUpdateArr.push('7');
-      } else if (image8 === null) {
-        indexImageNull.push('7');
-      }
-
-      if (typeof image9 === 'object' && image9) {
-        formData.append('productImages', image9);
-        indexImageUpdateArr.push('8');
-      } else if (image9 === null) {
-        indexImageNull.push('8');
-      }
-
-      const indexImageUpdateStr = indexImageUpdateArr.join(',');
-      const indexImageNullStr = indexImageNull.join(',');
-
-      const productSpecTextfile = new Blob([productSpec], {
-        type: 'text/plain',
-      });
-
-      const formData2 = new FormData();
-      formData2.append('productSpec', productSpecTextfile);
-
-      const productSpecs = await axios.patch(
-        `sellers/products/spec/${seller.id}/${productId}`,
-        formData2
-      );
-
-      const productImages = await axios.patch(
-        `sellers/products/images/${seller.id}/${productId}?indexImageUpdateStr=${indexImageUpdateStr}&&indexImageNullStr=${indexImageNullStr}`,
-        formData
-      );
-
       if (
-        productImages.data.message === 'update images success' &&
-        productSpecs.data.message === 'update spec success'
+        !productName ||
+        selectCategory === 'หมวดหมู่ทั้งหมด' ||
+        !productUnitPrice ||
+        !productStock ||
+        !productWeight ||
+        !productSpec ||
+        image1 === null ||
+        productStatus === ''
       ) {
-        const productItem = await axios.patch(
-          `sellers/products/${seller.id}/${productId}`,
-          {
-            selectCategory,
-            productName,
-            productUnitPrice,
-            productWeight,
-            productStock,
-            productStatus,
-          }
-        );
-        if (productItem.data.message === 'update product success') {
-          alert('แก้ไข สินค้า "สำเร็จ" ');
-          await modal.hide();
-
-          fetchProductSeller(navBar);
-        } else {
-          alert('แก้ไข สินค้า "ไม่สำเร็จ" ');
-        }
+        alert('คุณกรอกข้อมูลสินค้า ยังไม่ครบ');
       } else {
-        alert('แก้ไข รูปภาพสินค้า "ไม่สำเร็จ" ');
+        const formData = new FormData();
+        const indexImageUpdateArr = [];
+        const indexImageNull = [];
+
+        if (typeof image1 === 'object' && image1) {
+          formData.append('productImages', image1);
+          indexImageUpdateArr.push('0');
+        } else if (image1 === null) {
+          indexImageNull.push('0');
+        }
+
+        if (typeof image2 === 'object' && image2) {
+          formData.append('productImages', image2);
+          indexImageUpdateArr.push('1');
+        } else if (image2 === null) {
+          indexImageNull.push('1');
+        }
+
+        if (typeof image3 === 'object' && image3) {
+          formData.append('productImages', image3);
+          indexImageUpdateArr.push('2');
+        } else if (image3 === null) {
+          indexImageNull.push('2');
+        }
+
+        if (typeof image4 === 'object' && image4) {
+          formData.append('productImages', image4);
+          indexImageUpdateArr.push('3');
+        } else if (image4 === null) {
+          indexImageNull.push('3');
+        }
+
+        if (typeof image5 === 'object' && image5) {
+          formData.append('productImages', image5);
+          indexImageUpdateArr.push('4');
+        } else if (image5 === null) {
+          indexImageNull.push('4');
+        }
+
+        if (typeof image6 === 'object' && image6) {
+          formData.append('productImages', image6);
+          indexImageUpdateArr.push('5');
+        } else if (image6 === null) {
+          indexImageNull.push('5');
+        }
+
+        if (typeof image7 === 'object' && image7) {
+          formData.append('productImages', image7);
+          indexImageUpdateArr.push('6');
+        } else if (image7 === null) {
+          indexImageNull.push('6');
+        }
+
+        if (typeof image8 === 'object' && image8) {
+          formData.append('productImages', image8);
+          indexImageUpdateArr.push('7');
+        } else if (image8 === null) {
+          indexImageNull.push('7');
+        }
+
+        if (typeof image9 === 'object' && image9) {
+          formData.append('productImages', image9);
+          indexImageUpdateArr.push('8');
+        } else if (image9 === null) {
+          indexImageNull.push('8');
+        }
+
+        const indexImageUpdateStr = indexImageUpdateArr.join(',');
+        const indexImageNullStr = indexImageNull.join(',');
+
+        const productSpecTextfile = new Blob([productSpec], {
+          type: 'text/plain',
+        });
+
+        const formData2 = new FormData();
+        formData2.append('productSpec', productSpecTextfile);
+
+        const productSpecs = await axios.patch(
+          `sellers/products/spec/${seller.id}/${productId}`,
+          formData2
+        );
+
+        const productImages = await axios.patch(
+          `sellers/products/images/${seller.id}/${productId}?indexImageUpdateStr=${indexImageUpdateStr}&&indexImageNullStr=${indexImageNullStr}`,
+          formData
+        );
+
+        if (
+          productImages.data.message === 'update images success' &&
+          productSpecs.data.message === 'update spec success'
+        ) {
+          const productItem = await axios.patch(
+            `sellers/products/${seller.id}/${productId}`,
+            {
+              selectCategory,
+              productName,
+              productUnitPrice,
+              productWeight,
+              productStock,
+              productStatus,
+            }
+          );
+          if (productItem.data.message === 'update product success') {
+            alert('แก้ไข สินค้า "สำเร็จ" ');
+            await modal.hide();
+
+            fetchProductSeller(navBar);
+          } else {
+            alert('แก้ไข สินค้า "ไม่สำเร็จ" ');
+          }
+        } else {
+          alert('แก้ไข รูปภาพสินค้า "ไม่สำเร็จ" ');
+        }
       }
     } catch (err) {
       console.log(err);

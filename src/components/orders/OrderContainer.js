@@ -1,15 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import axios from '../../config/axios';
 import { Modal } from 'bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { CartContext } from '../../contexts/CartContext';
 import PaymentMethod from '../../components/PaymentMethod';
 import SellerItemOrder from './SellerItemOrder';
 import CustomerAddressDelivery from '../OrderAddressDelivery';
 import OrderAddressDeliveryModal from './OrderAddressDeliveryModalContainer';
-import { useNavigate } from 'react-router-dom';
 
 function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
   const modalEl = useRef();
   const [modal, setModal] = useState(null);
+
+  const { fetchCart } = useContext(CartContext);
 
   const [customerAddressCurrent, setCustomerAddressCurrent] = useState('');
   const [cartSellerIds, setCartSellerIds] = useState([]);
@@ -20,15 +23,15 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
 
   const navigate = useNavigate();
 
+  const allTotalPrice = productItemPrice.reduce((acc, item) => acc + item, 0);
+  const resultTotalPrice = allTotalPrice + deliveryTotalPrice;
+
   let customerAddressId;
   if (customerAddressCurrent) {
     customerAddressId = customerAddressCurrent.id;
   } else {
     customerAddressId = customerAddressDefault.id;
   }
-
-  const allTotalPrice = productItemPrice.reduce((acc, item) => acc + item, 0);
-  const resultTotalPrice = allTotalPrice + deliveryTotalPrice;
 
   const handleOnClickAddressCustomerById = async (customerAddressId) => {
     try {
@@ -113,6 +116,7 @@ function OrderContainer({ customerId, cartIds, customerAddressDefault }) {
         );
 
         navigate(`/customer/purchase/${customerId}`);
+        fetchCart();
       } catch (err) {
         console.log(err);
       }
